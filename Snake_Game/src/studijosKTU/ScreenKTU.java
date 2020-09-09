@@ -31,10 +31,10 @@ public class ScreenKTU extends Canvas
     public static final Color[] colors = 
             {white, yellow, orange, cyan, lightGray, magenta,
              pink, red, green, blue, gray, darkGray, black};
-    final protected int cellH, cellW;  // celės matavimai kartu su grid'u 
-    final private int cellH0, cellW0;  // celės matavimai nevertinant grid'o 
+    final protected int cellH, cellW;  // celės matavimai kartu su grid'u
+    final private int cellH0, cellW0;  // celės matavimai nevertinant grid'o
     final static private Dimension display = Toolkit.getDefaultToolkit().getScreenSize();
-    private static int startX=0, startY=0, maxHeight = 0;
+    private static int startX = 0, startY = 0, maxHeight = 0;
     final protected int screenH, screenW;
     final protected int grid;
     final protected int totalH, totalW;
@@ -133,7 +133,7 @@ public class ScreenKTU extends Canvas
     }
     final public void refresh(){
         refresh(100);
-        //refresh(1);
+//        refresh(1);
     }
     public void setColors(Color bc, Color fc){
         backColor = bc;
@@ -330,39 +330,6 @@ public class ScreenKTU extends Canvas
     public void run() {
         throw new UnsupportedOperationException("Reikia realizuoti run metodą");
     }
-
-//    void exploreFontsProperties(){
-//        for(int k=8; k<=60; k++){
-//             FontMetrics fm = getFontMetrics(new Font("Serif", Font.PLAIN, k));
-//             int a = fm.getAscent();
-//             int b = fm.getDescent();
-//             int c = fm.getLeading();
-//             System.out.printf("%2d %2d %2d %2d\n", k, a, b, c);
-//        }
-//    }
-//    char[] chrs = "MINTIS╳╳↖↗↘↙ąęgqČŠ\u263a\u263b*+@\u2600\u2602".toCharArray();
-//    void drawBoard(){
-//        setFontColor(Color.red);
-//        int k=0;
-//        for(int i = 0; i < screenH; i++) 
-//            for(int j = 0; j < screenW; j++){ 
-//                setBackColor((i+j)%2==0?Color.green:Color.gray);
-//                print(i,j, chrs[k++]);
-////                Toolkit.getDefaultToolkit().beep(); 
-//            }
-//            refresh(10);
-//    }
-//    void demoFonts(){
-//        drawBoard();
-////        System.out.println(new String(chrs));
-//    }
-//    public static void main(String... ps) {
-//        for(int fnt=0; fnt<4; fnt++)
-//        for(int cs=20; cs<36; cs+=2){
-//            ScreenKTU sc = new ScreenKTU(cs, cs, 4, 6, fnt);
-//            sc.demoFonts();
-//        }
-//    }  
 
     public void keyTyped(KeyEvent ke) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

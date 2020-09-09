@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="" />
+    <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Entities/Food.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Entities/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/testing/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/Snake/Snake.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/studijosKTU/ScreenKTU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/studijosKTU/ScreenKTU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Snake/Snake.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/studijosKTU/ScreenKTU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/studijosKTU/ScreenKTU.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,9 +30,15 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1gxaCLlWrANnG0mZw11nL6rr7lR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -36,13 +57,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="Snake" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Snake.Snake" />
+  <component name="RunManager" selected="Application.RendererTest">
+    <configuration name="Game" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="client.Snake.Game" />
       <module name="Snake_Game" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Snake.*" />
+          <option name="PATTERN" value="client.Snake.Entities.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -50,11 +71,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Snake" />
-      </list>
-    </recent_temporary>
+    <configuration name="RendererTest" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="client.Snake.Renderer.SwingRender" />
+      <module name="Snake_Game" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="client.Snake.Renderer.SnakePanel" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Testing" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="testing.Test" />
+      <module name="Snake_Game" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="testing.Test" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Game" />
+      <item itemvalue="Application.Testing" />
+      <item itemvalue="Application.RendererTest" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -68,5 +115,18 @@
       <updated>1599058568353</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
