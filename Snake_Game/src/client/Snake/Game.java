@@ -4,9 +4,12 @@ import static java.awt.Color.*;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
+import client.Snake.Renderer.SwingRender;
 import studijosKTU.ScreenKTU;
 
 public class Game {
+    private SwingRender render;
+
     private int screenResolution = 20; // 3
     private int screenSize = 50; // 335
 
@@ -17,15 +20,19 @@ public class Game {
     private Food[] foods;
 
     void Start() {
-        ScreenKTU scr = new ScreenKTU(screenResolution, screenSize);
-        scr.forEachCell((r, c) -> scr.print(r, c, white));
+        SwingRender render = new SwingRender();
 
-        players = new Player[] {new Player("0")};
-        foods = new Food[]{new Food(0, 0)};
 
-        players[0].setPosition((screenSize / 2) + 1, (screenSize / 2) + 1);
 
-        Running(scr);
+//        ScreenKTU scr = new ScreenKTU(screenResolution, screenSize);
+//        scr.forEachCell((r, c) -> scr.print(r, c, white));
+//
+//        players = new Player[] {new Player("0")};
+//        foods = new Food[]{new Food(0, 0)};
+//
+//        players[0].setPosition((screenSize / 2) + 1, (screenSize / 2) + 1);
+//
+//        Running(scr);
     }
     void Running(ScreenKTU scr)
     {

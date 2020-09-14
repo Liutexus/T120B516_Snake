@@ -6,78 +6,54 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-class SnakePanel extends JPanel {
+import client.Snake.Entities.Food;
+import client.Snake.Entities.Player;
 
+class SnakePanel extends JPanel {
     public int directionX = 0;
     public int directionY = 0;
 
+    ArrayList<Player> snakes;
+    ArrayList<Food> objects;
+    ArrayList terrain;
 
-    ArrayList shapes;
-
-    public SnakePanel() {
+    public SnakePanel(Player myPlayer) {
         setFocusable(true);
         requestFocusInWindow();
 
-        shapes = new ArrayList<Shape>();
-        shapes.add(new Rectangle.Float(50, 50, 20, 20));
-        shapes.add(new Rectangle.Float(200, 200, 40, 10));
-        //setBorder(BorderFactory.createLineBorder(Color.black));
-
-//        addMouseListener(new MouseAdapter() {
-//            public void mousePressed(MouseEvent e) {
-//                moveSquare(e.getX(),e.getY());
-//            }
-//        });
-//
-//        addMouseMotionListener(new MouseAdapter() {
-//            public void mouseDragged(MouseEvent e) {
-//                moveSquare(e.getX(),e.getY());
-//            }
-//        });
+        snakes = new ArrayList<Player>();
+        objects = new ArrayList<Food>();
+        terrain = new ArrayList();
 
         addKeyListener(new KeyListener(){
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_UP){
-                    directionY = 1;
 
-                    moveSquare(0, "UP");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_DOWN){
-                    directionY = -1;
+                switch(e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        directionY = 1;
 
-                    moveSquare(0, "DOWN");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    directionX = -1;
+                        moveSquare(myPlayer, "UP");
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        directionY = -1;
 
-                    moveSquare(0, "LEFT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                    directionX = 1;
+                        moveSquare(myPlayer, "DOWN");
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        directionX = -1;
 
-                    moveSquare(0, "RIGHT");
-                }
+                        moveSquare(myPlayer, "LEFT");
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        directionX = 1;
 
-                if(e.getKeyCode() == KeyEvent.VK_W){
-                    moveSquare(1, "UP");
+                        moveSquare(myPlayer, "RIGHT");
+                        break;
+                    case KeyEvent.VK_SPACE:
+                        System.out.println("Pressed SPACE");
+                        break;
                 }
-                if(e.getKeyCode() == KeyEvent.VK_S){
-                    moveSquare(1, "DOWN");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_A){
-                    moveSquare(1, "LEFT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                    moveSquare(1, "RIGHT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_SPACE){
-                    System.out.println("Pressed SPACE");
-
-                    //paint();
-
-                }
-
             }
 
             @Override
@@ -94,17 +70,23 @@ class SnakePanel extends JPanel {
         });
     }
 
-    private void moveSquare(int index, String direction) {
+    public void addPlayer(String id){
+        snakes.add(new Player(id));
+    }
 
-        Shape temp = (Shape) shapes.get(index);
-        Rectangle rec = temp.getBounds();
+    public void addPlayer(Player player){
+        snakes.add(player);
+    }
 
-        if(direction == "UP") rec.y -= 10;
-        if(direction == "DOWN") rec.y += 10;
-        if(direction == "LEFT") rec.x -= 10;
-        if(direction == "RIGHT") rec.x += 10;
+    private void moveSquare(Player player, String direction) {
+        if(direction == "UP") player.setMoveDirection(0, 1);
+        if(direction == "RIGHT") player.setMoveDirection(1, 0);
+        if(direction == "DOWN") player.setMoveDirection(0, -1);
+        if(direction == "LEFT") player.setMoveDirection(-1, 0);
+        if(direction == "SPACE") player.setMoveDirection(0, 0);
+        player.movePlayer();
 
-        shapes.set(index, rec);
+        System.out.println(player.toString());
 
         repaint();
     }
@@ -112,14 +94,15 @@ class SnakePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        shapes.forEach(x -> {
-                Shape temp = (Shape)x;
-                g.setColor(Color.RED);
-                g.fillRect(temp.getBounds().x, temp.getBounds().y, temp.getBounds().width, temp.getBounds().height);
-                g.setColor(Color.BLACK);
-                g.drawRect(temp.getBounds().x, temp.getBounds().y, temp.getBounds().width, temp.getBounds().height);
-
-        });
+//        snakes.forEach(x -> {
+//                Player temp = (Player)x;
+//                g.setColor(Color.RED);
+//                g.fillRect(temp.getBounds().x, temp.getBounds().y, temp.getBounds().width, temp.getBounds().height);
+//                g.setColor(Color.BLACK);
+//                g.drawRect(temp.getBounds().x, temp.getBounds().y, temp.getBounds().width, temp.getBounds().height);
+//        });
 
     }
 }
+
+

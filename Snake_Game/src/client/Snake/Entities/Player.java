@@ -126,4 +126,19 @@ public class Player {
         this.isGameOver = state;
     }
 
+
+    @Override
+    public String toString() {
+        String output;
+        output = "ID: " + this.id + "\n";
+        output += "Position: " + this.posX + " " + this.posY + "\n";
+        output += "Direction: " + this.directionX + " " + this.directionY + "\n";
+        output += "Size: " + this.sizeX + " " + this.sizeY + "\n";
+        output += "Health: " + this.health + "\n";
+        output += "Color: " + this.color + "\n";
+        output += "Boost: " + this.boost + "\n";
+        output += "Ground: " + this.ground + "\n";
+
+        return  output;
+    }
 }
