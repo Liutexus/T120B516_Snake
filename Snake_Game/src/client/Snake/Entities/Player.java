@@ -95,6 +95,10 @@ public class Player {
         return new float[] {this.directionX, this.directionY};
     }
 
+    public float[] getSize(){
+        return new float[] {this.sizeX, sizeY};
+    }
+
     public void increaseTailLength(int delta){
         this.tailLength += delta;
     }

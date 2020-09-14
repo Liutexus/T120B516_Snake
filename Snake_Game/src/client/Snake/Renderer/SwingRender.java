@@ -3,6 +3,7 @@ package client.Snake.Renderer;
 import client.Snake.Entities.Player;
 
 import javax.swing.JFrame;
+import java.awt.*;
 import java.nio.charset.Charset;
 import java.util.Random;
 
@@ -16,7 +17,7 @@ public class SwingRender extends JFrame {
         super("imma ssssssseee sneek");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 1000);
-        setResizable(false);
+//        setResizable(false);
 
         // Creating this client's ID
         Player myPlayer = new Player(randomId());
@@ -27,11 +28,13 @@ public class SwingRender extends JFrame {
 
             // Adding game to the window
             SnakePanel gamePanel = new SnakePanel(myPlayer);
-//            gamePanel.addPlayer(player);
+//            gamePanel.setPreferredSize(new Dimension(1000, 1000));
+//            gamePanel.addPlayer(myPlayer);
             add(gamePanel);
 
             // Host game logic here
 
+//        pack();
         setVisible(true);
     }
 
