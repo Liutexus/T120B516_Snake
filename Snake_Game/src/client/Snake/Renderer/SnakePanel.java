@@ -11,8 +11,8 @@ import client.Snake.Entities.Player;
 
 class SnakePanel extends JPanel {
     private Dimension windowSize;
-    private int horizontalCellCount = 20;
-    private int verticalCellCount = 20;
+    private int horizontalCellCount = 50;
+    private int verticalCellCount = 50;
     private int cellWidth;
     private int cellHeight;
 
@@ -33,28 +33,7 @@ class SnakePanel extends JPanel {
         addKeyListener(new KeyListener(){
             @Override
             public void keyPressed(KeyEvent e) {
-
-                switch(e.getKeyCode()) {
-                    case KeyEvent.VK_UP:
-
-                        movePlayer(myPlayer, "UP");
-                        break;
-                    case KeyEvent.VK_DOWN:
-
-                        movePlayer(myPlayer, "DOWN");
-                        break;
-                    case KeyEvent.VK_LEFT:
-
-                        movePlayer(myPlayer, "LEFT");
-                        break;
-                    case KeyEvent.VK_RIGHT:
-
-                        movePlayer(myPlayer, "RIGHT");
-                        break;
-                    case KeyEvent.VK_SPACE:
-                        System.out.println("Pressed SPACE");
-                        break;
-                }
+                keyResponse(myPlayer, e);
             }
 
             @Override
@@ -79,12 +58,40 @@ class SnakePanel extends JPanel {
         snakes.add(player);
     }
 
-    private void movePlayer(Player player, String direction) {
-        if(direction == "UP") player.setMoveDirection(0, -1);
-        if(direction == "RIGHT") player.setMoveDirection(1, 0);
-        if(direction == "DOWN") player.setMoveDirection(0, 1);
-        if(direction == "LEFT") player.setMoveDirection(-1, 0);
-        if(direction == "SPACE") player.setMoveDirection(0, 0);
+    private void keyResponse(Player player, KeyEvent key) {
+
+        switch (key.getKeyCode()){
+            case KeyEvent.VK_UP:
+                player.setMoveDirection(0, -1);
+                break;
+            case KeyEvent.VK_RIGHT:
+                player.setMoveDirection(1, 0);
+                break;
+            case KeyEvent.VK_DOWN:
+                player.setMoveDirection(0, 1);
+                break;
+            case KeyEvent.VK_LEFT:
+                player.setMoveDirection(-1, 0);
+                break;
+            case KeyEvent.VK_SPACE:
+                player.setMoveDirection(0, 0);
+                break;
+            case KeyEvent.VK_W: // Placeholder
+                player.deltaSize(1, 1);
+                break;
+            case KeyEvent.VK_D: // Placeholder
+                player.deltaSize(1, 0);
+                break;
+            case KeyEvent.VK_S: // Placeholder
+                player.deltaSize(-1, -1);
+                break;
+            case KeyEvent.VK_A: // Placeholder
+                player.deltaSize(0, 1);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
+        }
+
         player.movePlayer();
 
 //        System.out.println(player.toString());
@@ -99,25 +106,34 @@ class SnakePanel extends JPanel {
         cellHeight = (windowSize.height/verticalCellCount);
 
         snakes.forEach(x -> {
-//            System.out.println(x.toString());
-            drawSnake(g, x);
+            System.out.println(x.toString());
+            drawRect(g, x.getPosition(), x.getSize(), x.getPlayerColor());
+
+            // TODO: Draw the tail
+        });
+
+        objects.forEach(obj -> {
+            // TODO: Draw landscape object here
         });
 
     }
 
-    private void drawSnake(Graphics g, Player player) {
-        float[] pos = player.getPosition();
-//        float[] size = player.getSize();
-        String color = player.getPlayerColor();
+private void drawRect(Graphics g, float[] pos, float[] size, String color) {
+        int cellPositionX = ((int)(pos[0]) * windowSize.width)/horizontalCellCount;
+        int cellPositionY = ((int)(pos[1]) * windowSize.height)/verticalCellCount;
 
         g.setColor(Color.RED);
-        g.fillRect(((int)(pos[0]) * cellWidth), ((int)pos[1] * cellHeight), cellWidth+(windowSize.width%horizontalCellCount), cellHeight+(windowSize.height%verticalCellCount));
+        g.fillRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
 
         g.setColor(Color.BLACK);
-        g.drawRect(((int) pos[0] * cellWidth), ((int)pos[1] * cellHeight), cellWidth+(windowSize.width%horizontalCellCount), cellHeight+(windowSize.height%verticalCellCount));
-
+        g.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
     }
 
+
+
+
+
+
+
+
 }
-
-

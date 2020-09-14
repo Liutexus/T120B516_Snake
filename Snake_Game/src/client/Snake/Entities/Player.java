@@ -99,6 +99,16 @@ public class Player {
         return new float[] {this.sizeX, sizeY};
     }
 
+    public void setSize(float sizeX, float sizeY){
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+    }
+
+    public void deltaSize(float sizeX, float sizeY){
+        this.sizeX += sizeX;
+        this.sizeY += sizeY;
+    }
+
     public void increaseTailLength(int delta){
         this.tailLength += delta;
     }

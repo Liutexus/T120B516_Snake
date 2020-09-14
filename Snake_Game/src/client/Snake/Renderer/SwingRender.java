@@ -16,7 +16,7 @@ public class SwingRender extends JFrame {
         // Creating this client's window
         super("imma ssssssseee sneek");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 1000);
+//        setSize(1000, 1000);
 //        setResizable(false);
 
         // Creating this client's ID
@@ -28,13 +28,13 @@ public class SwingRender extends JFrame {
 
             // Adding game to the window
             SnakePanel gamePanel = new SnakePanel(myPlayer);
-//            gamePanel.setPreferredSize(new Dimension(1000, 1000));
+            gamePanel.setPreferredSize(new Dimension(1000, 1000));
 //            gamePanel.addPlayer(myPlayer);
             add(gamePanel);
 
             // Host game logic here
 
-//        pack();
+        pack();
         setVisible(true);
     }
 
