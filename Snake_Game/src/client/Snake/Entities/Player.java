@@ -13,7 +13,7 @@ public class Player {
 
     private float sizeX; // How big is the player by X axis
     private float sizeY; // How big is the player by Y axis
-    private int tailLength = 0; // Player tail's length
+    private int tailLength = 10; // Player tail's length
     private int score;
     private int health;
     private String color; // What color is the player?
@@ -82,8 +82,12 @@ public class Player {
         return new float[] {this.posX, this.posY};
     }
 
-    public ArrayList[] getPrevPositions(){
-        return new ArrayList[] {this.prevPosX, this.prevPosY};
+    public ArrayList getPrevPositionsX(){
+        return this.prevPosX;
+    }
+
+    public ArrayList getPrevPositionsY(){
+        return this.prevPosY;
     }
 
     public void setMoveDirection(float x, float y){

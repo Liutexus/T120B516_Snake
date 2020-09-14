@@ -50,14 +50,14 @@ public class Game {
                 }
             }
 
-            for(int i = 0; i < players[0].getTailLength(); i++){
-                float xTailCoord = (float)players[0].getPrevPositions()[0].get(i);
-                float yTailCoord = (float)players[0].getPrevPositions()[1].get(i);
+//            for(int i = 0; i < players[0].getTailLength(); i++){
+//                float xTailCoord = (float)players[0].getPrevPositions()[0].get(i);
+//                float yTailCoord = (float)players[0].getPrevPositions()[1].get(i);
 
-                int colorStep = 255 / (players[0].getTailLength() + 1);
-                Color tailColor = new Color(colorStep * i, colorStep, colorStep);
-                scr.print((int)yTailCoord, (int)xTailCoord, tailColor);
-            }
+//                int colorStep = 255 / (players[0].getTailLength() + 1);
+//                Color tailColor = new Color(colorStep * i, colorStep, colorStep);
+//                scr.print((int)yTailCoord, (int)xTailCoord, tailColor);
+//            }
 
             // Checking for game over conditions
             if(players[0].getPosition()[0] > screenSize-1 || players[0].getPosition()[0] < 0 || players[0].getPosition()[1] > screenSize-1 || players[0].getPosition()[1] < 0){ // is the player out of screen bounds?

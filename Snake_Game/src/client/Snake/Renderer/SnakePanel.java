@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
+import javafx.beans.binding.ObjectExpression;
 
 class SnakePanel extends JPanel {
     private Dimension windowSize;
@@ -107,7 +108,21 @@ class SnakePanel extends JPanel {
 
         snakes.forEach(x -> {
             System.out.println(x.toString());
-            drawRect(g, x.getPosition(), x.getSize(), x.getPlayerColor());
+            drawRect(g, x.getPosition(), x.getSize(), Color.RED);
+
+            ArrayList prevPosX = x.getPrevPositionsX();
+            ArrayList prevPosY = x.getPrevPositionsY();
+            for(int i = 0; i < x.getTailLength(); i++){
+                try {
+                    int colorStep = 255 / (x.getTailLength() + 1);
+                    Color tailColor = new Color(colorStep * (x.getTailLength() - i), colorStep, colorStep);
+                    prevPosX.get(i);
+                    drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, x.getSize(), tailColor);
+                    System.out.println("TAIL: " + i);
+                } catch (Exception e) {
+                    break;
+                }
+            }
 
             // TODO: Draw the tail
         });
@@ -118,15 +133,15 @@ class SnakePanel extends JPanel {
 
     }
 
-private void drawRect(Graphics g, float[] pos, float[] size, String color) {
+private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
         int cellPositionX = ((int)(pos[0]) * windowSize.width)/horizontalCellCount;
         int cellPositionY = ((int)(pos[1]) * windowSize.height)/verticalCellCount;
 
-        g.setColor(Color.RED);
+        g.setColor(color);
         g.fillRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
 
-        g.setColor(Color.BLACK);
-        g.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
+//        g.setColor(Color.BLACK);
+//        g.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
     }
 
 
