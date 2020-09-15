@@ -7,7 +7,7 @@ import client.Snake.Entities.Player;
 import client.Snake.Renderer.SwingRender;
 import studijosKTU.ScreenKTU;
 
-public class Game {
+public class Client {
     private SwingRender render;
 
     private int screenResolution = 20; // 3
@@ -36,7 +36,7 @@ public class Game {
     }
     void Running(ScreenKTU scr)
     {
-        foods[0].nextPosition(screenSize - 2, screenSize - 2);
+        foods[0].nextPosition(0, 0,screenSize - 2, screenSize - 2);
 
         while(!isGameOver){ // Main game loop
             scr.forEachCell((r, c) -> scr.print(r, c, white)); // Painting the screen white
@@ -46,7 +46,7 @@ public class Game {
             for(int i = 0; i < players.length; i++){
                 if(players[i].getPosition()[0] == foods[0].getPosition()[0] && players[i].getPosition()[1] == foods[0].getPosition()[1]){ // Catchin' the Bait
                     players[i].increaseTailLength(foods[0].getScoreValue());
-                    foods[0].nextPosition(screenSize - 2, screenSize - 2);
+                    foods[0].nextPosition(0, 0,screenSize - 2, screenSize - 2);
                 }
             }
 
@@ -78,7 +78,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game();
+        Client game = new Client();
 
         game.Start();
     }

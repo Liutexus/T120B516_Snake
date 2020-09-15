@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
-import javafx.beans.binding.ObjectExpression;
 
 class SnakePanel extends JPanel {
     private Dimension windowSize;
