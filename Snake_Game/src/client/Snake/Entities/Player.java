@@ -157,6 +157,6 @@ public class Player {
         output += "Boost: " + this.boost + "\n";
         output += "Ground: " + this.ground + "\n";
 
-        return  output;
+        return output;
     }
 }

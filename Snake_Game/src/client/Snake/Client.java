@@ -5,6 +5,7 @@ import static java.awt.Color.*;
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
 import client.Snake.Renderer.SwingRender;
+import client.Snake.Utilities.BitmapConverter;
 import studijosKTU.ScreenKTU;
 
 public class Client {
@@ -21,6 +22,7 @@ public class Client {
 
     void Start() {
         SwingRender render = new SwingRender();
+        BitmapConverter.BMPToTerrain("Snake_Game/img/seaside_road.bmp");
 
 
 
