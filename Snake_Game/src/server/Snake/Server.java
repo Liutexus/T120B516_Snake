@@ -1,4 +1,5 @@
 package server.Snake;
 
-public class server {
+public class Server {
+
 }
