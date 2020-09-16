@@ -4,13 +4,14 @@ import client.Snake.Entities.Player;
 
 import javax.swing.JFrame;
 import java.awt.*;
-import java.nio.charset.Charset;
 import java.util.Random;
 
 
-public class SwingRender extends JFrame {
-    public int directionX = 0;
-    public int directionY = 0;
+public class SwingRender extends JFrame implements Runnable {
+
+    SnakePanel gamePanel;
+    // Menu panel goes here
+    // Join game panel goes here
 
     public SwingRender() {
         // Creating this client's window
@@ -22,22 +23,24 @@ public class SwingRender extends JFrame {
         // Creating this client's ID
         Player myPlayer = new Player(randomId());
 
-        // TODO: Switch between views logic here
 
-            // Join game logic here
+        // Join game view here
 
-            // Adding game to the window
-            SnakePanel gamePanel = new SnakePanel(myPlayer);
-            gamePanel.setPreferredSize(new Dimension(1000, 1000));
+        // Adding game to the window
+        gamePanel = new SnakePanel(myPlayer);
+        gamePanel.setPreferredSize(new Dimension(1000, 1000));
 //            gamePanel.addPlayer(myPlayer);
-            add(gamePanel);
+        add(gamePanel);
 
-            // Host game logic here
+        // Host game view here
 
         pack();
         setVisible(true);
+
+        run();
     }
 
+    // Used to generate a random ID for current client
     private String randomId() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -54,4 +57,32 @@ public class SwingRender extends JFrame {
         return generatedString;
     }
 
+    @Override
+    public void run() {
+        while(true) {
+
+            // TODO: Switch between views logic here
+
+            if(gamePanel.isDisplayable()){ // Is current panel is the game panel
+                // Game logic goes here
+                // TODO: Get info from server here
+
+
+                gamePanel.getCurrentPlayer().movePlayer();
+
+
+
+
+
+                gamePanel.repaint();
+            }
+
+
+
+
+
+            try {Thread.sleep(100);} catch (Exception e) { };
+        }
+
+    }
 }

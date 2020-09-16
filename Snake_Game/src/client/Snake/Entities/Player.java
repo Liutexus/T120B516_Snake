@@ -113,8 +113,10 @@ public class Player {
         this.sizeY += sizeY;
     }
 
-    public void increaseTailLength(int delta){
-        this.tailLength += delta;
+    public void changeTailSize(int delta){
+        if(this.tailLength + delta >= 0){
+            this.tailLength += delta;
+        }
     }
 
     public int getTailLength(){

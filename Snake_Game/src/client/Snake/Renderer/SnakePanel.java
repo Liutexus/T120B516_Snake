@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
-import javafx.beans.binding.ObjectExpression;
 
 class SnakePanel extends JPanel {
     private Dimension windowSize;
@@ -16,6 +15,8 @@ class SnakePanel extends JPanel {
     private int verticalCellCount = 50;
     private int cellWidth;
     private int cellHeight;
+
+    private Player currentPlayer;
 
     ArrayList<Player> snakes;
     ArrayList<Food> objects;
@@ -29,6 +30,7 @@ class SnakePanel extends JPanel {
         objects = new ArrayList<Food>();
         terrain = new ArrayList();
 
+        currentPlayer = myPlayer;
         snakes.add(myPlayer);
 
         addKeyListener(new KeyListener(){
@@ -59,6 +61,42 @@ class SnakePanel extends JPanel {
         snakes.add(player);
     }
 
+    public int getCurrentPlayerIndex(){
+        for(int i = 0; i < snakes.size(); i++){
+            if(snakes.get(i).getId() == currentPlayer.getId()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public Player getCurrentPlayer(){
+        return this.currentPlayer;
+    }
+
+    public boolean updatePlayer(Player player) {
+        for(int i = 0; i < snakes.size(); i++) {
+            if(snakes.get(i).getId() == player.getId()){
+                snakes.set(i, player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void updatePlayers(Player[] players) {
+        for(int i = 0; i < snakes.size(); i++) {
+            for(int j = 0; j < players.length; j++){
+                if(snakes.get(i).getId() == players[j].getId()){
+                    snakes.set(i, players[j]);
+                    // TODO Recommended: Remove 'players[j]' from the array
+                    // to save up some computing time
+                    break;
+                }
+            }
+        }
+    }
+
     private void keyResponse(Player player, KeyEvent key) {
 
         switch (key.getKeyCode()){
@@ -81,35 +119,34 @@ class SnakePanel extends JPanel {
                 player.deltaSize(1, 1);
                 break;
             case KeyEvent.VK_D: // Placeholder
-                player.deltaSize(1, 0);
+                player.changeTailSize(1);
                 break;
             case KeyEvent.VK_S: // Placeholder
                 player.deltaSize(-1, -1);
                 break;
             case KeyEvent.VK_A: // Placeholder
-                player.deltaSize(0, 1);
+                player.changeTailSize(-1);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
         }
 
-        player.movePlayer();
 
-//        System.out.println(player.toString());
-
-        repaint();
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // To create a nice grid
         windowSize = getSize();
         cellWidth = (windowSize.width/horizontalCellCount);
         cellHeight = (windowSize.height/verticalCellCount);
 
+        // Draw all players
         snakes.forEach(x -> {
-            System.out.println(x.toString());
-            drawRect(g, x.getPosition(), x.getSize(), Color.RED);
+//            System.out.println(x.toString());
+            drawRect(g, x.getPosition(), x.getSize(), Color.RED); // Drawing the snake's head
 
+            // Drawing the tail
             ArrayList prevPosX = x.getPrevPositionsX();
             ArrayList prevPosY = x.getPrevPositionsY();
             for(int i = 0; i < x.getTailLength(); i++){
@@ -118,22 +155,22 @@ class SnakePanel extends JPanel {
                     Color tailColor = new Color(colorStep * (x.getTailLength() - i), colorStep, colorStep);
                     prevPosX.get(i);
                     drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, x.getSize(), tailColor);
-                    System.out.println("TAIL: " + i);
                 } catch (Exception e) {
+                    // Just to reduce headache from exceptions at the start of the game
+                    // when there's not enough previous positions to draw tail from.
                     break;
                 }
             }
-
-            // TODO: Draw the tail
         });
 
+        // Draw all objects placed on the map
         objects.forEach(obj -> {
-            // TODO: Draw landscape object here
+            // TODO: Draw map objects here
         });
 
     }
 
-private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
+    private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
         int cellPositionX = ((int)(pos[0]) * windowSize.width)/horizontalCellCount;
         int cellPositionY = ((int)(pos[1]) * windowSize.height)/verticalCellCount;
 
@@ -143,12 +180,5 @@ private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
 //        g.setColor(Color.BLACK);
 //        g.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
     }
-
-
-
-
-
-
-
 
 }
