@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import client.Snake.Entities.Food;
@@ -17,20 +22,25 @@ class SnakePanel extends JPanel {
     private int cellHeight;
 
     private Player currentPlayer;
+    private String Id;
+    private Socket socket;
 
     ArrayList<Player> snakes;
     ArrayList<Food> objects;
     ArrayList terrain;
 
-    public SnakePanel(Player myPlayer) {
+    public SnakePanel(Socket socket, Player myPlayer) {
         setFocusable(true);
         requestFocusInWindow();
 
-        snakes = new ArrayList<Player>();
-        objects = new ArrayList<Food>();
-        terrain = new ArrayList();
+        this.snakes = new ArrayList<Player>();
+        this.objects = new ArrayList<Food>();
+        this.terrain = new ArrayList();
 
-        currentPlayer = myPlayer;
+        this.currentPlayer = myPlayer;
+        this.socket = socket;
+        this.Id = getId();
+        // TODO: Rewrite 'myPlayer' to one created by the server
         snakes.add(myPlayer);
 
         addKeyListener(new KeyListener(){
@@ -72,6 +82,29 @@ class SnakePanel extends JPanel {
 
     public Player getCurrentPlayer(){
         return this.currentPlayer;
+    }
+
+    private String getId(){
+        // TODO: Assign socket input and output
+        BufferedReader in = null;
+        PrintWriter out = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // TODO: Wait for server to assign an ID
+        while (true) {
+            try {
+                String id = in.readLine();
+                System.out.println(id);
+                if(id.length() != 0) return id;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean updatePlayer(Player player) {
