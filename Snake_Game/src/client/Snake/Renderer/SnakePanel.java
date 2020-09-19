@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
@@ -25,7 +27,7 @@ class SnakePanel extends JPanel {
     private String Id;
     private Socket clientSocket;
 
-    private ArrayList<Player> snakes;
+    private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
     private ArrayList<Food> objects;
     private ArrayList terrain;
 
@@ -104,21 +106,16 @@ class SnakePanel extends JPanel {
     }
 
     public void updatePlayers() {
-        ArrayList<Player> remotePlayers = null;
+        Map<String, Player> remotePlayers = null;
         try {
-            remotePlayers = (ArrayList<Player>) in.readObject();
+            remotePlayers = (Map<String, Player>) in.readObject();
         } catch (Exception e) {
             System.out.println("Couldn't receive players from the server.");
             return;
 //            e.printStackTrace();
         }
         snakes = remotePlayers;
-
-        for(int i = 0; i < snakes.size(); i++)
-            if(snakes.get(i).getId().compareTo(Id) == 0){
-                currentPlayer = snakes.get(i); // Dunno if this really required but idk seems cool for now
-                break;
-            }
+        currentPlayer = remotePlayers.get(Id);
     }
 
     private void keyResponse(KeyEvent key) {
@@ -128,7 +125,7 @@ class SnakePanel extends JPanel {
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
                     currentPlayer.setMoveDirection(0, -1);
-                    out.writeByte(1);
+                    out.writeByte(1); // TODO: Find a better way to send inputs
                     out.writeUnshared(currentPlayer);
                     break;
                 case KeyEvent.VK_RIGHT:
@@ -171,7 +168,6 @@ class SnakePanel extends JPanel {
             System.out.println("Error sending an input to the server.");
 //            e.printStackTrace();
         }
-
     }
 
     // Rendering functions
@@ -183,36 +179,31 @@ class SnakePanel extends JPanel {
         cellHeight = (windowSize.height/verticalCellCount);
 
         // Draw all players
-        try{
-            snakes.forEach(x -> {
-                drawRect(g, x.getPosition(), x.getSize(), Color.RED); // Drawing the snake's head
+        for (Map.Entry<String, Player> entry : snakes.entrySet()) {
+            drawRect(g, entry.getValue().getPosition(), entry.getValue().getSize(), Color.RED); // Drawing the snake's head
 
-                // Drawing the tail
-                ArrayList prevPosX = x.getPrevPositionsX();
-                ArrayList prevPosY = x.getPrevPositionsY();
-                for(int i = 0; i < x.getTailLength(); i++){
-                    try {
-                        int colorStep = 255 / (x.getTailLength() + 1);
-                        Color tailColor = new Color(colorStep * (x.getTailLength() - i), colorStep, colorStep);
-                        prevPosX.get(i);
-                        drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, x.getSize(), tailColor);
-                    } catch (Exception e) {
-                        // Just to reduce headache from exceptions at the start of the game
-                        // when there's not enough previous positions to draw tail from.
-                        break;
-                    }
+            // Drawing the tail
+            ArrayList prevPosX = entry.getValue().getPrevPositionsX();
+            ArrayList prevPosY = entry.getValue().getPrevPositionsY();
+
+            for(int i = 0; i < entry.getValue().getTailLength(); i++){
+                try {
+                    int colorStep = 255 / (entry.getValue().getTailLength() + 1);
+                    Color tailColor = new Color(colorStep * (entry.getValue().getTailLength() - i), colorStep, colorStep);
+                    prevPosX.get(i);
+                    drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, entry.getValue().getSize(), tailColor);
+                } catch (Exception e) {
+                    // Just to reduce headache from exceptions at the start of the game
+                    // when there's not enough previous positions to draw tail from.
+                    break;
                 }
-            });
-        } catch (Exception e) {
-            System.out.println("Error in drawing players' snakes.");
+            }
         }
-
 
         // Draw all objects placed on the map
         objects.forEach(obj -> {
             // TODO: Draw map objects here
         });
-
     }
 
     private void drawRect(Graphics g, float[] pos, float[] size, Color color) {

@@ -3,16 +3,14 @@ package server.Snake;
 import client.Snake.Entities.Player;
 
 import java.net.ServerSocket;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
-import java.util.Dictionary;
 
 public class Server {
     private static int concurrentClients = 20;
-    private static ArrayList<Player> players = new ArrayList<Player>(); // All current players
-//    private static Dictionary players = new Hashtable();
-    private static int count = 0;
+    private static Map<String, Player> players = new ConcurrentHashMap<String, Player>(); // All current players
+    private static int count = 0; // Current player count
 
     public static void main(String[] args) throws Exception {
 

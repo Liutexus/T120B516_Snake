@@ -6,7 +6,7 @@ import client.Snake.Entities.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -17,10 +17,10 @@ public class Handler implements Runnable {
 
     private Player clientPlayer;
     private String clientId;
-    private ArrayList<Player> players;
+    private Map<String, Player> players;
 
 
-    Handler(Socket serverSocket, ArrayList<Player> players) {
+    Handler(Socket serverSocket, Map players) {
         // Generate, create and assign an ID for new incoming client here
         this.serverSocket = serverSocket; // Current socket object
         this.players = players; // Get all existing players
@@ -40,7 +40,7 @@ public class Handler implements Runnable {
         System.out.println("Connected: " + serverSocket);
 
         try {
-            Listener clientListener = new Listener(in, players);
+            Listener clientListener = new Listener(in);
             clientId = randomId();
             out.writeObject(clientId); // Return a randomized ID to the connected client
             clientPlayer = createPlayer(clientId);
@@ -80,18 +80,18 @@ public class Handler implements Runnable {
     }
 
     private Player createPlayer(String id) {
-        for (Player player: players)
-            if(player.getId() == id) {
-                System.out.println("Player already exists.");
-                return null;
-            }
+        if(players.containsKey(id)) {
+            System.out.println("Player already exists.");
+            return null;
+        }
+
         int randX = ThreadLocalRandom.current().nextInt(5, 45);
         int randY = ThreadLocalRandom.current().nextInt(5, 45);
 
         // This could be improved by some more fancier initial position assignment
         Player player = new Player(id, randX, randY);
 
-        players.add(player); // Adding new client user to the players' pool
+        players.put(id, player); // Adding new client user to the players' pool
 
         return player;
     }
@@ -106,9 +106,7 @@ public class Handler implements Runnable {
 
     private void updateDirection(String id, float x, float y) {
         synchronized(players) {
-            for(int i = 0; i < players.size(); i++)
-                if(players.get(i).getId().compareTo(id) == 0)
-                    players.get(i).setMoveDirection(x, y);
+            players.get(id).setMoveDirection(x, y);
         }
     }
 
@@ -116,11 +114,8 @@ public class Handler implements Runnable {
     private class Listener implements Runnable {
         ObjectInputStream in;
 
-        ArrayList<Player> players;
-
-        public Listener(ObjectInputStream in, ArrayList<Player> players) {
+        public Listener(ObjectInputStream in) {
             this.in = in;
-            this.players = players;
         }
 
         @Override
