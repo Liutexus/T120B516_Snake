@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/ServerGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Server.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -111,5 +113,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Snake_Game$Client.ic" NAME="Client Coverage Results" MODIFIED="1600519448754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>client.Snake.Entities.*</FILTER>
+    </SUITE>
   </component>
 </project>

@@ -39,8 +39,8 @@ class SnakePanel extends JPanel {
         this.clientSocket = clientSocket;
         // Assign socket's input and output streams
         try {
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
-            in = new ObjectInputStream(clientSocket.getInputStream());
+            out = new ObjectOutputStream(this.clientSocket.getOutputStream());
+            in = new ObjectInputStream(this.clientSocket.getInputStream());
         } catch (IOException e) {
             System.out.println("Cannot establish connection to server.");
 //            e.printStackTrace();
@@ -68,23 +68,6 @@ class SnakePanel extends JPanel {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-    }
-
-    public void addPlayer(String id){
-        snakes.add(new Player(id));
-    }
-
-    public void addPlayer(Player player){
-        snakes.add(player);
-    }
-
-    public int getCurrentPlayerIndex(){
-        for(int i = 0; i < snakes.size(); i++){
-            if(snakes.get(i).getId() == currentPlayer.getId()){
-                return i;
-            }
-        }
-        return -1;
     }
 
     public Player getLocalCurrentPlayer(){
@@ -120,29 +103,19 @@ class SnakePanel extends JPanel {
         }
     }
 
-    public boolean updatePlayer(Player player) {
-        for(int i = 0; i < snakes.size(); i++) {
-            if(snakes.get(i).getId() == player.getId()){
-                snakes.set(i, player);
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void updatePlayers() {
         ArrayList<Player> remotePlayers = null;
         try {
             remotePlayers = (ArrayList<Player>) in.readObject();
-
         } catch (Exception e) {
             System.out.println("Couldn't receive players from the server.");
+            return;
 //            e.printStackTrace();
         }
         snakes = remotePlayers;
 
         for(int i = 0; i < snakes.size(); i++)
-            if(snakes.get(i).getId() == Id){
+            if(snakes.get(i).getId().compareTo(Id) == 0){
                 currentPlayer = snakes.get(i); // Dunno if this really required but idk seems cool for now
                 break;
             }
@@ -150,41 +123,53 @@ class SnakePanel extends JPanel {
 
     private void keyResponse(KeyEvent key) {
 
-        switch (key.getKeyCode()){
-            case KeyEvent.VK_UP:
-//                player.setMoveDirection(0, -1);
-                break;
-            case KeyEvent.VK_RIGHT:
-//                player.setMoveDirection(1, 0);
-                break;
-            case KeyEvent.VK_DOWN:
-//                player.setMoveDirection(0, 1);
-                break;
-            case KeyEvent.VK_LEFT:
-//                player.setMoveDirection(-1, 0);
-                break;
-            case KeyEvent.VK_SPACE:
-//                player.setMoveDirection(0, 0);
-                break;
-            case KeyEvent.VK_W: // Placeholder
+        try {
+            out.reset(); // Removing any previously sent messages
+            switch (key.getKeyCode()){
+                case KeyEvent.VK_UP:
+                    currentPlayer.setMoveDirection(0, -1);
+                    out.writeObject(currentPlayer);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    currentPlayer.setMoveDirection(1, 0);
+                    out.writeObject(currentPlayer);
+                    break;
+                case KeyEvent.VK_DOWN:
+                    currentPlayer.setMoveDirection(0, 1);
+                    out.writeObject(currentPlayer);
+                    break;
+                case KeyEvent.VK_LEFT:
+                    currentPlayer.setMoveDirection(-1, 0);
+                    out.writeObject(currentPlayer);
+                    break;
+                case KeyEvent.VK_SPACE:
+                    currentPlayer.setMoveDirection(0, 0);
+                    out.writeObject(currentPlayer);
+                    break;
+                case KeyEvent.VK_W: // Placeholder
 //                player.deltaSize(1, 1);
-                break;
-            case KeyEvent.VK_D: // Placeholder
+                    break;
+                case KeyEvent.VK_D: // Placeholder
 //                player.changeTailSize(1);
-                break;
-            case KeyEvent.VK_S: // Placeholder
+                    break;
+                case KeyEvent.VK_S: // Placeholder
 //                player.deltaSize(-1, -1);
-                break;
-            case KeyEvent.VK_A: // Placeholder
+                    break;
+                case KeyEvent.VK_A: // Placeholder
 //                player.changeTailSize(-1);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
-        }
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
+            }
 
+        } catch (Exception e) {
+            System.out.println("Error sending an input to the server.");
+//            e.printStackTrace();
+        }
 
     }
 
+    // Rendering functions
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         // To create a nice grid
@@ -193,26 +178,30 @@ class SnakePanel extends JPanel {
         cellHeight = (windowSize.height/verticalCellCount);
 
         // Draw all players
-        snakes.forEach(x -> {
-//            System.out.println(x.toString());
-            drawRect(g, x.getPosition(), x.getSize(), Color.RED); // Drawing the snake's head
+        try{
+            snakes.forEach(x -> {
+                drawRect(g, x.getPosition(), x.getSize(), Color.RED); // Drawing the snake's head
 
-            // Drawing the tail
-            ArrayList prevPosX = x.getPrevPositionsX();
-            ArrayList prevPosY = x.getPrevPositionsY();
-            for(int i = 0; i < x.getTailLength(); i++){
-                try {
-                    int colorStep = 255 / (x.getTailLength() + 1);
-                    Color tailColor = new Color(colorStep * (x.getTailLength() - i), colorStep, colorStep);
-                    prevPosX.get(i);
-                    drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, x.getSize(), tailColor);
-                } catch (Exception e) {
-                    // Just to reduce headache from exceptions at the start of the game
-                    // when there's not enough previous positions to draw tail from.
-                    break;
+                // Drawing the tail
+                ArrayList prevPosX = x.getPrevPositionsX();
+                ArrayList prevPosY = x.getPrevPositionsY();
+                for(int i = 0; i < x.getTailLength(); i++){
+                    try {
+                        int colorStep = 255 / (x.getTailLength() + 1);
+                        Color tailColor = new Color(colorStep * (x.getTailLength() - i), colorStep, colorStep);
+                        prevPosX.get(i);
+                        drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, x.getSize(), tailColor);
+                    } catch (Exception e) {
+                        // Just to reduce headache from exceptions at the start of the game
+                        // when there's not enough previous positions to draw tail from.
+                        break;
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            System.out.println("Error in drawing players' snakes.");
+        }
+
 
         // Draw all objects placed on the map
         objects.forEach(obj -> {

@@ -1,3 +1,5 @@
+// Handler.java class is responsible of keeping a connection with a client,
+// receiving inputs and processing them accordingly.
 package server.Snake;
 
 import client.Snake.Entities.Player;
@@ -6,27 +8,22 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Handler implements Runnable {
-    private Socket serverSocket;
+    private static Socket serverSocket;
+    private static ObjectOutputStream out;
+    private static ObjectInputStream in;
+
+    private Player clientPlayer;
+    private String clientId;
     private ArrayList<Player> players;
     private int count = 0;
 
 
-    Handler(Socket serverSocket, ArrayList<Player> players, int count) {
-        // TODO: Generate, create and assign an ID for new incoming client here
+    Handler(Socket serverSocket, ArrayList<Player> players) {
+        // Generate, create and assign an ID for new incoming client here
         this.serverSocket = serverSocket; // Current socket object
         this.players = players; // Get all existing players
-        this.count = count;
-
-    }
-
-    private boolean AddPlayerToGame(Player newPlayer){
-        if(players.size() == 4){
-            return  false;
-        }
-        return true;
     }
 
     @Override
@@ -34,24 +31,28 @@ public class Handler implements Runnable {
         System.out.println("Connected: " + serverSocket);
 
         try {
-            // TODO: Catch incoming inputs and update data on server here
             // We return data from server to the client through here
-            var out = new ObjectOutputStream(serverSocket.getOutputStream());
+            out = new ObjectOutputStream(serverSocket.getOutputStream());
             // We listen to our client here
-            var in = new ObjectInputStream(serverSocket.getInputStream());
+            in = new ObjectInputStream(serverSocket.getInputStream());
 
-            String clientId = randomId();
+            clientId = randomId();
             out.writeObject(clientId); // Return a randomized ID to the connected client
-            Player clientPlayer = createPlayer(clientId);
+            clientPlayer = createPlayer(clientId);
             out.writeObject(clientPlayer); // Return generated client's 'Player' object
 
-            // TODO: Logic which processes client's inputs goes here
-            // TODO: Add loop which listens for client's messages here
-            //synchronized(sync_object){} // Synchronize data
-            while (true) { // Main server loop
-                out.reset();
-                movePlayer(clientId);
-                out.writeObject(players);
+            while (true) { // Loop to listen to client's messages
+                synchronized(players) { // To safely access 'players' variable and not conflict with other threads
+                    out.reset();
+                    out.writeObject(players);
+
+                    // TODO: Listen to client's messages
+//                    if(in.available() != 0){
+//                        Player receivedClientPlayer = (Player)in.readObject(); // ERROR: Waits for input
+//                        System.out.println(receivedClientPlayer.toString());
+//                        updatePlayer(receivedClientPlayer);
+//                    }
+                }
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
 
@@ -66,12 +67,6 @@ public class Handler implements Runnable {
             System.out.println("Closed: " + serverSocket);
         }
     }
-
-    private void parseInput(String line){
-        // TODO: Add listener's commands to change server's data
-    }
-
-
 
     // Some utilities
     // Used to generate a random ID for current client
@@ -97,23 +92,15 @@ public class Handler implements Runnable {
                 System.out.println("Player already exists.");
                 return null;
             }
+        Random random = new Random(); int min = 5; int max = 45;
+        Float randX = min + random.nextFloat() * (max - min);
+        Float randY = min + random.nextFloat() * (max - min);
 
-        Player player = new Player(id);
-        // TODO: Assign a nice position for new player so all players are nicely places on the map
-        players.add(player);
+        // This could be improved by some more fancier initial position assignment
+        Player player = new Player(id, randX, randY);
+
+        players.add(player); // Adding new client user to the players' pool
 
         return player;
-    }
-
-    private boolean movePlayer(String id) {
-        for (int i = 0; i < players.size(); i++){
-            if(players.get(i).getId() == id){
-                players.get(i).setMoveDirection(1, 1);
-                players.get(i).movePlayer();
-                return true;
-            }
-        }
-
-        return false;
     }
 }
