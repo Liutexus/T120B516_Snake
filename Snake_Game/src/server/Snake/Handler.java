@@ -43,17 +43,17 @@ public class Handler implements Runnable {
             String clientId = randomId();
             out.writeObject(clientId); // Return a randomized ID to the connected client
             Player clientPlayer = createPlayer(clientId);
-            out.writeObject(clientPlayer);
+            out.writeObject(clientPlayer); // Return generated client's 'Player' object
+
             // TODO: Logic which processes client's inputs goes here
             // TODO: Add loop which listens for client's messages here
             //synchronized(sync_object){} // Synchronize data
-
-//            while (true) { // Main server loop
-//                System.out.println(in.readUTF());
-//                out.writeObject(clientPlayer);
-//                out.println(in.nextLine().toUpperCase());
-//                try {Thread.sleep(100);} catch (Exception e) { };
-//            }
+            while (true) { // Main server loop
+                out.reset();
+                movePlayer(clientId);
+                out.writeObject(players);
+                try {Thread.sleep(100);} catch (Exception e) { };
+            }
 
 
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public class Handler implements Runnable {
     }
 
     private void parseInput(String line){
-
+        // TODO: Add listener's commands to change server's data
     }
 
 
@@ -91,7 +91,7 @@ public class Handler implements Runnable {
         return generatedString;
     }
 
-    private Player createPlayer(String id){
+    private Player createPlayer(String id) {
         for (Player player: players)
             if(player.getId() == id) {
                 System.out.println("Player already exists.");
@@ -103,5 +103,17 @@ public class Handler implements Runnable {
         players.add(player);
 
         return player;
+    }
+
+    private boolean movePlayer(String id) {
+        for (int i = 0; i < players.size(); i++){
+            if(players.get(i).getId() == id){
+                players.get(i).setMoveDirection(1, 1);
+                players.get(i).movePlayer();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -12,20 +12,18 @@ public class SwingRender extends JFrame implements Runnable {
     private static Socket clientSocket;
 
     private SnakePanel gamePanel;
-    // Menu panel goes here
-    // Join game panel goes here
+//    private MenuPanel menuPanel; // Placeholder
+//    private JoinGamePanel joinGamePanel; // Placeholder
+//    private HostGamePanel hostGamePanel; // Placeholder
 
     public SwingRender() {
         // Creating this client's window
-        super("imma ssssssseee sneek");
+        super("imma sssessee sneekk hehehe boii");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setSize(1000, 1000);
 //        setResizable(false);
 
-        // Creating this client's ID
-//        Player myPlayer = new Player(randomId());
-
         // TODO: Join game view here
+
 
 
         // TODO: Adding game to the window
@@ -48,6 +46,13 @@ public class SwingRender extends JFrame implements Runnable {
 
         run();
     }
+
+
+    private void switchViews(){
+        // TODO: Add a menu view to switch to other views
+
+    }
+
 
     // Used to generate a random ID for current client
     private String randomId() {
@@ -75,8 +80,10 @@ public class SwingRender extends JFrame implements Runnable {
             if(gamePanel.isDisplayable()){ // Is current panel is the game panel
 
                 // TODO: Get info from server here
-
+                gamePanel.updatePlayers();
 //                gamePanel.getCurrentPlayer().movePlayer();
+//                System.out.println(gamePanel.getLocalCurrentPlayer().toString());
+
                 // TODO: Send info from client to server
                 gamePanel.repaint();
             }

@@ -25,20 +25,19 @@ class SnakePanel extends JPanel {
     private String Id;
     private Socket clientSocket;
 
-    ArrayList<Player> snakes;
-    ArrayList<Food> objects;
-    ArrayList terrain;
+    private ArrayList<Player> snakes;
+    private ArrayList<Food> objects;
+    private ArrayList terrain;
 
     public SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
-        this.snakes = new ArrayList<Player>();
         this.objects = new ArrayList<Food>();
         this.terrain = new ArrayList();
 
         this.clientSocket = clientSocket;
-        // Assign socket input and output
+        // Assign socket's input and output streams
         try {
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             in = new ObjectInputStream(clientSocket.getInputStream());
@@ -48,8 +47,7 @@ class SnakePanel extends JPanel {
         }
 
         this.Id = getId();
-        this.currentPlayer = getCurrentPlayer();
-        snakes.add(currentPlayer);
+        this.currentPlayer = getRemoteCurrentPlayer();
 
         addKeyListener(new KeyListener(){
             @Override
@@ -89,7 +87,11 @@ class SnakePanel extends JPanel {
         return -1;
     }
 
-    public Player getCurrentPlayer(){
+    public Player getLocalCurrentPlayer(){
+        return this.currentPlayer;
+    }
+
+    public Player getRemoteCurrentPlayer(){
         // Request server to create a 'Player' object
         while (true) {
             try {
@@ -109,8 +111,7 @@ class SnakePanel extends JPanel {
         while (true) {
             try {
                 String id = (String)in.readObject();
-                System.out.println(id);
-//                out.writeObject(true);
+//                System.out.println(id);
                 if(id.length() != 0) return id;
             } catch (Exception e) {
                 System.out.println("Failed to receive ID from server.");
@@ -129,17 +130,22 @@ class SnakePanel extends JPanel {
         return false;
     }
 
-    public void updatePlayers(Player[] players) {
-        for(int i = 0; i < snakes.size(); i++) {
-            for(int j = 0; j < players.length; j++){
-                if(snakes.get(i).getId() == players[j].getId()){
-                    snakes.set(i, players[j]);
-                    // TODO Recommended: Remove 'players[j]' from the array
-                    // to save up some computing time
-                    break;
-                }
-            }
+    public void updatePlayers() {
+        ArrayList<Player> remotePlayers = null;
+        try {
+            remotePlayers = (ArrayList<Player>) in.readObject();
+
+        } catch (Exception e) {
+            System.out.println("Couldn't receive players from the server.");
+//            e.printStackTrace();
         }
+        snakes = remotePlayers;
+
+        for(int i = 0; i < snakes.size(); i++)
+            if(snakes.get(i).getId() == Id){
+                currentPlayer = snakes.get(i); // Dunno if this really required but idk seems cool for now
+                break;
+            }
     }
 
     private void keyResponse(KeyEvent key) {
