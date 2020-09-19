@@ -2,22 +2,21 @@ package server.Snake;
 
 import client.Snake.Entities.Player;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Handler implements Runnable {
-    private Socket socket;
+    private Socket serverSocket;
     private ArrayList<Player> players;
     private int count = 0;
 
 
-    Handler(Socket socket, ArrayList<Player> players, int count) {
+    Handler(Socket serverSocket, ArrayList<Player> players, int count) {
         // TODO: Generate, create and assign an ID for new incoming client here
-        this.socket = socket; // Current socket object
+        this.serverSocket = serverSocket; // Current socket object
         this.players = players; // Get all existing players
         this.count = count;
 
@@ -32,38 +31,46 @@ public class Handler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Connected: " + socket);
+        System.out.println("Connected: " + serverSocket);
 
         try {
             // TODO: Catch incoming inputs and update data on server here
-            // We listen to our client here
-            var in = new Scanner(socket.getInputStream());
             // We return data from server to the client through here
-            var out = new PrintWriter(socket.getOutputStream(), true);
+            var out = new ObjectOutputStream(serverSocket.getOutputStream());
+            // We listen to our client here
+            var in = new ObjectInputStream(serverSocket.getInputStream());
 
-            out.println(randomId());
-
+            String clientId = randomId();
+            out.writeObject(clientId); // Return a randomized ID to the connected client
+            Player clientPlayer = createPlayer(clientId);
+            out.writeObject(clientPlayer);
             // TODO: Logic which processes client's inputs goes here
             // TODO: Add loop which listens for client's messages here
             //synchronized(sync_object){} // Synchronize data
 
-//            while (in.hasNextLine()) { // Main server loop
-//                System.out.println(in.nextLine().toUpperCase());
+//            while (true) { // Main server loop
+//                System.out.println(in.readUTF());
+//                out.writeObject(clientPlayer);
 //                out.println(in.nextLine().toUpperCase());
+//                try {Thread.sleep(100);} catch (Exception e) { };
 //            }
 
 
         } catch (Exception e) {
-            System.out.println("Error:" + socket);
+            System.out.println("Error:" + serverSocket);
         } finally {
             try {
-                socket.close();
+                serverSocket.close();
             } catch (IOException e) {
             }
-            System.out.println("Closed: " + socket);
+            System.out.println("Closed: " + serverSocket);
         }
+    }
+
+    private void parseInput(String line){
 
     }
+
 
 
     // Some utilities
@@ -82,5 +89,19 @@ public class Handler implements Runnable {
 
 //        System.out.println(generatedString);
         return generatedString;
+    }
+
+    private Player createPlayer(String id){
+        for (Player player: players)
+            if(player.getId() == id) {
+                System.out.println("Player already exists.");
+                return null;
+            }
+
+        Player player = new Player(id);
+        // TODO: Assign a nice position for new player so all players are nicely places on the map
+        players.add(player);
+
+        return player;
     }
 }

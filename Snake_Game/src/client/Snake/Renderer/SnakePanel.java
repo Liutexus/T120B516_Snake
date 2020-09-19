@@ -4,10 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -15,6 +12,9 @@ import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
 
 class SnakePanel extends JPanel {
+    private static ObjectOutputStream out;
+    private static ObjectInputStream in;
+
     private Dimension windowSize;
     private int horizontalCellCount = 50;
     private int verticalCellCount = 50;
@@ -23,13 +23,13 @@ class SnakePanel extends JPanel {
 
     private Player currentPlayer;
     private String Id;
-    private Socket socket;
+    private Socket clientSocket;
 
     ArrayList<Player> snakes;
     ArrayList<Food> objects;
     ArrayList terrain;
 
-    public SnakePanel(Socket socket, Player myPlayer) {
+    public SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
@@ -37,16 +37,25 @@ class SnakePanel extends JPanel {
         this.objects = new ArrayList<Food>();
         this.terrain = new ArrayList();
 
-        this.currentPlayer = myPlayer;
-        this.socket = socket;
+        this.clientSocket = clientSocket;
+        // Assign socket input and output
+        try {
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
+        } catch (IOException e) {
+            System.out.println("Cannot establish connection to server.");
+//            e.printStackTrace();
+        }
+
         this.Id = getId();
-        // TODO: Rewrite 'myPlayer' to one created by the server
-        snakes.add(myPlayer);
+        this.currentPlayer = getCurrentPlayer();
+        snakes.add(currentPlayer);
 
         addKeyListener(new KeyListener(){
             @Override
             public void keyPressed(KeyEvent e) {
-                keyResponse(myPlayer, e);
+                // TODO: Rewrite keyevents to send outputs to the server
+                keyResponse(e);
             }
 
             @Override
@@ -81,28 +90,31 @@ class SnakePanel extends JPanel {
     }
 
     public Player getCurrentPlayer(){
-        return this.currentPlayer;
+        // Request server to create a 'Player' object
+        while (true) {
+            try {
+                Player player = (Player)in.readObject();
+//                System.out.println(player.toString());
+                if(player != null) return player;
+            } catch (Exception e) {
+                System.out.println("Player object from server not received.");
+//                e.printStackTrace();
+            }
+        }
+
     }
 
     private String getId(){
-        // TODO: Assign socket input and output
-        BufferedReader in = null;
-        PrintWriter out = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // TODO: Wait for server to assign an ID
+        // Wait for server to assign an ID
         while (true) {
             try {
-                String id = in.readLine();
+                String id = (String)in.readObject();
                 System.out.println(id);
+//                out.writeObject(true);
                 if(id.length() != 0) return id;
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Failed to receive ID from server.");
+//                e.printStackTrace();
             }
         }
     }
@@ -130,35 +142,35 @@ class SnakePanel extends JPanel {
         }
     }
 
-    private void keyResponse(Player player, KeyEvent key) {
+    private void keyResponse(KeyEvent key) {
 
         switch (key.getKeyCode()){
             case KeyEvent.VK_UP:
-                player.setMoveDirection(0, -1);
+//                player.setMoveDirection(0, -1);
                 break;
             case KeyEvent.VK_RIGHT:
-                player.setMoveDirection(1, 0);
+//                player.setMoveDirection(1, 0);
                 break;
             case KeyEvent.VK_DOWN:
-                player.setMoveDirection(0, 1);
+//                player.setMoveDirection(0, 1);
                 break;
             case KeyEvent.VK_LEFT:
-                player.setMoveDirection(-1, 0);
+//                player.setMoveDirection(-1, 0);
                 break;
             case KeyEvent.VK_SPACE:
-                player.setMoveDirection(0, 0);
+//                player.setMoveDirection(0, 0);
                 break;
             case KeyEvent.VK_W: // Placeholder
-                player.deltaSize(1, 1);
+//                player.deltaSize(1, 1);
                 break;
             case KeyEvent.VK_D: // Placeholder
-                player.changeTailSize(1);
+//                player.changeTailSize(1);
                 break;
             case KeyEvent.VK_S: // Placeholder
-                player.deltaSize(-1, -1);
+//                player.deltaSize(-1, -1);
                 break;
             case KeyEvent.VK_A: // Placeholder
-                player.changeTailSize(-1);
+//                player.changeTailSize(-1);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + key.getKeyCode());

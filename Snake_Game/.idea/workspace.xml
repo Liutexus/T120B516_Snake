@@ -3,23 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/studijosKTU/Consumer2D.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/studijosKTU/ScreenKTU$Fonts.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/studijosKTU/ScreenKTU$Grid.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/studijosKTU/ScreenKTU.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Entities/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/studijosKTU/Consumer2D.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/studijosKTU/ScreenKTU.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +56,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.Snake.Client" />
       <module name="Snake_Game" />

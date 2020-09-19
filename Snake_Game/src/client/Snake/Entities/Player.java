@@ -1,7 +1,7 @@
 package client.Snake.Entities;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements java.io.Serializable {
     private String id;
 
     private float posX; // Current player horizontal position

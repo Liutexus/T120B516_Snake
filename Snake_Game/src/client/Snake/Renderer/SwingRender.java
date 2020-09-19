@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.Random;
 
 public class SwingRender extends JFrame implements Runnable {
-    private static Socket socket;
+    private static Socket clientSocket;
 
     private SnakePanel gamePanel;
     // Menu panel goes here
@@ -23,15 +23,15 @@ public class SwingRender extends JFrame implements Runnable {
 //        setResizable(false);
 
         // Creating this client's ID
-        Player myPlayer = new Player(randomId());
+//        Player myPlayer = new Player(randomId());
 
         // TODO: Join game view here
 
 
         // TODO: Adding game to the window
         try {
-            socket = new Socket("localhost", 80);
-            gamePanel = new SnakePanel(socket, myPlayer);
+            clientSocket = new Socket("localhost", 80);
+            gamePanel = new SnakePanel(clientSocket);
             gamePanel.setPreferredSize(new Dimension(1000, 1000));
             add(gamePanel);
         } catch (Exception e) {
@@ -73,12 +73,11 @@ public class SwingRender extends JFrame implements Runnable {
             // TODO: Switch between views logic here
 
             if(gamePanel.isDisplayable()){ // Is current panel is the game panel
-                // Game logic goes here
 
                 // TODO: Get info from server here
 
-                gamePanel.getCurrentPlayer().movePlayer();
-
+//                gamePanel.getCurrentPlayer().movePlayer();
+                // TODO: Send info from client to server
                 gamePanel.repaint();
             }
 
