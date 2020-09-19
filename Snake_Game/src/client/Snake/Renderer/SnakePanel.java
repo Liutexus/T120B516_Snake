@@ -128,23 +128,28 @@ class SnakePanel extends JPanel {
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
                     currentPlayer.setMoveDirection(0, -1);
-                    out.writeObject(currentPlayer);
+                    out.writeByte(1);
+                    out.writeUnshared(currentPlayer);
                     break;
                 case KeyEvent.VK_RIGHT:
                     currentPlayer.setMoveDirection(1, 0);
-                    out.writeObject(currentPlayer);
+                    out.writeByte(1);
+                    out.writeUnshared(currentPlayer);
                     break;
                 case KeyEvent.VK_DOWN:
                     currentPlayer.setMoveDirection(0, 1);
-                    out.writeObject(currentPlayer);
+                    out.writeByte(1);
+                    out.writeUnshared(currentPlayer);
                     break;
                 case KeyEvent.VK_LEFT:
                     currentPlayer.setMoveDirection(-1, 0);
-                    out.writeObject(currentPlayer);
+                    out.writeByte(1);
+                    out.writeUnshared(currentPlayer);
                     break;
                 case KeyEvent.VK_SPACE:
                     currentPlayer.setMoveDirection(0, 0);
-                    out.writeObject(currentPlayer);
+                    out.writeByte(1);
+                    out.writeUnshared(currentPlayer);
                     break;
                 case KeyEvent.VK_W: // Placeholder
 //                player.deltaSize(1, 1);

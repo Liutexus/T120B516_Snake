@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Handler implements Runnable {
     private static Socket serverSocket;
@@ -17,13 +18,21 @@ public class Handler implements Runnable {
     private Player clientPlayer;
     private String clientId;
     private ArrayList<Player> players;
-    private int count = 0;
 
 
     Handler(Socket serverSocket, ArrayList<Player> players) {
         // Generate, create and assign an ID for new incoming client here
         this.serverSocket = serverSocket; // Current socket object
         this.players = players; // Get all existing players
+
+        try {
+            // We return data from server to the client through here
+            out = new ObjectOutputStream(serverSocket.getOutputStream());
+            // We listen to our client here
+            in = new ObjectInputStream(serverSocket.getInputStream());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -31,11 +40,7 @@ public class Handler implements Runnable {
         System.out.println("Connected: " + serverSocket);
 
         try {
-            // We return data from server to the client through here
-            out = new ObjectOutputStream(serverSocket.getOutputStream());
-            // We listen to our client here
-            in = new ObjectInputStream(serverSocket.getInputStream());
-
+            Listener clientListener = new Listener(in, players);
             clientId = randomId();
             out.writeObject(clientId); // Return a randomized ID to the connected client
             clientPlayer = createPlayer(clientId);
@@ -45,26 +50,14 @@ public class Handler implements Runnable {
                 synchronized(players) { // To safely access 'players' variable and not conflict with other threads
                     out.reset();
                     out.writeObject(players);
-
-                    // TODO: Listen to client's messages
-//                    if(in.available() != 0){
-//                        Player receivedClientPlayer = (Player)in.readObject(); // ERROR: Waits for input
-//                        System.out.println(receivedClientPlayer.toString());
-//                        updatePlayer(receivedClientPlayer);
-//                    }
+                    clientListener.run();
                 }
+
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
 
-
         } catch (Exception e) {
             System.out.println("Error:" + serverSocket);
-        } finally {
-            try {
-                serverSocket.close();
-            } catch (IOException e) {
-            }
-            System.out.println("Closed: " + serverSocket);
         }
     }
 
@@ -92,9 +85,8 @@ public class Handler implements Runnable {
                 System.out.println("Player already exists.");
                 return null;
             }
-        Random random = new Random(); int min = 5; int max = 45;
-        Float randX = min + random.nextFloat() * (max - min);
-        Float randY = min + random.nextFloat() * (max - min);
+        int randX = ThreadLocalRandom.current().nextInt(5, 45);
+        int randY = ThreadLocalRandom.current().nextInt(5, 45);
 
         // This could be improved by some more fancier initial position assignment
         Player player = new Player(id, randX, randY);
@@ -102,5 +94,50 @@ public class Handler implements Runnable {
         players.add(player); // Adding new client user to the players' pool
 
         return player;
+    }
+
+//    private void updatePlayer(Player player) {
+//        synchronized(players) {
+//            for(int i = 0; i < players.size(); i++)
+//                if(players.get(i).getId().compareTo(player.getId()) == 0)
+//                    players.set(i, player);
+//        }
+//    }
+
+    private void updateDirection(String id, float x, float y) {
+        synchronized(players) {
+            for(int i = 0; i < players.size(); i++)
+                if(players.get(i).getId().compareTo(id) == 0)
+                    players.get(i).setMoveDirection(x, y);
+        }
+    }
+
+    // Client listener class
+    private class Listener implements Runnable {
+        ObjectInputStream in;
+
+        ArrayList<Player> players;
+
+        public Listener(ObjectInputStream in, ArrayList<Player> players) {
+            this.in = in;
+            this.players = players;
+        }
+
+        @Override
+        public void run() {
+            // Listen to client's messages
+            try {
+                if (in.available() != 0) {
+                    in.readByte();
+                    Player receivedClientPlayer = (Player) in.readUnshared();
+                    float[] directions = receivedClientPlayer.getMoveDirection();
+//                    updatePlayer(receivedClientPlayer); // <- This lags as hell (Leaving it here for a bit to remember my mistakes)
+                    updateDirection(receivedClientPlayer.getId(), directions[0], directions[1]);
+                }
+            } catch (Exception e) {
+                System.out.println("Error at reading client's messages");
+                e.printStackTrace();
+            }
+        }
     }
 }
