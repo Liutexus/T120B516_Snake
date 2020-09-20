@@ -80,12 +80,12 @@ class SnakePanel extends JPanel {
         // Request server to create a 'Player' object
         while (true) {
             try {
-                Player player = (Player)in.readObject();
+                Player player = (Player)in.readUnshared();
 //                System.out.println(player.toString());
                 if(player != null) return player;
             } catch (Exception e) {
                 System.out.println("Player object from server not received.");
-//                e.printStackTrace();
+                e.printStackTrace();
             }
         }
 
@@ -95,7 +95,7 @@ class SnakePanel extends JPanel {
         // Wait for server to assign an ID
         while (true) {
             try {
-                String id = (String)in.readObject();
+                String id = (String)in.readUnshared();
 //                System.out.println(id);
                 if(id.length() != 0) return id;
             } catch (Exception e) {

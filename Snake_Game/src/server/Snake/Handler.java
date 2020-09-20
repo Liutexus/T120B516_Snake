@@ -19,7 +19,6 @@ public class Handler implements Runnable {
     private String clientId;
     private Map<String, Player> players;
 
-
     Handler(Socket serverSocket, Map players) {
         // Generate, create and assign an ID for new incoming client here
         this.serverSocket = serverSocket; // Current socket object
@@ -42,17 +41,19 @@ public class Handler implements Runnable {
         try {
             Listener clientListener = new Listener(in);
             clientId = randomId();
-            out.writeObject(clientId); // Return a randomized ID to the connected client
+            out.writeUnshared(clientId); // Return a randomized ID to the connected client
             clientPlayer = createPlayer(clientId);
-            out.writeObject(clientPlayer); // Return generated client's 'Player' object
+            out.writeUnshared(clientPlayer); // Return generated client's 'Player' object
 
             while (true) { // Loop to listen to client's messages
+                long start = System.currentTimeMillis(); // Benchmarking
                 synchronized(players) { // To safely access 'players' variable and not conflict with other threads
-                    out.reset();
-                    out.writeObject(players);
-                    clientListener.run();
-                }
+                    out.reset(); // <- FIX: Lags as hell
 
+                    out.writeObject(players);
+                    //clientListener.run(); // Listening to client's messages
+                }
+                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
 
@@ -84,15 +85,11 @@ public class Handler implements Runnable {
             System.out.println("Player already exists.");
             return null;
         }
-
         int randX = ThreadLocalRandom.current().nextInt(5, 45);
         int randY = ThreadLocalRandom.current().nextInt(5, 45);
-
         // This could be improved by some more fancier initial position assignment
         Player player = new Player(id, randX, randY);
-
         players.put(id, player); // Adding new client user to the players' pool
-
         return player;
     }
 
