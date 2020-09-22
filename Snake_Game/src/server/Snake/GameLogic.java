@@ -21,15 +21,15 @@ public class GameLogic implements Runnable {
         for (Map.Entry<String, Player> entry : players.entrySet()) {
             // --- JUST FOR FUN ---
             // For testing purposes
-            float[] directs = entry.getValue().getMoveDirection();
-            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
-            if(randx == directs[0]*-1) randx = (int)directs[0];
-
-            int randy = 0;
-            if(randx == 0){
-                randy = ThreadLocalRandom.current().nextInt(-1, 2);
-            }
-            entry.getValue().setMoveDirection(randx, randy);
+//            float[] directs = entry.getValue().getMoveDirection();
+//            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
+//            if(randx == directs[0]*-1) randx = (int)directs[0];
+//
+//            int randy = 0;
+//            if(randx == 0){
+//                randy = ThreadLocalRandom.current().nextInt(-1, 2);
+//            }
+//            entry.getValue().setMoveDirection(randx, randy);
             // --- FUN ZONE OVER ---
             entry.getValue().movePlayer();
         }

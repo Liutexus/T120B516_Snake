@@ -11,13 +11,13 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Handler implements Runnable {
-    private static Socket serverSocket;
-    private static ObjectOutputStream out;
-    private static ObjectInputStream in;
+    private Socket serverSocket;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
 
     private Player clientPlayer;
     private String clientId;
-    private Map<String, Player> players;
+    public static Map<String, Player> players;
 
     Handler(Socket serverSocket, Map players) {
         // Generate, create and assign an ID for new incoming client here
@@ -40,6 +40,7 @@ public class Handler implements Runnable {
 
         try {
             Listener clientListener = new Listener(in);
+            Sender clientSender = new Sender(out);
             clientId = randomId();
             out.writeUnshared(clientId); // Return a randomized ID to the connected client
             clientPlayer = createPlayer(clientId);
@@ -51,8 +52,8 @@ public class Handler implements Runnable {
                     out.reset(); // <- FIX: Lags as hell
 
                     out.writeObject(players);
-                    //clientListener.run(); // Listening to client's messages
                 }
+                clientListener.run(); // Listening to client's messages
                 System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
@@ -93,14 +94,6 @@ public class Handler implements Runnable {
         return player;
     }
 
-//    private void updatePlayer(Player player) {
-//        synchronized(players) {
-//            for(int i = 0; i < players.size(); i++)
-//                if(players.get(i).getId().compareTo(player.getId()) == 0)
-//                    players.set(i, player);
-//        }
-//    }
-
     private void updateDirection(String id, float x, float y) {
         synchronized(players) {
             players.get(id).setMoveDirection(x, y);
@@ -123,13 +116,29 @@ public class Handler implements Runnable {
                     in.readByte();
                     Player receivedClientPlayer = (Player) in.readUnshared();
                     float[] directions = receivedClientPlayer.getMoveDirection();
-//                    updatePlayer(receivedClientPlayer); // <- This lags as hell (Leaving it here for a bit to remember my mistakes)
                     updateDirection(receivedClientPlayer.getId(), directions[0], directions[1]);
                 }
             } catch (Exception e) {
                 System.out.println("Error at reading client's messages");
                 e.printStackTrace();
             }
+        }
+    }
+
+    // Client sender class
+    private class Sender implements Runnable {
+        ObjectOutputStream out;
+
+        public Sender(ObjectOutputStream out) {
+            this.out = out;
+        }
+
+        @Override
+        public void run() {
+
+
+            // TODO: Send a packet and receive one for "PING"
+
         }
     }
 }
