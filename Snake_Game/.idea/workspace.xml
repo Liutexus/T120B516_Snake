@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +50,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Client 1">
-    <configuration name="Client 1" type="Application" factoryName="Application">
+    <configuration name="Client 1" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="client.Snake.Client" />
       <module name="Snake_Game" />
       <extension name="coverage">
@@ -68,7 +63,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Client" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="Client" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.Snake.Client" />
       <module name="Snake_Game" />
       <extension name="coverage">
