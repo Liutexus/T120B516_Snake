@@ -247,7 +247,7 @@ public class Player implements java.io.Serializable {
 
     @Override
     public String toString() {
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        ObjectWriter ow = new ObjectMapper().writer();
         String json = "";
         try {
             json = ow.writeValueAsString(this);

@@ -43,7 +43,7 @@ public class Handler implements Runnable {
     public void run() {
         System.out.println("Connected: " + serverSocket);
 
-//        Listener clientListener = new Listener(in);
+        Listener clientListener = new Listener(new InputStreamReader(in));
         Sender clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
 
         try {
@@ -102,32 +102,43 @@ public class Handler implements Runnable {
         }
     }
 
-    // Client listener class
+    // --- Client listener class ---
     private class Listener implements Runnable {
-        ObjectInputStream in;
+        InputStreamReader in;
 
-        public Listener(ObjectInputStream in) {
+        public Listener(InputStreamReader in) {
             this.in = in;
+        }
+
+        public String listenForPacket() {
+            char[] packet = new char[65536];
+            try {
+                in.read(packet);
+                return new String(packet).trim();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
         public void run() {
             // Listen to client's messages
-            try {
-                if (in.available() != 0) {
-                    in.readByte();
-                    Player receivedClientPlayer = (Player) in.readUnshared();
-                    float[] directions = receivedClientPlayer.getMoveDirection();
-                    updateDirection(receivedClientPlayer.getId(), directions[0], directions[1]);
-                }
-            } catch (Exception e) {
-                System.out.println("Error at reading client's messages");
-                e.printStackTrace();
-            }
+//            try {
+//                if (in.available() != 0) {
+//                    in.readByte();
+//                    Player receivedClientPlayer = (Player) in.readUnshared();
+//                    float[] directions = receivedClientPlayer.getMoveDirection();
+//                    updateDirection(receivedClientPlayer.getId(), directions[0], directions[1]);
+//                }
+//            } catch (Exception e) {
+//                System.out.println("Error at reading client's messages");
+//                e.printStackTrace();
+//            }
         }
     }
 
-    // Client sender class
+    // --- Client sender class ---
     private class Sender implements Runnable {
         private OutputStreamWriter out;
 
@@ -140,16 +151,23 @@ public class Handler implements Runnable {
             try {
                 long start = System.currentTimeMillis(); // Benchmarking
 
-                players.forEach((key, value) -> {
-                    try {
-                        out.write(value.toString().toCharArray().length);
-                        out.flush(); // Needs optimization
-                        out.write(value.toString());
-                        out.flush();
-                    } catch (Exception e) {
+                synchronized (players){
+                    players.forEach((key, value) -> {
+                        try {
+//                        out.write(Integer.toString(value.toString().toCharArray().length));
+//                        out.flush();
+//                        out.write(value.toString());
+//                        out.flush();
+                            // TODO For Later: Needs optimization (Could be possible to send the length of the message and the actual message in one go)
+//                            sendPacket(Integer.toString(value.toString().toCharArray().length * 2));
+                            sendPacket(value.toString());
 
-                    }
-                });
+                        } catch (Exception e) {
+
+                        }
+                    });
+
+                }
 
                 System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
 //                try {Thread.sleep(100);} catch (Exception e) { };
@@ -160,21 +178,30 @@ public class Handler implements Runnable {
             }
         }
 
-//        private void sendUnsharedPacket(Object packet) throws IOException {
-//
-//            out.writeUnshared(packet); // Return a randomized ID to the connected client
-//        }
-
-        public void sendClientLogin() throws IOException {
+        public void sendClientLogin() {
             clientId = randomId();
-            out.write(clientId); // Return a randomized ID to the connected client
-            out.flush();
+//            sendPacket(Integer.toString(clientId.toCharArray().length));
+            sendPacket(clientId);
+
             clientPlayer = createPlayer(clientId);
-            out.write(clientPlayer.toString()); // Return generated client's 'Player' object
-            out.flush();
+//            sendPacket(Integer.toString(clientPlayer.toString().toCharArray().length));
+            sendPacket(clientPlayer.toString());
         }
 
+        private void sendPacket(String packet) {
+            try {
+                BufferedWriter bfw = new BufferedWriter(out);
+                if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough
+                if(!packet.endsWith("\n")) packet += "\n";
 
+                System.out.print(packet);
+                bfw.write(packet);
+                bfw.flush();
+            } catch (IOException e) {
+                System.out.println("Error sending packet to client.");
+                e.printStackTrace();
+            }
+        }
 
     }
 }
