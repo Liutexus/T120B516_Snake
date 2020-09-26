@@ -57,7 +57,7 @@ public class GameLogic implements Runnable {
         while(true) { // Main game loop
             // Game logic goes here
             movePlayers();
-            updateHandlers();
+//            updateHandlers();
 
             try {Thread.sleep(100);} catch (Exception e) { };
         }

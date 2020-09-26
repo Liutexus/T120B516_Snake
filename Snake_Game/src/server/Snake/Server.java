@@ -21,7 +21,7 @@ public class Server {
             GameLogic gameLogic = new GameLogic(handlers, players);
             pool.execute(gameLogic); // Running main game's logic class
             while (true) {
-                Handler handler = new Handler(listener.accept(), gameLogic);
+                Handler handler = new Handler(listener.accept(), gameLogic, players);
                 handlers.put(count, handler);
                 count++;
                 pool.execute(handler); // Listening to a client

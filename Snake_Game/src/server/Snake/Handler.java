@@ -21,13 +21,13 @@ public class Handler implements Runnable {
 
     private Player clientPlayer;
     private String clientId;
-    private Map<String, Player> players = new ConcurrentHashMap<>();
+    public static Map<String, Player> players = new ConcurrentHashMap<>();
 
-    Handler(Socket serverSocket, GameLogic gameLogic) {
+    Handler(Socket serverSocket, GameLogic gameLogic, Map players) {
 
         this.serverSocket = serverSocket; // Current socket object
         this.gameLogic = gameLogic;
-        this.players = gameLogic.getPlayers();
+        this.players = players;
 
         try {
             // We return data from server to the client through here

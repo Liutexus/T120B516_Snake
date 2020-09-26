@@ -9,7 +9,10 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
@@ -226,18 +229,20 @@ class SnakePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         // TODO: Keep receiving data from server
-//        updatePlayers();
-        Updater updater = new Updater(in);
-        updater.run();
-
-
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ClientUpdater updater = new ClientUpdater();
+        ClientListener listener = new ClientListener(in, updater);
+        executor.execute(updater);
+        executor.execute(listener);
     }
 
-    private class Updater implements Runnable{
+    private class ClientListener implements Runnable {
         private InputStreamReader in;
+        private ClientUpdater updater;
 
-        public Updater(InputStreamReader in) {
+        public ClientListener(InputStreamReader in, ClientUpdater updater) {
             this.in = in;
+            this.updater = updater;
         }
 
         @Override
@@ -245,21 +250,44 @@ class SnakePanel extends JPanel implements Runnable {
             while(true) {
                 BufferedReader inb = new BufferedReader(in);
                 try {
-                    Player tempPlayer = new Player(null);
-                    String packet = inb.readLine();
-
-                    tempPlayer.jsonToObject(packet);
-
-                    System.out.println(tempPlayer.toString());
-                    synchronized (snakes) {
-                        if(!snakes.containsKey(tempPlayer) && tempPlayer != null) snakes.put(tempPlayer.getId(), tempPlayer);
-                        else snakes.replace(tempPlayer.getId(), tempPlayer);
+                    updater.addPacket(inb.readLine());
+                    synchronized (updater){
+                        if(updater.sleeping) updater.notify();
                     }
-                    repaint();
                 } catch (Exception e) {
                     System.out.println("Couldn't receive players from the server.");
-//               e.printStackTrace();
+                    e.printStackTrace();
                     return;
+                }
+            }
+        }
+    }
+
+    private class ClientUpdater implements Runnable {
+        public boolean sleeping = false;
+        private Stack<String> packets;
+
+        public ClientUpdater() {
+            packets = new Stack<>();
+        }
+
+        public void addPacket(String packet) {
+            packets.add(packet);
+        }
+
+        @Override
+        public void run() {
+            while(true) {
+                if (packets.size() == 0) {
+                    try { this.wait(); } catch (Exception e) { }
+                    sleeping = true;
+                } else {
+                    sleeping = false;
+                    Player tempPlayer = new Player(null);
+                    tempPlayer.jsonToObject(packets.pop());
+                    if(!snakes.containsKey(tempPlayer) && tempPlayer != null) snakes.put(tempPlayer.getId(), tempPlayer);
+                    else snakes.replace(tempPlayer.getId(), tempPlayer);
+                    repaint();
                 }
             }
         }
