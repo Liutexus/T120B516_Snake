@@ -247,16 +247,6 @@ public class Player implements java.io.Serializable {
 
     @Override
     public String toString() {
-//        String output;
-//        output = "ID: " + this.id + "\n";
-//        output += "Position: " + this.posX + " " + this.posY + "\n";
-//        output += "Direction: " + this.directionX + " " + this.directionY + "\n";
-//        output += "Size: " + this.sizeX + " " + this.sizeY + "\n";
-//        output += "Health: " + this.health + "\n";
-//        output += "Color: " + this.color + "\n";
-//        output += "Boost: " + this.boost + "\n";
-//        output += "Ground: " + this.ground + "\n";
-
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = "";
         try {
@@ -264,7 +254,6 @@ public class Player implements java.io.Serializable {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
         return json;
     }
 }

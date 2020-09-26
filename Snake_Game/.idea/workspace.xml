@@ -2,29 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_annotations_2_11_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_core_2_10_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_liferay_com_fasterxml_jackson_databind_2_10_3_LIFERAY_PATCHED_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs/com.fasterxml.jackson.databind-2.10.3.LIFERAY-PATCHED-1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs/jackson-annotations-2.11.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs/jackson-core-2.10.4.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake_Game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Snake_Game.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Sender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Sender.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Entities/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Server.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +66,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="Client 1" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="client.Snake.Client" />
       <module name="Snake_Game" />

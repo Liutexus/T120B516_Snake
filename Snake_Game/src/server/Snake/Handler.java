@@ -49,7 +49,7 @@ public class Handler implements Runnable {
         try {
             clientSender.sendClientLogin();
             while (true){
-//                clientSender.run(); // Sending packets to the client
+                clientSender.run(); // Sending packets to the client
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
         } catch (Exception e) {
@@ -142,6 +142,8 @@ public class Handler implements Runnable {
 
                 players.forEach((key, value) -> {
                     try {
+                        out.write(value.toString().toCharArray().length);
+                        out.flush(); // Needs optimization
                         out.write(value.toString());
                         out.flush();
                     } catch (Exception e) {

@@ -56,7 +56,7 @@ public class SwingRender extends JFrame implements Runnable {
 
             if(gamePanel.isDisplayable()){ // Is current panel is the game panel
                 // Get info from server
-//                gamePanel.updatePlayers();
+                gamePanel.run();
                 gamePanel.repaint();
             }
 
