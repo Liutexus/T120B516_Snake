@@ -1,5 +1,11 @@
 package client.Snake.Entities;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.*;
 
 public class Player implements java.io.Serializable {
     private String id;
@@ -142,23 +148,123 @@ public class Player implements java.io.Serializable {
         return false;
     }
 
+    public void setScore () {
+        // TODO
+    }
+
+    public int getScore() {
+        return this.score;
+    }
+
+    public void setHealth() {
+        // TODO
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public void setBoost() {
+        // TODO
+    }
+
+    public String getBoost() {
+        return this.boost;
+    }
+
+    public void setGround() {
+        // TODO
+    }
+
+    public String getGround() {
+        return this.ground;
+    }
+
     public void setGameOver(boolean state){
         this.isGameOver = state;
     }
 
+    public void jsonToObject(String json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, Object> map = new HashMap<>();
+        try {
+            map = objectMapper.readValue(json, new TypeReference<HashMap<String,Object>>(){});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        map.forEach((field, obj) -> {
+            ArrayList<Object> objects;
+            switch (field){
+                case "id":
+                    this.id = (String)obj;
+                    break;
+                case "position":
+                    objects = (ArrayList<Object>) obj;
+                    posX = (float)(double)objects.get(0);
+                    posY = (float)(double)objects.get(1);
+                    break;
+                case "prevPositionsX":
+                    this.prevPosX = (ArrayList) obj;
+                    break;
+                case "prevPositionsY":
+                    this.prevPosY = (ArrayList) obj;
+                    break;
+                case "moveDirection":
+                    objects = (ArrayList<Object>) obj;
+                    this.directionX = (float)(double)objects.get(0);
+                    this.directionY = (float)(double)objects.get(1);
+                    break;
+                case "size":
+                    objects = (ArrayList<Object>) obj;
+                    this.sizeX = (float)(double)objects.get(0);
+                    this.sizeY = (float)(double)objects.get(1);
+                    break;
+                case "tailLength":
+                    this.tailLength = (int)obj;
+                    break;
+                case "score":
+                    this.score = (int)obj;
+                    break;
+                case "health":
+                    this.health = (int)obj;
+                    break;
+                case "playerColor":
+                    this.color = (String)obj;
+                    break;
+                case "boost":
+                    this.boost = (String)obj;
+                    break;
+                case "ground":
+                    this.ground = (String)obj;
+                    break;
+                default:
+                    System.out.println("Attribute: '" + field + "' is not recognised.");
+                    break;
+            }
+        });
+    }
 
     @Override
     public String toString() {
-        String output;
-        output = "ID: " + this.id + "\n";
-        output += "Position: " + this.posX + " " + this.posY + "\n";
-        output += "Direction: " + this.directionX + " " + this.directionY + "\n";
-        output += "Size: " + this.sizeX + " " + this.sizeY + "\n";
-        output += "Health: " + this.health + "\n";
-        output += "Color: " + this.color + "\n";
-        output += "Boost: " + this.boost + "\n";
-        output += "Ground: " + this.ground + "\n";
+//        String output;
+//        output = "ID: " + this.id + "\n";
+//        output += "Position: " + this.posX + " " + this.posY + "\n";
+//        output += "Direction: " + this.directionX + " " + this.directionY + "\n";
+//        output += "Size: " + this.sizeX + " " + this.sizeY + "\n";
+//        output += "Health: " + this.health + "\n";
+//        output += "Color: " + this.color + "\n";
+//        output += "Boost: " + this.boost + "\n";
+//        output += "Ground: " + this.ground + "\n";
 
-        return output;
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = "";
+        try {
+            json = ow.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 }

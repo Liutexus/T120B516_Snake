@@ -5,17 +5,22 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
+import java.nio.*;
 import java.net.Socket;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
 
 class SnakePanel extends JPanel {
     private static ObjectOutputStream out;
-    private static ObjectInputStream in;
+    private static InputStreamReader in;
 
     private Dimension windowSize;
     private int horizontalCellCount = 50;
@@ -42,13 +47,14 @@ class SnakePanel extends JPanel {
         // Assign socket's input and output streams
         try {
             out = new ObjectOutputStream(this.clientSocket.getOutputStream());
-            in = new ObjectInputStream(this.clientSocket.getInputStream());
+            in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.out.println("Cannot establish connection to server.");
-//            e.printStackTrace();
+            e.printStackTrace();
         }
 
         this.Id = getId();
+        System.out.println(this.Id);
         this.currentPlayer = getRemoteCurrentPlayer();
 
         addKeyListener(new KeyListener(){
@@ -72,32 +78,38 @@ class SnakePanel extends JPanel {
         });
     }
 
-    public Player getLocalCurrentPlayer(){
+    public Player getLocalCurrentPlayer() {
         return this.currentPlayer;
     }
 
-    public Player getRemoteCurrentPlayer(){
-        // Request server to create a 'Player' object
+    public Player getRemoteCurrentPlayer() {
+        BufferedReader inb = new BufferedReader(in);
+        char[] chars = new char[1024];
         while (true) {
             try {
-                Player player = (Player)in.readUnshared();
-//                System.out.println(player.toString());
-                if(player != null) return player;
+                Player tempPlayer = new Player(null);
+                inb.read(chars);
+                String receivedPlayer = new String(chars).trim();
+
+                tempPlayer.jsonToObject(receivedPlayer);
+
+                if(tempPlayer != null) return tempPlayer;
             } catch (Exception e) {
                 System.out.println("Player object from server not received.");
                 e.printStackTrace();
             }
         }
-
     }
 
-    private String getId(){
-        // Wait for server to assign an ID
+    private String getId() {
+        BufferedReader inb = new BufferedReader(in);
+        char[] chars = new char[256];
         while (true) {
             try {
-                String id = (String)in.readUnshared();
-//                System.out.println(id);
-                if(id.length() != 0) return id;
+                inb.read(chars);
+//                System.out.println(chars);
+                if(chars.length != 0) return new String(chars).trim();
+                else return null;
             } catch (Exception e) {
                 System.out.println("Failed to receive ID from server.");
 //                e.printStackTrace();
@@ -105,18 +117,20 @@ class SnakePanel extends JPanel {
         }
     }
 
-    public void updatePlayers() {
-        Map<String, Player> remotePlayers = null;
-        try {
-            remotePlayers = (Map<String, Player>) in.readObject();
-        } catch (Exception e) {
-            System.out.println("Couldn't receive players from the server.");
-            return;
-//            e.printStackTrace();
-        }
-        snakes = remotePlayers;
-        currentPlayer = remotePlayers.get(Id);
-    }
+//    public void updatePlayers() {
+//
+////        Map<String, Player> remotePlayers = null;
+//        try {
+//            System.out.println(in.);
+////            remotePlayers = (Map<String, Player>) in.readObject();
+//        } catch (Exception e) {
+//            System.out.println("Couldn't receive players from the server.");
+//            return;
+////            e.printStackTrace();
+//        }
+////        snakes = remotePlayers;
+////        currentPlayer = remotePlayers.get(Id);
+//    }
 
     private void keyResponse(KeyEvent key) {
 
