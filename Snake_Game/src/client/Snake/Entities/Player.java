@@ -67,8 +67,8 @@ public class Player implements java.io.Serializable {
     }
 
     public boolean movePlayer(){
-        prevPosX.add(0, posX);
-        prevPosY.add(0, posY);
+//        prevPosX.add(0, posX);
+//        prevPosY.add(0, posY);
 
         posX += directionX;
         posY += directionY;

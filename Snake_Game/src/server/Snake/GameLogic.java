@@ -3,7 +3,6 @@ package server.Snake;
 
 import client.Snake.Entities.Player;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -41,9 +40,8 @@ public class GameLogic implements Runnable {
     }
 
     private void updateHandlers() {
-        for (Map.Entry<Integer, Handler> entry : handlers.entrySet()) {
-            entry.getValue().updatePlayersMap(new ConcurrentHashMap<String, Player>(players));
-        }
+        for (Map.Entry<Integer, Handler> entry : handlers.entrySet())
+            entry.getValue().updatePlayersMap(new ConcurrentHashMap<>(players));
     }
 
     public Map getPlayers() {

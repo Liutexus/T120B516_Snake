@@ -5,22 +5,18 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
-import java.nio.*;
 import java.net.Socket;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
 
 class SnakePanel extends JPanel implements Runnable {
-    private static OutputStreamWriter out;
-    private static InputStreamReader in;
+    private OutputStreamWriter out;
+    private InputStreamReader in;
 
     private Dimension windowSize;
     private int horizontalCellCount = 50;
@@ -80,10 +76,6 @@ class SnakePanel extends JPanel implements Runnable {
         });
     }
 
-    public Player getLocalCurrentPlayer() {
-        return this.currentPlayer;
-    }
-
     public Player getRemoteCurrentPlayer() {
         BufferedReader inb = new BufferedReader(in);
         while (true) {
@@ -118,22 +110,18 @@ class SnakePanel extends JPanel implements Runnable {
     public void updatePlayers() {
         BufferedReader inb = new BufferedReader(in);
         try {
+//            run(); // TODO: Receive all players (Now it receives only one)
             Player tempPlayer = new Player(null);
             String packet = inb.readLine();
+            System.out.println(packet);
             tempPlayer.jsonToObject(packet);
-            if(!snakes.containsKey(tempPlayer)) snakes.put(tempPlayer.getId(), tempPlayer);
+            if(!snakes.containsKey(tempPlayer) && tempPlayer != null) snakes.put(tempPlayer.getId(), tempPlayer);
             else snakes.replace(tempPlayer.getId(), tempPlayer);
         } catch (Exception e) {
             System.out.println("Couldn't receive players from the server.");
-            e.printStackTrace();
+//            e.printStackTrace();
             return;
         }
-//        snakes = remotePlayers;
-//        currentPlayer = remotePlayers.get(Id);
-    }
-
-    public void receivePacket() {
-
     }
 
     private void keyResponse(KeyEvent key) {
@@ -238,11 +226,44 @@ class SnakePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         // TODO: Keep receiving data from server
-        if(this.currentPlayer != null) {
-            updatePlayers();
-        }
-
+//        updatePlayers();
+        Updater updater = new Updater(in);
+        updater.run();
 
 
     }
+
+    private class Updater implements Runnable{
+        private InputStreamReader in;
+
+        public Updater(InputStreamReader in) {
+            this.in = in;
+        }
+
+        @Override
+        public void run() {
+            while(true) {
+                BufferedReader inb = new BufferedReader(in);
+                try {
+                    Player tempPlayer = new Player(null);
+                    String packet = inb.readLine();
+
+                    tempPlayer.jsonToObject(packet);
+
+                    System.out.println(tempPlayer.toString());
+                    synchronized (snakes) {
+                        if(!snakes.containsKey(tempPlayer) && tempPlayer != null) snakes.put(tempPlayer.getId(), tempPlayer);
+                        else snakes.replace(tempPlayer.getId(), tempPlayer);
+                    }
+                    repaint();
+                } catch (Exception e) {
+                    System.out.println("Couldn't receive players from the server.");
+//               e.printStackTrace();
+                    return;
+                }
+            }
+        }
+    }
+
+
 }

@@ -50,18 +50,16 @@ public class SwingRender extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        while(true) {
-
-            // TODO: Switch between views logic here
-
+//        while(true) {
+//
+//            // TODO: Switch between views logic here
+//
             if(gamePanel.isDisplayable()){ // Is current panel is the game panel
-                // Get info from server
                 gamePanel.run();
-                gamePanel.repaint();
             }
-
-            try {Thread.sleep(100);} catch (Exception e) { };
-        }
+//
+//            try {Thread.sleep(100);} catch (Exception e) { };
+//        }
 
     }
 }

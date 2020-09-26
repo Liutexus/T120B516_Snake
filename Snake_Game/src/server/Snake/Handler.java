@@ -53,14 +53,13 @@ public class Handler implements Runnable {
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             System.out.println("Error:" + serverSocket);
         }
     }
 
     public void updatePlayersMap(Map<String, Player> players) {
         this.players = players;
-//        this.notify();
     }
 
     // Some utilities
@@ -149,48 +148,31 @@ public class Handler implements Runnable {
         @Override
         public void run() {
             try {
-                long start = System.currentTimeMillis(); // Benchmarking
+//                long start = System.currentTimeMillis(); // Benchmarking
 
                 synchronized (players){
                     players.forEach((key, value) -> {
-                        try {
-//                        out.write(Integer.toString(value.toString().toCharArray().length));
-//                        out.flush();
-//                        out.write(value.toString());
-//                        out.flush();
-                            // TODO For Later: Needs optimization (Could be possible to send the length of the message and the actual message in one go)
-//                            sendPacket(Integer.toString(value.toString().toCharArray().length * 2));
-                            sendPacket(value.toString());
-
-                        } catch (Exception e) {
-
-                        }
+                        sendPacket(value.toString());
                     });
-
                 }
-
-                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
-//                try {Thread.sleep(100);} catch (Exception e) { };
-
+//                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
                 System.out.println("Error sending a packet to the client.");
             }
         }
 
         public void sendClientLogin() {
             clientId = randomId();
-//            sendPacket(Integer.toString(clientId.toCharArray().length));
             sendPacket(clientId);
 
             clientPlayer = createPlayer(clientId);
-//            sendPacket(Integer.toString(clientPlayer.toString().toCharArray().length));
             sendPacket(clientPlayer.toString());
         }
 
         private void sendPacket(String packet) {
+            BufferedWriter bfw = new BufferedWriter(out);
             try {
-                BufferedWriter bfw = new BufferedWriter(out);
                 if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough
                 if(!packet.endsWith("\n")) packet += "\n";
 
