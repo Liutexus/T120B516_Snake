@@ -191,6 +191,7 @@ public class Player implements java.io.Serializable {
             map = objectMapper.readValue(json, new TypeReference<HashMap<String,Object>>(){});
         } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
 
         map.forEach((field, obj) -> {

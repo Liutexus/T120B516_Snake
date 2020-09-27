@@ -7,9 +7,7 @@ import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -107,23 +105,6 @@ class SnakePanel extends JPanel implements Runnable {
                 System.out.println("Failed to receive ID from server.");
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void updatePlayers() {
-        BufferedReader inb = new BufferedReader(in);
-        try {
-//            run(); // TODO: Receive all players (Now it receives only one)
-            Player tempPlayer = new Player(null);
-            String packet = inb.readLine();
-            System.out.println(packet);
-            tempPlayer.jsonToObject(packet);
-            if(!snakes.containsKey(tempPlayer) && tempPlayer != null) snakes.put(tempPlayer.getId(), tempPlayer);
-            else snakes.replace(tempPlayer.getId(), tempPlayer);
-        } catch (Exception e) {
-            System.out.println("Couldn't receive players from the server.");
-//            e.printStackTrace();
-            return;
         }
     }
 
@@ -251,13 +232,14 @@ class SnakePanel extends JPanel implements Runnable {
                 BufferedReader inb = new BufferedReader(in);
                 try {
                     updater.addPacket(inb.readLine());
-                    synchronized (updater){
-                        if(updater.sleeping) updater.notify();
-                    }
+                    if(updater.sleeping)
+                        synchronized (updater) {
+                            updater.notify();
+                        }
                 } catch (Exception e) {
                     System.out.println("Couldn't receive players from the server.");
-                    e.printStackTrace();
-                    return;
+//                    e.printStackTrace();
+                    continue;
                 }
             }
         }
@@ -265,10 +247,12 @@ class SnakePanel extends JPanel implements Runnable {
 
     private class ClientUpdater implements Runnable {
         public boolean sleeping = false;
-        private Stack<String> packets;
+        private ArrayDeque<String> packets;
+        ExecutorService executor;
 
         public ClientUpdater() {
-            packets = new Stack<>();
+            packets = new ArrayDeque<>();
+            executor = Executors.newFixedThreadPool(2);
         }
 
         public void addPacket(String packet) {
@@ -279,19 +263,24 @@ class SnakePanel extends JPanel implements Runnable {
         public void run() {
             while(true) {
                 if (packets.size() == 0) {
-                    try { this.wait(); } catch (Exception e) { }
                     sleeping = true;
+                    try { this.wait(); } catch (Exception e) { }
                 } else {
                     sleeping = false;
                     Player tempPlayer = new Player(null);
-                    tempPlayer.jsonToObject(packets.pop());
-                    if(!snakes.containsKey(tempPlayer) && tempPlayer != null) snakes.put(tempPlayer.getId(), tempPlayer);
-                    else snakes.replace(tempPlayer.getId(), tempPlayer);
+                    try {
+                        tempPlayer.jsonToObject(packets.pop());
+                    } catch (Exception e) {
+                        System.out.println("Error: Couldn't parse received packet.");
+//                        e.printStackTrace();
+                        continue;
+                    }
+                    if(tempPlayer.getId() != null)
+                        if(!snakes.containsKey(tempPlayer)) snakes.put(tempPlayer.getId(), tempPlayer);
+                        else snakes.replace(tempPlayer.getId(), tempPlayer);
                     repaint();
                 }
             }
         }
     }
-
-
 }
