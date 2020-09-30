@@ -122,18 +122,14 @@ public class Handler implements Runnable {
 
         @Override
         public void run() {
-            // Listen to client's messages
-//            try {
-//                if (in.available() != 0) {
-//                    in.readByte();
-//                    Player receivedClientPlayer = (Player) in.readUnshared();
-//                    float[] directions = receivedClientPlayer.getMoveDirection();
-//                    updateDirection(receivedClientPlayer.getId(), directions[0], directions[1]);
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Error at reading client's messages");
-//                e.printStackTrace();
-//            }
+            while(true) {
+                try {
+
+                } catch (Exception e) {
+                    System.out.println("Error at reading client's messages");
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
