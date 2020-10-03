@@ -14,6 +14,8 @@ import java.util.concurrent.Executors;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 class SnakePanel extends JPanel implements Runnable {
     private OutputStreamWriter out;
@@ -109,34 +111,55 @@ class SnakePanel extends JPanel implements Runnable {
     }
 
     private void keyResponse(KeyEvent key) {
-        /*
         try {
-            out.reset(); // Removing any previously sent messages
+            ObjectWriter objectMapper = new ObjectMapper().writer();
+            HashMap<Object, Object> packetMap;
+            String packet = "";
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
-                    currentPlayer.setMoveDirection(0, -1);
-                    out.writeByte(1); // TODO: Find a better way to send inputs
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("directionX", "0");
+                    packetMap.put("directionY", "-1");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_RIGHT:
-                    currentPlayer.setMoveDirection(1, 0);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("directionX", "1");
+                    packetMap.put("directionY", "0");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_DOWN:
-                    currentPlayer.setMoveDirection(0, 1);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("directionX", "0");
+                    packetMap.put("directionY", "1");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_LEFT:
-                    currentPlayer.setMoveDirection(-1, 0);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("directionX", "-1");
+                    packetMap.put("directionY", "0");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_SPACE:
-                    currentPlayer.setMoveDirection(0, 0);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("directionX", "0");
+                    packetMap.put("directionY", "0");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_W: // Placeholder
 //                player.deltaSize(1, 1);
@@ -157,7 +180,7 @@ class SnakePanel extends JPanel implements Runnable {
         } catch (Exception e) {
             System.out.println("Error sending an input to the server.");
 //            e.printStackTrace();
-        }*/
+        }
     }
 
     // Rendering functions
@@ -228,8 +251,8 @@ class SnakePanel extends JPanel implements Runnable {
 
         @Override
         public void run() {
+            BufferedReader inb = new BufferedReader(in);
             while(true) {
-                BufferedReader inb = new BufferedReader(in);
                 try {
                     updater.addPacket(inb.readLine());
                     if(updater.sleeping)

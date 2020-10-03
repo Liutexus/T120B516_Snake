@@ -2,7 +2,10 @@
 package server.Snake;
 
 import client.Snake.Entities.Player;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,15 +24,15 @@ public class GameLogic implements Runnable {
     private void movePlayers() {
         for (Map.Entry<String, Player> entry : players.entrySet()) {
             // --- JUST FOR FUN --- // For testing purposes
-            float[] directs = entry.getValue().getMoveDirection();
-            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
-            if(randx == directs[0]*-1) randx = (int)directs[0];
-
-            int randy = 0;
-            if(randx == 0){
-                randy = ThreadLocalRandom.current().nextInt(-1, 2);
-            }
-            entry.getValue().setMoveDirection(randx, randy);
+//            float[] directs = entry.getValue().getMoveDirection();
+//            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
+//            if(randx == directs[0]*-1) randx = (int)directs[0];
+//
+//            int randy = 0;
+//            if(randx == 0){
+//                randy = ThreadLocalRandom.current().nextInt(-1, 2);
+//            }
+//            entry.getValue().setMoveDirection(randx, randy);
             // --- FUN ZONE OVER ---
             entry.getValue().movePlayer();
         }
@@ -39,17 +42,24 @@ public class GameLogic implements Runnable {
         players.put(player.getId(), player);
     }
 
-    private void updateHandlers() {
-        for (Map.Entry<Integer, Handler> entry : handlers.entrySet())
-            entry.getValue().updatePlayersMap(new ConcurrentHashMap<>(players));
+    private HashMap parseJSon(String json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, Object> map = new HashMap<>();
+        try {
+            map = objectMapper.readValue(json, new TypeReference<>(){});
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        System.out.println(map);
+        return map;
     }
 
-    public Map getPlayers() {
-        Map<String, Player> temp;
-        synchronized (players){
-            temp = new ConcurrentHashMap<String, Player>(players);
-        }
-        return temp;
+    public void updatePlayerField(String json) {
+        HashMap<String, Object> fields = parseJSon(json);
+
+        if(fields.containsKey("directionX") && fields.containsKey("directionY"))
+            players.get(fields.get("id")).setMoveDirection(Float.parseFloat((String)fields.get("directionX")), Float.parseFloat((String)fields.get("directionY")));
     }
 
     @Override
@@ -57,7 +67,6 @@ public class GameLogic implements Runnable {
         while(true) { // Main game loop
             // Game logic goes here
             movePlayers();
-//            updateHandlers();
 
             try {Thread.sleep(100);} catch (Exception e) { };
         }

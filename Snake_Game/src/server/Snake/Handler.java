@@ -11,6 +11,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Handler implements Runnable {
@@ -46,10 +48,15 @@ public class Handler implements Runnable {
         Listener clientListener = new Listener(new InputStreamReader(in));
         Sender clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
 
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
         try {
             clientSender.sendClientLogin();
-            while (true){
-                clientSender.run(); // Sending packets to the client
+            executor.execute(clientListener);
+            while (true) {
+                long start = System.currentTimeMillis(); // Benchmarking
+                executor.execute(clientSender); // Sending packets to the client
+//                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
         } catch (Exception e) {
@@ -76,7 +83,6 @@ public class Handler implements Runnable {
         }
         String generatedString = buffer.toString();
 
-//        System.out.println(generatedString);
         return generatedString;
     }
 
@@ -95,12 +101,6 @@ public class Handler implements Runnable {
         return player;
     }
 
-    private void updateDirection(String id, float x, float y) {
-        synchronized(players) {
-            players.get(id).setMoveDirection(x, y);
-        }
-    }
-
     // --- Client listener class ---
     private class Listener implements Runnable {
         InputStreamReader in;
@@ -109,25 +109,17 @@ public class Handler implements Runnable {
             this.in = in;
         }
 
-        public String listenForPacket() {
-            char[] packet = new char[65536];
-            try {
-                in.read(packet);
-                return new String(packet).trim();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
         @Override
         public void run() {
+            BufferedReader inb = new BufferedReader(in);
             while(true) {
                 try {
-
+//                    System.out.println(inb.readLine());
+                    gameLogic.updatePlayerField(inb.readLine());
                 } catch (Exception e) {
-                    System.out.println("Error at reading client's messages");
+//                    System.out.println("Couldn't receive packet from the client.");
                     e.printStackTrace();
+                    continue;
                 }
             }
         }
@@ -172,7 +164,7 @@ public class Handler implements Runnable {
                 if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough
                 if(!packet.endsWith("\n")) packet += "\n";
 
-                System.out.print(packet);
+//                System.out.print(packet);
                 bfw.write(packet);
                 bfw.flush();
             } catch (IOException e) {
