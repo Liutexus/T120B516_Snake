@@ -6,29 +6,37 @@ import client.Snake.Entities.Player;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Handler implements Runnable {
     private Socket serverSocket;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+    public static GameLogic gameLogic;
+    private OutputStream out;
+    private InputStream in;
 
     private Player clientPlayer;
     private String clientId;
-    public static Map<String, Player> players;
+    public static Map<String, Player> players = new ConcurrentHashMap<>();
 
-    Handler(Socket serverSocket, Map players) {
-        // Generate, create and assign an ID for new incoming client here
+    Handler(Socket serverSocket, GameLogic gameLogic, Map players) {
+
         this.serverSocket = serverSocket; // Current socket object
-        this.players = players; // Get all existing players
+        this.gameLogic = gameLogic;
+        this.players = players;
 
         try {
             // We return data from server to the client through here
-            out = new ObjectOutputStream(serverSocket.getOutputStream());
+            out = serverSocket.getOutputStream();
             // We listen to our client here
-            in = new ObjectInputStream(serverSocket.getInputStream());
+            in = serverSocket.getInputStream();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,27 +46,23 @@ public class Handler implements Runnable {
     public void run() {
         System.out.println("Connected: " + serverSocket);
 
+        Listener clientListener = new Listener(new InputStreamReader(in));
+        Sender clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
         try {
-            Listener clientListener = new Listener(in);
-            Sender clientSender = new Sender(out);
-            clientId = randomId();
-            out.writeUnshared(clientId); // Return a randomized ID to the connected client
-            clientPlayer = createPlayer(clientId);
-            out.writeUnshared(clientPlayer); // Return generated client's 'Player' object
-
-            while (true) { // Loop to listen to client's messages
-                long start = System.currentTimeMillis(); // Benchmarking
-                synchronized(players) { // To safely access 'players' variable and not conflict with other threads
-                    out.reset(); // <- FIX: Lags as hell
-
-                    out.writeObject(players);
-                }
-                clientListener.run(); // Listening to client's messages
-                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
+            clientSender.sendClientLogin();
+            executor.execute(clientListener);
+            while (true) {
+                if(serverSocket.isClosed()) break;
+//                long start = System.currentTimeMillis(); // Benchmarking
+                executor.execute(clientSender); // Sending packets to the client
+//                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
-
         } catch (Exception e) {
+//            e.printStackTrace();
             System.out.println("Error:" + serverSocket);
         }
     }
@@ -77,7 +81,6 @@ public class Handler implements Runnable {
         }
         String generatedString = buffer.toString();
 
-//        System.out.println(generatedString);
         return generatedString;
     }
 
@@ -90,55 +93,80 @@ public class Handler implements Runnable {
         int randY = ThreadLocalRandom.current().nextInt(5, 45);
         // This could be improved by some more fancier initial position assignment
         Player player = new Player(id, randX, randY);
-        players.put(id, player); // Adding new client user to the players' pool
+
+        gameLogic.addPlayer(player);
+//        players.put(id, player); // Adding new client user to the players' pool
         return player;
     }
 
-    private void updateDirection(String id, float x, float y) {
-        synchronized(players) {
-            players.get(id).setMoveDirection(x, y);
-        }
-    }
-
-    // Client listener class
+    // --- Client listener class ---
     private class Listener implements Runnable {
-        ObjectInputStream in;
+        InputStreamReader in;
 
-        public Listener(ObjectInputStream in) {
+        public Listener(InputStreamReader in) {
             this.in = in;
         }
 
         @Override
         public void run() {
-            // Listen to client's messages
-            try {
-                if (in.available() != 0) {
-                    in.readByte();
-                    Player receivedClientPlayer = (Player) in.readUnshared();
-                    float[] directions = receivedClientPlayer.getMoveDirection();
-                    updateDirection(receivedClientPlayer.getId(), directions[0], directions[1]);
+            BufferedReader inb = new BufferedReader(in);
+            while(true) {
+                try {
+                    gameLogic.updatePlayerField(inb.readLine());
+                } catch (Exception e) {
+                    if(serverSocket.isClosed()) break;
+                    System.out.println("Couldn't receive packet from the client.");
+                    e.printStackTrace();
+                    continue;
                 }
-            } catch (Exception e) {
-                System.out.println("Error at reading client's messages");
-                e.printStackTrace();
             }
         }
     }
 
-    // Client sender class
+    // --- Client sender class ---
     private class Sender implements Runnable {
-        ObjectOutputStream out;
+        private OutputStreamWriter out;
 
-        public Sender(ObjectOutputStream out) {
+        public Sender(OutputStreamWriter out) {
             this.out = out;
         }
 
         @Override
         public void run() {
-
-
-            // TODO: Send a packet and receive one for "PING"
-
+            try {
+                synchronized (players){
+                    players.forEach((key, value) -> {
+                        sendPacket(value.toString());
+                    });
+                }
+            } catch (Exception e) {
+//                e.printStackTrace();
+                System.out.println("Error sending a packet to the client.");
+            }
         }
+
+        public void sendClientLogin() {
+            clientId = randomId();
+            sendPacket(clientId);
+
+            clientPlayer = createPlayer(clientId);
+            sendPacket(clientPlayer.toString());
+        }
+
+        private void sendPacket(String packet) {
+            BufferedWriter bfw = new BufferedWriter(out);
+            try {
+                if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough
+                if(!packet.endsWith("\n")) packet += "\n";
+
+//                System.out.print(packet);
+                bfw.write(packet);
+                bfw.flush();
+            } catch (IOException e) {
+                System.out.println("Error sending packet to client.");
+                e.printStackTrace();
+            }
+        }
+
     }
 }

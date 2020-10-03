@@ -17,9 +17,11 @@ public class Server {
         try (var listener = new ServerSocket(80)) {
             System.out.println("The server is running...");
             var pool = Executors.newFixedThreadPool(concurrentClients); // To take in x amount of clients at a time
-            pool.execute(new GameLogic(handlers, players)); // Running main game's logic class
+
+            GameLogic gameLogic = new GameLogic(handlers, players);
+            pool.execute(gameLogic); // Running main game's logic class
             while (true) {
-                Handler handler = new Handler(listener.accept(), players);
+                Handler handler = new Handler(listener.accept(), gameLogic, players);
                 handlers.put(count, handler);
                 count++;
                 pool.execute(handler); // Listening to a client

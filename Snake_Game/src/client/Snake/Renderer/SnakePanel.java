@@ -6,16 +6,20 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import client.Snake.Entities.Food;
 import client.Snake.Entities.Player;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
-class SnakePanel extends JPanel {
-    private static ObjectOutputStream out;
-    private static ObjectInputStream in;
+class SnakePanel extends JPanel implements Runnable {
+    private OutputStreamWriter out;
+    private InputStreamReader in;
 
     private Dimension windowSize;
     private int horizontalCellCount = 50;
@@ -41,17 +45,20 @@ class SnakePanel extends JPanel {
         this.clientSocket = clientSocket;
         // Assign socket's input and output streams
         try {
-            out = new ObjectOutputStream(this.clientSocket.getOutputStream());
-            in = new ObjectInputStream(this.clientSocket.getInputStream());
+            out = new OutputStreamWriter(this.clientSocket.getOutputStream());
+            in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
+            System.out.println("Connection established with the server.");
         } catch (IOException e) {
             System.out.println("Cannot establish connection to server.");
-//            e.printStackTrace();
+            e.printStackTrace();
         }
 
         this.Id = getId();
+        System.out.println("Client ID: " + this.Id);
         this.currentPlayer = getRemoteCurrentPlayer();
+//        System.out.println(currentPlayer.toString());
 
-        addKeyListener(new KeyListener(){
+        addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 // TODO: Rewrite keyevents to send outputs to the server
@@ -72,81 +79,87 @@ class SnakePanel extends JPanel {
         });
     }
 
-    public Player getLocalCurrentPlayer(){
-        return this.currentPlayer;
-    }
-
-    public Player getRemoteCurrentPlayer(){
-        // Request server to create a 'Player' object
+    public Player getRemoteCurrentPlayer() {
+        BufferedReader inb = new BufferedReader(in);
         while (true) {
             try {
-                Player player = (Player)in.readUnshared();
-//                System.out.println(player.toString());
-                if(player != null) return player;
+                Player tempPlayer = new Player(null);
+                String packet = inb.readLine();
+                tempPlayer.jsonToObject(packet);
+                if(!snakes.containsKey(tempPlayer)) snakes.put(tempPlayer.getId(), tempPlayer);
+                if(tempPlayer != null) return tempPlayer;
+                return null;
             } catch (Exception e) {
                 System.out.println("Player object from server not received.");
                 e.printStackTrace();
             }
         }
-
     }
 
-    private String getId(){
-        // Wait for server to assign an ID
+    private String getId() {
+        BufferedReader inb = new BufferedReader(in);
         while (true) {
             try {
-                String id = (String)in.readUnshared();
-//                System.out.println(id);
-                if(id.length() != 0) return id;
+                String packet = inb.readLine();
+                if(packet.length() != 0) return packet;
+                else return null;
             } catch (Exception e) {
                 System.out.println("Failed to receive ID from server.");
-//                e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }
 
-    public void updatePlayers() {
-        Map<String, Player> remotePlayers = null;
-        try {
-            remotePlayers = (Map<String, Player>) in.readObject();
-        } catch (Exception e) {
-            System.out.println("Couldn't receive players from the server.");
-            return;
-//            e.printStackTrace();
-        }
-        snakes = remotePlayers;
-        currentPlayer = remotePlayers.get(Id);
-    }
-
     private void keyResponse(KeyEvent key) {
-
         try {
-            out.reset(); // Removing any previously sent messages
+            ObjectWriter objectMapper = new ObjectMapper().writer();
+            HashMap<Object, Object> packetMap;
+            String packet = "";
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
-                    currentPlayer.setMoveDirection(0, -1);
-                    out.writeByte(1); // TODO: Find a better way to send inputs
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", this.Id);
+                    packetMap.put("directionX", "0");
+                    packetMap.put("directionY", "-1");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_RIGHT:
-                    currentPlayer.setMoveDirection(1, 0);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", this.Id);
+                    packetMap.put("directionX", "1");
+                    packetMap.put("directionY", "0");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_DOWN:
-                    currentPlayer.setMoveDirection(0, 1);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", this.Id);
+                    packetMap.put("directionX", "0");
+                    packetMap.put("directionY", "1");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_LEFT:
-                    currentPlayer.setMoveDirection(-1, 0);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", this.Id);
+                    packetMap.put("directionX", "-1");
+                    packetMap.put("directionY", "0");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_SPACE:
-                    currentPlayer.setMoveDirection(0, 0);
-                    out.writeByte(1);
-                    out.writeUnshared(currentPlayer);
+                    packetMap = new HashMap<>();
+                    packetMap.put("id", this.Id);
+                    packetMap.put("directionX", "0");
+                    packetMap.put("directionY", "0");
+                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
+                    out.write(packet);
+                    out.flush();
                     break;
                 case KeyEvent.VK_W: // Placeholder
 //                player.deltaSize(1, 1);
@@ -191,8 +204,9 @@ class SnakePanel extends JPanel {
                     int colorStep = 255 / (entry.getValue().getTailLength() + 1);
                     Color tailColor = new Color(colorStep * (entry.getValue().getTailLength() - i), colorStep, colorStep);
                     prevPosX.get(i);
-                    drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, entry.getValue().getSize(), tailColor);
+                    drawRect(g, new float[]{(Float.parseFloat(prevPosX.get(i).toString())), Float.parseFloat(prevPosY.get(i).toString())}, entry.getValue().getSize(), tailColor);
                 } catch (Exception e) {
+//                    e.printStackTrace();
                     // Just to reduce headache from exceptions at the start of the game
                     // when there's not enough previous positions to draw tail from.
                     break;
@@ -217,4 +231,80 @@ class SnakePanel extends JPanel {
 //        g.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
     }
 
+    @Override
+    public void run() {
+        // TODO: Keep receiving data from server
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ClientUpdater updater = new ClientUpdater();
+        ClientListener listener = new ClientListener(in, updater);
+        executor.execute(updater);
+        executor.execute(listener);
+    }
+
+    private class ClientListener implements Runnable {
+        private InputStreamReader in;
+        private ClientUpdater updater;
+
+        public ClientListener(InputStreamReader in, ClientUpdater updater) {
+            this.in = in;
+            this.updater = updater;
+        }
+
+        @Override
+        public void run() {
+            BufferedReader inb = new BufferedReader(in);
+            while(true) {
+                try {
+                    updater.addPacket(inb.readLine());
+                    if(updater.sleeping)
+                        synchronized (updater) {
+                            updater.notify();
+                        }
+                } catch (Exception e) {
+                    System.out.println("Couldn't receive players from the server.");
+//                    e.printStackTrace();
+                    continue;
+                }
+            }
+        }
+    }
+
+    private class ClientUpdater implements Runnable {
+        public boolean sleeping = false;
+        private ArrayDeque<String> packets;
+        ExecutorService executor;
+
+        public ClientUpdater() {
+            packets = new ArrayDeque<>();
+            executor = Executors.newFixedThreadPool(2);
+        }
+
+        public void addPacket(String packet) {
+            packets.add(packet);
+        }
+
+        @Override
+        public void run() {
+            while(true) {
+                if (packets.size() == 0) {
+                    sleeping = true;
+                    try { this.wait(); } catch (Exception e) { }
+                } else {
+                    sleeping = false;
+                    Player tempPlayer = new Player(null);
+                    try {
+                        tempPlayer.jsonToObject(packets.pop());
+                    } catch (Exception e) {
+                        System.out.println("Error: Couldn't parse received packet.");
+//                        e.printStackTrace();
+                        continue;
+                    }
+                    if(tempPlayer.getId() != null)
+                        if(!snakes.containsKey(tempPlayer)) snakes.put(tempPlayer.getId(), tempPlayer);
+                        else snakes.replace(tempPlayer.getId(), tempPlayer);
+                    repaint();
+                }
+            }
+        }
+    }
 }
