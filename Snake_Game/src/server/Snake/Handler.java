@@ -6,6 +6,7 @@ import client.Snake.Entities.Player;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
@@ -54,7 +55,8 @@ public class Handler implements Runnable {
             clientSender.sendClientLogin();
             executor.execute(clientListener);
             while (true) {
-                long start = System.currentTimeMillis(); // Benchmarking
+                if(serverSocket.isClosed()) break;
+//                long start = System.currentTimeMillis(); // Benchmarking
                 executor.execute(clientSender); // Sending packets to the client
 //                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
                 try {Thread.sleep(100);} catch (Exception e) { };
@@ -63,10 +65,6 @@ public class Handler implements Runnable {
 //            e.printStackTrace();
             System.out.println("Error:" + serverSocket);
         }
-    }
-
-    public void updatePlayersMap(Map<String, Player> players) {
-        this.players = players;
     }
 
     // Some utilities
@@ -114,10 +112,10 @@ public class Handler implements Runnable {
             BufferedReader inb = new BufferedReader(in);
             while(true) {
                 try {
-//                    System.out.println(inb.readLine());
                     gameLogic.updatePlayerField(inb.readLine());
                 } catch (Exception e) {
-//                    System.out.println("Couldn't receive packet from the client.");
+                    if(serverSocket.isClosed()) break;
+                    System.out.println("Couldn't receive packet from the client.");
                     e.printStackTrace();
                     continue;
                 }
@@ -136,14 +134,11 @@ public class Handler implements Runnable {
         @Override
         public void run() {
             try {
-//                long start = System.currentTimeMillis(); // Benchmarking
-
                 synchronized (players){
                     players.forEach((key, value) -> {
                         sendPacket(value.toString());
                     });
                 }
-//                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
             } catch (Exception e) {
 //                e.printStackTrace();
                 System.out.println("Error sending a packet to the client.");

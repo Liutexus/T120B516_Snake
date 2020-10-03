@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class GameLogic implements Runnable {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
@@ -44,14 +43,13 @@ public class GameLogic implements Runnable {
 
     private HashMap parseJSon(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map;
         try {
             map = objectMapper.readValue(json, new TypeReference<>(){});
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        System.out.println(map);
         return map;
     }
 

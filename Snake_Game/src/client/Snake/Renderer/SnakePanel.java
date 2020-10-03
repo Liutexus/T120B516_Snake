@@ -56,7 +56,7 @@ class SnakePanel extends JPanel implements Runnable {
         this.Id = getId();
         System.out.println("Client ID: " + this.Id);
         this.currentPlayer = getRemoteCurrentPlayer();
-        System.out.println(currentPlayer.toString());
+//        System.out.println(currentPlayer.toString());
 
         addKeyListener(new KeyListener() {
             @Override
@@ -118,7 +118,7 @@ class SnakePanel extends JPanel implements Runnable {
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
                     packetMap = new HashMap<>();
-                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "-1");
                     packet = objectMapper.writeValueAsString(packetMap) + "\n";
@@ -127,7 +127,7 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case KeyEvent.VK_RIGHT:
                     packetMap = new HashMap<>();
-                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "1");
                     packetMap.put("directionY", "0");
                     packet = objectMapper.writeValueAsString(packetMap) + "\n";
@@ -136,7 +136,7 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case KeyEvent.VK_DOWN:
                     packetMap = new HashMap<>();
-                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "1");
                     packet = objectMapper.writeValueAsString(packetMap) + "\n";
@@ -145,7 +145,7 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case KeyEvent.VK_LEFT:
                     packetMap = new HashMap<>();
-                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "-1");
                     packetMap.put("directionY", "0");
                     packet = objectMapper.writeValueAsString(packetMap) + "\n";
@@ -154,7 +154,7 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case KeyEvent.VK_SPACE:
                     packetMap = new HashMap<>();
-                    packetMap.put("id", currentPlayer.getId());
+                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "0");
                     packet = objectMapper.writeValueAsString(packetMap) + "\n";
@@ -204,8 +204,9 @@ class SnakePanel extends JPanel implements Runnable {
                     int colorStep = 255 / (entry.getValue().getTailLength() + 1);
                     Color tailColor = new Color(colorStep * (entry.getValue().getTailLength() - i), colorStep, colorStep);
                     prevPosX.get(i);
-                    drawRect(g, new float[]{(float) prevPosX.get(i), (float) prevPosY.get(i)}, entry.getValue().getSize(), tailColor);
+                    drawRect(g, new float[]{(Float.parseFloat(prevPosX.get(i).toString())), Float.parseFloat(prevPosY.get(i).toString())}, entry.getValue().getSize(), tailColor);
                 } catch (Exception e) {
+//                    e.printStackTrace();
                     // Just to reduce headache from exceptions at the start of the game
                     // when there's not enough previous positions to draw tail from.
                     break;

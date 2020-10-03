@@ -1,4 +1,5 @@
 package client.Snake.Entities;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,8 +68,8 @@ public class Player implements java.io.Serializable {
     }
 
     public boolean movePlayer(){
-//        prevPosX.add(0, posX);
-//        prevPosY.add(0, posY);
+        prevPosX.add(0, posX);
+        prevPosY.add(0, posY);
 
         posX += directionX;
         posY += directionY;
@@ -123,6 +124,21 @@ public class Player implements java.io.Serializable {
         if(this.tailLength + delta >= 0){
             this.tailLength += delta;
         }
+    }
+
+    public void trimTailSizeAndPrevPos(int maxLength) {
+        if(prevPosX.size() < maxLength || prevPosY.size() < maxLength)
+            return;
+
+        this.tailLength = maxLength;
+        ArrayList tempX = new ArrayList();
+        ArrayList tempY = new ArrayList();
+        for(int i = 0; i < maxLength; i++){
+            tempX.add(prevPosX.get(i));
+            tempY.add(prevPosY.get(i));
+        }
+        prevPosX = tempX;
+        prevPosY = tempY;
     }
 
     public int getTailLength(){
@@ -250,8 +266,10 @@ public class Player implements java.io.Serializable {
     public String toString() {
         ObjectWriter ow = new ObjectMapper().writer();
         String json = "";
+        Player convObj = this;
+        convObj.trimTailSizeAndPrevPos(convObj.tailLength);
         try {
-            json = ow.writeValueAsString(this);
+            json = ow.writeValueAsString(convObj);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
