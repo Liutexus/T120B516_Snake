@@ -1,4 +1,4 @@
-package client.Snake.Utilities;
+package client.Snake.Utility;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

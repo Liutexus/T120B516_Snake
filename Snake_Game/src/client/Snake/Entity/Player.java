@@ -1,8 +1,6 @@
-package client.Snake.Entities;
-import java.lang.reflect.Array;
+package client.Snake.Entity;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;

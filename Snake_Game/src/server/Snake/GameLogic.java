@@ -1,7 +1,7 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
 package server.Snake;
 
-import client.Snake.Entities.Player;
+import client.Snake.Entity.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

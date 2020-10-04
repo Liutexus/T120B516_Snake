@@ -1,4 +1,4 @@
-package client.Snake.Entities;
+package client.Snake.Entity;
 
 import java.util.concurrent.ThreadLocalRandom;
 

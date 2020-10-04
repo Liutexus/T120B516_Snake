@@ -1,6 +1,5 @@
 package client.Snake;
 import client.Snake.Renderer.SwingRender;
-import client.Snake.Utilities.BitmapConverter;
 
 public class Client {
 
