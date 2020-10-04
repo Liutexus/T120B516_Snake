@@ -1,7 +1,7 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
 package server.Snake;
 
-import client.Snake.Entities.Player;
+import client.Snake.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,7 +33,7 @@ public class GameLogic implements Runnable {
 //            }
 //            entry.getValue().setMoveDirection(randx, randy);
             // --- FUN ZONE OVER ---
-            entry.getValue().movePlayer();
+            entry.getValue().getSnake().move();
         }
     }
 
@@ -57,7 +57,7 @@ public class GameLogic implements Runnable {
         HashMap<String, Object> fields = parseJSon(json);
 
         if(fields.containsKey("directionX") && fields.containsKey("directionY"))
-            players.get(fields.get("id")).setMoveDirection(Float.parseFloat((String)fields.get("directionX")), Float.parseFloat((String)fields.get("directionY")));
+            players.get(fields.get("id")).getSnake().setVelocity(Float.parseFloat((String)fields.get("directionX")), Float.parseFloat((String)fields.get("directionY")));
     }
 
     @Override

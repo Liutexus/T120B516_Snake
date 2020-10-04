@@ -1,6 +1,6 @@
 package server.Snake;
 
-import client.Snake.Entities.Player;
+import client.Snake.Player;
 
 import java.net.ServerSocket;
 import java.util.*;

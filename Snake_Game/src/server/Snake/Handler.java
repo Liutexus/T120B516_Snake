@@ -2,13 +2,11 @@
 // receiving inputs and processing them accordingly.
 package server.Snake;
 
-import client.Snake.Entities.Player;
+import client.Snake.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
