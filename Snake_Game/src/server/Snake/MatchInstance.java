@@ -9,13 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
 public class MatchInstance implements Runnable, Subject {
-    private static int concurrentClients = 4; // How maximum concurrent clients can we run?
+    private static int concurrentThreads = 5;
     private static Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
     private static Map<Integer, Handler> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
 
-    private GameLogic gameLogic;
-    private int maxPlayerCount = 4;
-    private int currentPlayerCount = 0;
+    private static GameLogic gameLogic;
+    private static int maxPlayerCount = 4;
+    private static int currentPlayerCount = 0;
 
     private boolean gameStarted = false;
 
@@ -31,9 +31,13 @@ public class MatchInstance implements Runnable, Subject {
         return this.maxPlayerCount;
     }
 
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
     @Override
     public void run() {
-        var pool = Executors.newFixedThreadPool(concurrentClients); // To take in x amount of clients at a time
+        var pool = Executors.newFixedThreadPool(concurrentThreads);
         pool.execute(gameLogic);
         while(true) {
             if(currentPlayerCount != maxPlayerCount) {
@@ -43,13 +47,13 @@ public class MatchInstance implements Runnable, Subject {
 
             if(!gameStarted){
                 handlers.forEach((index, handler) -> {
+                    handler.setMatchInstance(this);
                     handler.setGameLogic(this.gameLogic);
                     handler.setPlayers(this.players);
                     pool.execute(handler);
                 });
                 gameStarted = true;
             }
-
             try {Thread.sleep(100);} catch (Exception e) { };
         }
 
@@ -73,6 +77,13 @@ public class MatchInstance implements Runnable, Subject {
 
     @Override
     public boolean notifyObservers() {
-        return false;
+        try {
+            handlers.forEach((index, handler) -> {
+                handler.update();
+            });
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

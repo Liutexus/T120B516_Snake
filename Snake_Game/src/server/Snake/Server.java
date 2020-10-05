@@ -11,9 +11,7 @@ public class Server {
     private static Map<String, MatchInstance> matches = new ConcurrentHashMap<>(); // All current matches
     private static ExecutorService pool = Executors.newFixedThreadPool(concurrentMatches); // To take in x amount of clients at a time
 
-    public static void main(String[] args) throws Exception {
-
-
+    public static void main(String[] args) {
         try (var listener = new ServerSocket(80)) {
             System.out.println("The server is running...");
 
@@ -45,7 +43,7 @@ public class Server {
 
     private static MatchInstance returnAvailableMatch() {
         for (MatchInstance match: matches.values())
-            if(match.getCurrentPlayerCount() < match.getMaxPlayerCount())
+            if(match.getCurrentPlayerCount() < match.getMaxPlayerCount() && !match.isGameStarted())
                 return match;
         MatchInstance matchInstance = new MatchInstance();
         pool.execute(matchInstance);

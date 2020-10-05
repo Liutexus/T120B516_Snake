@@ -17,7 +17,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Handler implements Runnable, Observer {
     private Socket serverSocket;
-    public static GameLogic gameLogic;
+    private MatchInstance match;
+    private static GameLogic gameLogic;
     private OutputStream out;
     private InputStream in;
 
@@ -51,6 +52,10 @@ public class Handler implements Runnable, Observer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setMatchInstance(MatchInstance match) {
+        this.match = match;
     }
 
     public void setGameLogic(GameLogic gameLogic) {
@@ -141,7 +146,7 @@ public class Handler implements Runnable, Observer {
                 } catch (Exception e) {
                     if(serverSocket.isClosed()) break;
                     System.out.println("Couldn't receive packet from the client.");
-                    e.printStackTrace();
+//                    e.printStackTrace();
                     continue;
                 }
             }
