@@ -1,5 +1,7 @@
 package client.Snake.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Entity {
@@ -15,6 +17,7 @@ public class Entity {
         this.sizeY = 1;
     }
 
+    @JsonIgnore
     public float getPositionX() {
         return this.positionX;
     }
@@ -23,6 +26,7 @@ public class Entity {
         this.positionX = positionX;
     }
 
+    @JsonIgnore
     public float getPositionY() {
         return this.positionY;
     }
@@ -45,6 +49,7 @@ public class Entity {
         this.positionY = ThreadLocalRandom.current().nextInt(minY, maxY + 1);
     }
 
+    @JsonIgnore
     public float getSizeX() {
         return this.sizeX;
     }
@@ -53,6 +58,7 @@ public class Entity {
         this.sizeX = sizeX;
     }
 
+    @JsonIgnore
     public float getSizeY() {
         return this.sizeY;
     }

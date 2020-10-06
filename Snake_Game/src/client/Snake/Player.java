@@ -1,5 +1,5 @@
 package client.Snake;
-import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +18,7 @@ public class Player implements java.io.Serializable {
 
     public Player(String id) {
         this.id = id;
-        this.snake = new Snake();
+        this.snake = new Snake(0, 0);
         this.score = 0;
         this.color = "BLACK";
         this.isGameOver = false;
@@ -48,7 +48,7 @@ public class Player implements java.io.Serializable {
         this.color = color;
     }
 
-    public int getSore() {
+    public int getScore() {
         return this.score;
     }
 
@@ -65,11 +65,11 @@ public class Player implements java.io.Serializable {
     public boolean getIsGameOver() {
         return this.isGameOver;
     }
+
     public void setGameOver(boolean isGameOver){
         this.isGameOver = isGameOver;
     }
 
-    // TODO: Fix JSON-to-object parsing to accommodate the new Snake/Player split.
     public void jsonToObject(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> map = new HashMap<>();
@@ -79,36 +79,14 @@ public class Player implements java.io.Serializable {
             e.printStackTrace();
             return;
         }
-
         map.forEach((field, obj) -> {
-            ArrayList<Object> objects;
             switch (field){
                 case "id":
                     this.id = (String)obj;
                     break;
-                case "position":
-                    objects = (ArrayList<Object>) obj;
-                    this.snake.setPositionX((float)(double)objects.get(0));
-                    this.snake.setPositionY((float)(double)objects.get(1));
-                    break;
-                case "prevPositionsX":
-                    this.snake.setPreviousPositionsX((ArrayList) obj);
-                    break;
-                case "prevPositionsY":
-                    this.snake.setPreviousPositionsY((ArrayList) obj);
-                    break;
-                case "velocity":
-                    objects = (ArrayList<Object>) obj;
-                    this.snake.setVelocityX((float)(double)objects.get(0));
-                    this.snake.setVelocityY((float)(double)objects.get(1));
-                    break;
-                case "size":
-                    objects = (ArrayList<Object>) obj;
-                    this.snake.setSizeX((float)(double)objects.get(0));
-                    this.snake.setSizeY((float)(double)objects.get(1));
-                    break;
-                case "tailLength":
-                    this.snake.setTailLength((int)obj);
+                case "snake":
+                    HashMap snakeMap = (HashMap) obj;
+                    this.snake.mapToObject(snakeMap);
                     break;
                 case "score":
                     this.score = (int)obj;
@@ -118,6 +96,7 @@ public class Player implements java.io.Serializable {
                     break;
                 case "isGameOver":
                     this.isGameOver = (boolean) obj;
+                    break;
                 default:
                     System.out.println("Attribute: '" + field + "' is not recognised.");
                     break;

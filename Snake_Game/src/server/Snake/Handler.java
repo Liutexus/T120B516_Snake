@@ -36,7 +36,7 @@ public class Handler implements Runnable {
             // We listen to our client here
             in = serverSocket.getInputStream();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -114,7 +114,7 @@ public class Handler implements Runnable {
                 } catch (Exception e) {
                     if(serverSocket.isClosed()) break;
                     System.out.println("Couldn't receive packet from the client.");
-                    e.printStackTrace();
+//                    e.printStackTrace();
                     continue;
                 }
             }
@@ -157,12 +157,12 @@ public class Handler implements Runnable {
                 if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough
                 if(!packet.endsWith("\n")) packet += "\n";
 
-//                System.out.print(packet);
+//                System.out.println(packet);
                 bfw.write(packet);
                 bfw.flush();
             } catch (IOException e) {
                 System.out.println("Error sending packet to client.");
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
 

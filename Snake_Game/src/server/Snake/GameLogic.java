@@ -26,7 +26,7 @@ public class GameLogic implements Runnable {
     // TODO: Add various functions which change players' state
 
     private void movePlayers() {
-        for (Map.Entry<String, Player> entry : players.entrySet()) {
+        for (Player player : players.values()) {
             // --- JUST FOR FUN --- // For testing purposes
 //            float[] directs = entry.getValue().getMoveDirection();
 //            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
@@ -38,7 +38,7 @@ public class GameLogic implements Runnable {
 //            }
 //            entry.getValue().setMoveDirection(randx, randy);
             // --- FUN ZONE OVER ---
-            entry.getValue().getSnake().move();
+            player.getSnake().move();
         }
     }
 

@@ -2,11 +2,11 @@ package client.Snake.Entity;
 
 import client.Snake.Entity.Entity;
 import client.Snake.Player;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 
 public abstract class AbstractMovingEntity extends Entity {
-
     protected ArrayList<Float> previousPositionsX; // Previous horizontal positions.
     protected ArrayList<Float> previousPositionsY; // Previous vertical positions.
     protected float velocityX; // How fast is the entity going horizontally?
@@ -29,7 +29,7 @@ public abstract class AbstractMovingEntity extends Entity {
     }
 
     public void AddPreviousPositionX(float previousPositionX) {
-        this.previousPositionsX.add(previousPositionX);
+        this.previousPositionsX.add(0, previousPositionX);
     }
 
     public ArrayList getPreviousPositionsY() {
@@ -41,9 +41,10 @@ public abstract class AbstractMovingEntity extends Entity {
     }
 
     public void AddPreviousPositionY(float previousPositionY) {
-        this.previousPositionsY.add(previousPositionY);
+        this.previousPositionsY.add(0, previousPositionY);
     }
 
+    @JsonIgnore
     public float getVelocityX() {
         return velocityX;
     }
@@ -52,6 +53,7 @@ public abstract class AbstractMovingEntity extends Entity {
         this.velocityX = velocityX;
     }
 
+    @JsonIgnore
     public float getVelocityY() {
         return velocityY;
     }
