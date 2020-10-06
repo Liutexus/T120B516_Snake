@@ -63,7 +63,6 @@ class SnakePanel extends JPanel implements Runnable {
         addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                // TODO: Rewrite keyevents to send outputs to the server
                 keyResponse(e);
             }
 
