@@ -14,7 +14,6 @@ public class Client {
 
     public static void main(String[] args) {
         Client game = new Client();
-
         game.Start();
     }
 }
