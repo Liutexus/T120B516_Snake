@@ -3,6 +3,7 @@
 package server.Snake;
 
 import client.Snake.Player;
+import server.Snake.Interface.Observer;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,9 +15,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Handler implements Runnable {
+public class Handler implements Runnable, Observer {
     private Socket serverSocket;
-    public static GameLogic gameLogic;
+    private MatchInstance match;
+    private static GameLogic gameLogic;
     private OutputStream out;
     private InputStream in;
 
@@ -24,8 +26,20 @@ public class Handler implements Runnable {
     private String clientId;
     public static Map<String, Player> players = new ConcurrentHashMap<>();
 
-    Handler(Socket serverSocket, GameLogic gameLogic, Map players) {
+    public Handler(Socket serverSocket) {
+        this.serverSocket = serverSocket; // Current socket object
 
+        try {
+            // We return data from server to the client through here
+            out = serverSocket.getOutputStream();
+            // We listen to our client here
+            in = serverSocket.getInputStream();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Handler(Socket serverSocket, GameLogic gameLogic, Map players) {
         this.serverSocket = serverSocket; // Current socket object
         this.gameLogic = gameLogic;
         this.players = players;
@@ -39,6 +53,19 @@ public class Handler implements Runnable {
 //            e.printStackTrace();
         }
     }
+
+    public void setMatchInstance(MatchInstance match) {
+        this.match = match;
+    }
+
+    public void setGameLogic(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
+    }
+
+    public void setPlayers(Map players) {
+        this.players = players;
+    }
+
 
     @Override
     public void run() {
@@ -63,6 +90,11 @@ public class Handler implements Runnable {
 //            e.printStackTrace();
             System.out.println("Error:" + serverSocket);
         }
+    }
+
+    @Override
+    public void update() {
+
     }
 
     // Some utilities
