@@ -8,6 +8,12 @@ public class Entity {
     protected float sizeX; // How big is the player by X axis
     protected float sizeY; // How big is the player by Y axis
 
+    public Entity(float positionX, float positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.sizeX = 1;
+        this.sizeY = 1;
+    }
 
     public float getPositionX() {
         return this.positionX;

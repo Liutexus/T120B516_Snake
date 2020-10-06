@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.Snake.Entity.Food;
+import client.Snake.Entity.Collectible.Static.Leaf;
 import client.Snake.Player;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -32,14 +32,14 @@ class SnakePanel extends JPanel implements Runnable {
     private Socket clientSocket;
 
     private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
-    private ArrayList<Food> objects;
+    private ArrayList<Leaf> objects;
     private ArrayList terrain;
 
     public SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
-        this.objects = new ArrayList<Food>();
+        this.objects = new ArrayList<Leaf>();
         this.terrain = new ArrayList();
 
         this.clientSocket = clientSocket;

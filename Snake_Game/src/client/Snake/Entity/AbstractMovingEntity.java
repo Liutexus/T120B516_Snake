@@ -1,5 +1,8 @@
 package client.Snake.Entity;
 
+import client.Snake.Entity.Entity;
+import client.Snake.Player;
+
 import java.util.ArrayList;
 
 public abstract class AbstractMovingEntity extends Entity {
@@ -8,6 +11,14 @@ public abstract class AbstractMovingEntity extends Entity {
     protected ArrayList<Float> previousPositionsY; // Previous vertical positions.
     protected float velocityX; // How fast is the entity going horizontally?
     protected float velocityY; // How fast is the entity going vertically?
+
+    public AbstractMovingEntity(float positionX, float positionY) {
+        super(positionX, positionY);
+        this.previousPositionsX = new ArrayList<Float>();
+        this.previousPositionsY = new ArrayList<Float>();
+        this.velocityX = 0;
+        this.velocityY = 0;
+    }
 
     public ArrayList getPreviousPositionsX() {
         return this.previousPositionsX;
@@ -49,10 +60,16 @@ public abstract class AbstractMovingEntity extends Entity {
         this.velocityY = velocityY;
     }
 
+    public float[] getVelocity() {
+        return new float[] {this.velocityX, this.velocityY};
+    }
+
     public void setVelocity(float velocityX, float velocityY){
         this.velocityX = velocityX;
         this.velocityY = velocityY;
     }
 
     public abstract boolean move();
+
+    public abstract void onCollide(Player player);
 }

@@ -1,5 +1,7 @@
 package client.Snake.Entity;
 
+import client.Snake.Player;
+
 import java.util.ArrayList;
 
 public class Snake extends AbstractMovingEntity {
@@ -8,27 +10,8 @@ public class Snake extends AbstractMovingEntity {
     private String boost; // What boost player currently has?
     private String terrain; // What terrain is the player standing on?
 
-    public Snake() {
-        this.previousPositionsX = new ArrayList();
-        this.previousPositionsY = new ArrayList();
-        this.positionX = 0;
-        this.positionY = 0;
-        this.velocityX = 0;
-        this.velocityY = 0;
-        this.sizeX = 1;
-        this.sizeY = 1;
-        this.tailLength = 10;
-    }
-
-    public Snake(float posX, float posY) {
-        this.previousPositionsX = new ArrayList();
-        this.previousPositionsY = new ArrayList();
-        this.positionX = posX;
-        this.positionY = posY;
-        this.velocityX = 0;
-        this.velocityY = 0;
-        this.sizeX = 1;
-        this.sizeY = 1;
+    public Snake(float positionX, float positionY) {
+        super(positionX, positionY);
         this.tailLength = 10;
     }
 
@@ -80,5 +63,11 @@ public class Snake extends AbstractMovingEntity {
 
         // TODO: Check if new position do not collide with previous positions or another player.
         return true;
+    }
+
+    // TODO: Implement Snake<->Snake collision handling.
+    @Override
+    public void onCollide(Player player) {
+
     }
 }
