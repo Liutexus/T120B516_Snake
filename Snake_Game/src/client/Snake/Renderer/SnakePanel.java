@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 class SnakePanel extends JPanel implements Runnable {
+    private static SnakePanel panelInstance = null;
+
     private OutputStreamWriter out;
     private InputStreamReader in;
 
@@ -35,7 +37,7 @@ class SnakePanel extends JPanel implements Runnable {
     private ArrayList<Food> objects;
     private ArrayList terrain;
 
-    public SnakePanel(Socket clientSocket) {
+    private SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
@@ -76,6 +78,13 @@ class SnakePanel extends JPanel implements Runnable {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
+    }
+
+    public static SnakePanel getInstance(Socket clientSocket) {
+        if (panelInstance == null)
+            panelInstance = new SnakePanel(clientSocket);
+
+        return panelInstance;
     }
 
     public Player getRemoteCurrentPlayer() {
