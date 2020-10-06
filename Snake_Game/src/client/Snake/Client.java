@@ -1,6 +1,5 @@
 package client.Snake;
 import client.Snake.Renderer.SwingRender;
-import client.Snake.Utilities.BitmapConverter;
 
 public class Client {
 
@@ -15,7 +14,6 @@ public class Client {
 
     public static void main(String[] args) {
         Client game = new Client();
-
         game.Start();
     }
 }

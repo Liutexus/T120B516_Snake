@@ -12,8 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.Snake.Entities.Food;
-import client.Snake.Entities.Player;
+import client.Snake.Entity.Collectible.Static.Leaf;
+import client.Snake.Player;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
@@ -34,14 +34,14 @@ class SnakePanel extends JPanel implements Runnable {
     private Socket clientSocket;
 
     private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
-    private ArrayList<Food> objects;
+    private ArrayList<Leaf> objects;
     private ArrayList terrain;
 
     private SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
-        this.objects = new ArrayList<Food>();
+        this.objects = new ArrayList<Leaf>();
         this.terrain = new ArrayList();
 
         this.clientSocket = clientSocket;
@@ -201,18 +201,18 @@ class SnakePanel extends JPanel implements Runnable {
 
         // Draw all players
         for (Map.Entry<String, Player> entry : snakes.entrySet()) {
-            drawRect(g, entry.getValue().getPosition(), entry.getValue().getSize(), Color.RED); // Drawing the snake's head
+            drawRect(g, entry.getValue().getSnake().getPosition(), entry.getValue().getSnake().getSize(), Color.RED); // Drawing the snake's head
 
             // Drawing the tail
-            ArrayList prevPosX = entry.getValue().getPrevPositionsX();
-            ArrayList prevPosY = entry.getValue().getPrevPositionsY();
+            ArrayList prevPosX = entry.getValue().getSnake().getPreviousPositionsX();
+            ArrayList prevPosY = entry.getValue().getSnake().getPreviousPositionsY();
 
-            for(int i = 0; i < entry.getValue().getTailLength(); i++){
+            for(int i = 0; i < entry.getValue().getSnake().getTailLength(); i++){
                 try {
-                    int colorStep = 255 / (entry.getValue().getTailLength() + 1);
-                    Color tailColor = new Color(colorStep * (entry.getValue().getTailLength() - i), colorStep, colorStep);
+                    int colorStep = 255 / (entry.getValue().getSnake().getTailLength() + 1);
+                    Color tailColor = new Color(colorStep * (entry.getValue().getSnake().getTailLength() - i), colorStep, colorStep);
                     prevPosX.get(i);
-                    drawRect(g, new float[]{(Float.parseFloat(prevPosX.get(i).toString())), Float.parseFloat(prevPosY.get(i).toString())}, entry.getValue().getSize(), tailColor);
+                    drawRect(g, new float[]{(Float.parseFloat(prevPosX.get(i).toString())), Float.parseFloat(prevPosY.get(i).toString())}, entry.getValue().getSnake().getSize(), tailColor);
                 } catch (Exception e) {
 //                    e.printStackTrace();
                     // Just to reduce headache from exceptions at the start of the game
