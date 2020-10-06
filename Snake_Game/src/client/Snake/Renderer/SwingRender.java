@@ -25,7 +25,7 @@ public class SwingRender extends JFrame implements Runnable {
         // TODO: Adding game to the window
         try {
             clientSocket = new Socket("localhost", 80);
-            gamePanel = new SnakePanel(clientSocket);
+            gamePanel = SnakePanel.getInstance(clientSocket);
             gamePanel.setPreferredSize(new Dimension(1000, 1000));
             add(gamePanel);
         } catch (Exception e) {
