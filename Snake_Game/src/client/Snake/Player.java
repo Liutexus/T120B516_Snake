@@ -69,7 +69,7 @@ public class Player implements java.io.Serializable {
         this.isGameOver = isGameOver;
     }
 
-    // TODO: Fix JSON-to-object parsing to accomodate the new Snake/Player split.
+    // TODO: Fix JSON-to-object parsing to accommodate the new Snake/Player split.
     public void jsonToObject(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> map = new HashMap<>();
