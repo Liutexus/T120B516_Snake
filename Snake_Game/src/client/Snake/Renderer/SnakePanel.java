@@ -128,18 +128,6 @@ class SnakePanel extends JPanel implements Runnable {
                     out.write(packet.toString());
                     out.flush();
                     break;
-                case KeyEvent.VK_W: // Placeholder
-//                player.deltaSize(1, 1);
-                    break;
-                case KeyEvent.VK_D: // Placeholder
-//                player.changeTailSize(1);
-                    break;
-                case KeyEvent.VK_S: // Placeholder
-//                player.deltaSize(-1, -1);
-                    break;
-                case KeyEvent.VK_A: // Placeholder
-//                player.changeTailSize(-1);
-                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
             }

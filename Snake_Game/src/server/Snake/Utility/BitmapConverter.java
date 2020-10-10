@@ -1,15 +1,15 @@
-package client.Snake.Utility;
+package server.Snake.Utility;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
 public final class BitmapConverter {
-
-    enum Terrain {
+    public enum Terrain {
         Sand,
         Sea,
         Road,
@@ -28,8 +28,7 @@ public final class BitmapConverter {
     }};
 
     public static Terrain[][] BMPToTerrain(String imagePath) {
-        try
-        {
+        try {
             File bitmapFile = new File(imagePath);
             BufferedImage image = ImageIO.read(bitmapFile);
 
@@ -44,17 +43,35 @@ public final class BitmapConverter {
             }
             return terrainType;
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             System.out.println(e.toString());
             return new Terrain[0][0];
         }
     }
 
-    public static Color[][] BMPToColor(String imagePath) {
-        try
-        {
+    public static Terrain[][] BMPToTerrain(String imagePath, int sizeX, int sizeY) {
+        try {
+            File bitmapFile = new File(imagePath);
+            BufferedImage imageBuff = ImageIO.read(bitmapFile);
+            BufferedImage scaledImageBuff = new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics2D = scaledImageBuff.createGraphics();
+            graphics2D.drawImage(imageBuff, 0, 0, sizeX, sizeY, null);
+            graphics2D.dispose();
 
+            Terrain[][] terrainType = new Terrain[sizeY][sizeX];
+            for(int i = 0; i < sizeY; i++)
+                for(int j = 0; j < sizeX; j++)
+                    terrainType[i][j] = colorToTerrainMap.get(scaledImageBuff.getRGB(j, i));
+            return terrainType;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return new Terrain[0][0];
+        }
+    }
+
+    public static Color[][] BMPToColor(String imagePath) {
+        try {
             File bitmapFile = new File(imagePath);
             BufferedImage image = ImageIO.read(bitmapFile);
 
@@ -69,8 +86,7 @@ public final class BitmapConverter {
             }
             return colorValues;
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             System.out.println(e.toString());
             return new Color[0][0];
         }

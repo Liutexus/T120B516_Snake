@@ -3,6 +3,7 @@ package server.Snake;
 import client.Snake.Player;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
+import server.Snake.Utility.BitmapConverter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +15,7 @@ public class MatchInstance implements Runnable, ISubject {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
 
     private GameLogic gameLogic;
+    private BitmapConverter.Terrain[][] terrain;
     private int maxPlayerCount = 4;
     private int currentPlayerCount = 0;
 
@@ -21,6 +23,9 @@ public class MatchInstance implements Runnable, ISubject {
 
     public MatchInstance() {
         this.gameLogic = new GameLogic(this.handlers, this.players);
+        this.terrain = BitmapConverter.BMPToTerrain("img/seaside_road.bmp", 50, 50);
+
+        System.out.println(terrain);
     }
 
     public int getCurrentPlayerCount() {
@@ -39,7 +44,7 @@ public class MatchInstance implements Runnable, ISubject {
     public void run() {
         var pool = Executors.newFixedThreadPool(concurrentThreads);
         pool.execute(gameLogic);
-        while(true) {
+        while(true){
             if(currentPlayerCount != maxPlayerCount) {
                 try {Thread.sleep(100);} catch (Exception e) { };
                 continue;
