@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameLogic implements Runnable {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
@@ -28,7 +29,7 @@ public class GameLogic implements Runnable {
     private void movePlayers() {
         for (Player player : players.values()) {
             // --- JUST FOR FUN --- // For testing purposes
-//            float[] directs = entry.getValue().getMoveDirection();
+//            float[] directs = player.getSnake().getVelocity();
 //            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
 //            if(randx == directs[0]*-1) randx = (int)directs[0];
 //
@@ -36,7 +37,7 @@ public class GameLogic implements Runnable {
 //            if(randx == 0){
 //                randy = ThreadLocalRandom.current().nextInt(-1, 2);
 //            }
-//            entry.getValue().setMoveDirection(randx, randy);
+//            player.getSnake().setVelocity(randx, randy);
             // --- FUN ZONE OVER ---
             player.getSnake().move();
         }

@@ -1,6 +1,6 @@
 package server.Snake.Interface;
 
-public interface Observer {
+public interface IObserver {
     void update();
 }
 

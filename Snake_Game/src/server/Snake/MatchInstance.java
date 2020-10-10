@@ -1,20 +1,20 @@
 package server.Snake;
 
-import client.Snake.Entities.Player;
-import server.Snake.Interface.Observer;
-import server.Snake.Interface.Subject;
+import client.Snake.Player;
+import server.Snake.Interface.IObserver;
+import server.Snake.Interface.ISubject;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
-public class MatchInstance implements Runnable, Subject {
+public class MatchInstance implements Runnable, ISubject {
     private static int concurrentThreads = 5;
     private static Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
     private static Map<Integer, Handler> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
 
     private static GameLogic gameLogic;
-    private static int maxPlayerCount = 4;
+    private static int maxPlayerCount = 1;
     private static int currentPlayerCount = 0;
 
     private boolean gameStarted = false;
@@ -60,7 +60,7 @@ public class MatchInstance implements Runnable, Subject {
     }
 
     @Override
-    public boolean registerObserver(Observer o) {
+    public boolean registerObserver(IObserver o) {
         if(this.currentPlayerCount < this.maxPlayerCount){
             handlers.put(currentPlayerCount, (Handler)o);
             this.currentPlayerCount++;
@@ -70,7 +70,7 @@ public class MatchInstance implements Runnable, Subject {
     }
 
     @Override
-    public boolean unregisterObserver(Observer o) {
+    public boolean unregisterObserver(IObserver o) {
         handlers.remove(o);
         return true;
     }

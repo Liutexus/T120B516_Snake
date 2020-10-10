@@ -2,9 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/Packet/EPacketHeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/Packet/Packet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Player$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Player$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Sender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Sender.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/Observer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/Subject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/Observer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/Subject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/ISubject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,6 +42,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -119,6 +143,22 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java</url>
+          <line>302</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java</url>
+          <line>300</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Snake_Game$Client.ic" NAME="Client Coverage Results" MODIFIED="1600519448754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
