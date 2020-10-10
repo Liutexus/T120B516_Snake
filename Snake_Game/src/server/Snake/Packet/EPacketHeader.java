@@ -9,6 +9,8 @@ public enum EPacketHeader {
     ID,
     MAP,
     PLAYER,
+    MATCH,
+    SERVER,
     CLIENTPLAYER,
     CLIENTRESPONSE,
     ALLPLAYERS,

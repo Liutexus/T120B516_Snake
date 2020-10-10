@@ -5,13 +5,9 @@ import client.Snake.Entity.Collectible.CollectibleFactory;
 import client.Snake.Entity.IFactory;
 import client.Snake.Entity.Obstacle.ObstacleFactory;
 import client.Snake.Player;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class GameLogic implements Runnable {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
@@ -45,18 +41,6 @@ public class GameLogic implements Runnable {
 
     public void addPlayer(Player player) {
         players.put(player.getId(), player);
-    }
-
-    private HashMap parseJSon(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> map;
-        try {
-            map = objectMapper.readValue(json, new TypeReference<>(){});
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return map;
     }
 
     public void updatePlayerField(Map map) {
