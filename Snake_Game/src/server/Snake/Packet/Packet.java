@@ -40,7 +40,6 @@ public class Packet {
             e.printStackTrace();
             return;
         }
-
         if(map.get(this.header.toString()).getClass() == String.class)
             this.body = (String) map.get(this.header.toString());
         else
@@ -71,28 +70,29 @@ public class Packet {
             e.printStackTrace();
             return null;
         }
-
         return map;
     }
 
     @Override
     public String toString(){
-        String packet = "{\"" + header.toString() + "\":";
+        String packet = "{\"" + header.toString() + "\":"; // add packet opening parentheses and its header
 
-        if(!body.contains(":")) {
+        if(!body.contains(":")) { // if body is only a simple string
             if(!body.endsWith("\""))
                 this.body += '"';
             if(!body.startsWith("\""))
                 this.body = '"' + this.body;
         }
 
-        if(!body.startsWith("{") && body.contains(":")) packet += "{";
-        packet += body;
-        if(!body.endsWith("}") && body.contains(":")) packet += "}";
+        if(!body.startsWith("{") && body.contains(":")) packet += "{"; // does body have object opening parentheses
 
-        packet += "}";
+        packet += body;
+
+        if(!body.endsWith("}") && body.contains(":")) packet += "}"; // does body have object closing parentheses
+
+        packet += "}"; // add packet closing parentheses
         if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough
-        if(!packet.endsWith("\n")) packet += "\n";
+        if(!packet.endsWith("\n")) packet += "\n"; // adding new line so the stream can know where the packet ends
         return packet;
     }
 

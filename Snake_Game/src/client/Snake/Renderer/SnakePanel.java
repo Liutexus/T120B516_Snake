@@ -59,11 +59,6 @@ class SnakePanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
 
-//        this.Id = getId();
-//        System.out.println("Client ID: " + this.Id);
-//        this.currentPlayer = getRemoteCurrentPlayer();
-//        System.out.println(currentPlayer.toString());
-
         addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -89,37 +84,6 @@ class SnakePanel extends JPanel implements Runnable {
             panelInstance = new SnakePanel(clientSocket);
 
         return panelInstance;
-    }
-
-//    public Player getRemoteCurrentPlayer() {
-//        BufferedReader inb = new BufferedReader(in);
-//        while (true) {
-//            try {
-//                Player tempPlayer = new Player(null);
-//                String packet = inb.readLine();
-//                tempPlayer.jsonToObject(packet);
-//                if(!snakes.containsKey(tempPlayer)) snakes.put(tempPlayer.getId(), tempPlayer);
-//                if(tempPlayer != null) return tempPlayer;
-//                return null;
-//            } catch (Exception e) {
-//                System.out.println("Error trying to receive Client's player object.");
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-    private String getId() {
-        BufferedReader inb = new BufferedReader(in);
-        while (true) {
-            try {
-                String packet = inb.readLine();
-                if(packet.length() != 0) return packet;
-                else return null;
-            } catch (Exception e) {
-                System.out.println("Failed to receive ID from server.");
-                e.printStackTrace();
-            }
-        }
     }
 
     private void keyResponse(KeyEvent key) {
@@ -236,7 +200,6 @@ class SnakePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        // TODO: Keep receiving data from server
         ExecutorService executor = Executors.newFixedThreadPool(2);
         ClientUpdater updater = new ClientUpdater();
         ClientListener listener = new ClientListener(in, updater);

@@ -140,8 +140,6 @@ public class Handler implements Runnable, IObserver {
 
         private void parsePacket(String packetJson){
             Packet packet = new Packet(packetJson);
-            Map packetMap;
-            Player packetPlayer = new Player(null);
             switch (packet.header){
                 case EMPTY:
                     break;
