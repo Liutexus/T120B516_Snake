@@ -27,7 +27,8 @@ public class Hawk extends AbstractMovingEntity {
     }
 
     @Override
-    public void onCollide(Player player) {
-        player.deltaScore(-75);
+    public void onCollide(Object collider) {
+        if(collider.getClass() == Player.class)
+            ((Player)collider).deltaScore(-75);
     }
 }

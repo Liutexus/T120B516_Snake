@@ -13,8 +13,8 @@ public class SizeUp extends AbstractStaticEntity {
     @Override
     // TODO: Implement this size buff in a smarter manner (perhaps temporarily with a timer).
     // Increases size of player snake by 1x1.
-    public void onCollide(Player player) {
-        Snake playerSnake = player.getSnake();
+    public void onCollide(Object collider) {
+        Snake playerSnake = ((Player)collider).getSnake();
         playerSnake.deltaSize(1, 1);
     }
 }

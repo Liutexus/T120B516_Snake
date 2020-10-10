@@ -39,6 +39,16 @@ public class GameLogic implements Runnable {
         }
     }
 
+    private void checkCollisions() {
+        players.forEach((id1, player1) -> {
+            players.forEach((id2, player2) -> {
+                if(player1 != player2) {
+                    player1.getSnake().onCollide(player2.getSnake());
+                }
+            });
+        });
+    }
+
     public void addPlayer(Player player) {
         players.put(player.getId(), player);
     }
@@ -52,6 +62,7 @@ public class GameLogic implements Runnable {
     public void run() {
         while(true) { // Main game loop
             // Game logic goes here
+            checkCollisions();
             movePlayers();
 
             try {Thread.sleep(100);} catch (Exception e) { };
