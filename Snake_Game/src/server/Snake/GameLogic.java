@@ -5,10 +5,7 @@ import client.Snake.Entity.Collectible.CollectibleFactory;
 import client.Snake.Entity.IFactory;
 import client.Snake.Entity.Obstacle.ObstacleFactory;
 import client.Snake.Player;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,7 +25,7 @@ public class GameLogic implements Runnable {
     private void movePlayers() {
         for (Player player : players.values()) {
             // --- JUST FOR FUN --- // For testing purposes
-//            float[] directs = entry.getValue().getMoveDirection();
+//            float[] directs = player.getSnake().getVelocity();
 //            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
 //            if(randx == directs[0]*-1) randx = (int)directs[0];
 //
@@ -36,7 +33,7 @@ public class GameLogic implements Runnable {
 //            if(randx == 0){
 //                randy = ThreadLocalRandom.current().nextInt(-1, 2);
 //            }
-//            entry.getValue().setMoveDirection(randx, randy);
+//            player.getSnake().setVelocity(randx, randy);
             // --- FUN ZONE OVER ---
             player.getSnake().move();
         }
@@ -46,23 +43,9 @@ public class GameLogic implements Runnable {
         players.put(player.getId(), player);
     }
 
-    private HashMap parseJSon(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> map;
-        try {
-            map = objectMapper.readValue(json, new TypeReference<>(){});
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return map;
-    }
-
-    public void updatePlayerField(String json) {
-        HashMap<String, Object> fields = parseJSon(json);
-
-        if(fields.containsKey("directionX") && fields.containsKey("directionY"))
-            players.get(fields.get("id")).getSnake().setVelocity(Float.parseFloat((String)fields.get("directionX")), Float.parseFloat((String)fields.get("directionY")));
+    public void updatePlayerField(Map map) {
+        if(map.containsKey("directionX") && map.containsKey("directionY"))
+            players.get(map.get("id")).getSnake().setVelocity(Float.parseFloat((String)map.get("directionX")), Float.parseFloat((String)map.get("directionY")));
     }
 
     @Override

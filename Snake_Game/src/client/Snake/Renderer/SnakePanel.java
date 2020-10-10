@@ -12,10 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import client.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Entity.Collectible.Static.Leaf;
+import client.Snake.Entity.Entity;
 import client.Snake.Player;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import server.Snake.Packet.EPacketHeader;
+import server.Snake.Packet.Packet;
 
 class SnakePanel extends JPanel implements Runnable {
     private static SnakePanel panelInstance = null;
@@ -34,14 +38,14 @@ class SnakePanel extends JPanel implements Runnable {
     private Socket clientSocket;
 
     private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
-    private ArrayList<Leaf> objects;
+    private Map<String, Entity> mapObjects;
     private ArrayList terrain;
 
     private SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
-        this.objects = new ArrayList<Leaf>();
+        this.mapObjects = new ConcurrentHashMap<>();
         this.terrain = new ArrayList();
 
         this.clientSocket = clientSocket;
@@ -54,11 +58,6 @@ class SnakePanel extends JPanel implements Runnable {
             System.out.println("Cannot establish connection to server.");
             e.printStackTrace();
         }
-
-        this.Id = getId();
-        System.out.println("Client ID: " + this.Id);
-        this.currentPlayer = getRemoteCurrentPlayer();
-//        System.out.println(currentPlayer.toString());
 
         addKeyListener(new KeyListener() {
             @Override
@@ -87,86 +86,46 @@ class SnakePanel extends JPanel implements Runnable {
         return panelInstance;
     }
 
-    public Player getRemoteCurrentPlayer() {
-        BufferedReader inb = new BufferedReader(in);
-        while (true) {
-            try {
-                Player tempPlayer = new Player(null);
-                String packet = inb.readLine();
-                tempPlayer.jsonToObject(packet);
-                if(!snakes.containsKey(tempPlayer)) snakes.put(tempPlayer.getId(), tempPlayer);
-                if(tempPlayer != null) return tempPlayer;
-                return null;
-            } catch (Exception e) {
-                System.out.println("Player object from server not received.");
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private String getId() {
-        BufferedReader inb = new BufferedReader(in);
-        while (true) {
-            try {
-                String packet = inb.readLine();
-                if(packet.length() != 0) return packet;
-                else return null;
-            } catch (Exception e) {
-                System.out.println("Failed to receive ID from server.");
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void keyResponse(KeyEvent key) {
         try {
             ObjectWriter objectMapper = new ObjectMapper().writer();
-            HashMap<Object, Object> packetMap;
-            String packet = "";
+            HashMap<Object, Object> packetMap = new HashMap<>();
+            Packet packet = new Packet(EPacketHeader.CLIENTRESPONSE);
+            packetMap.put("id", this.Id);
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "-1");
-                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
-                    out.write(packet);
+                    packet.setBody(objectMapper.writeValueAsString(packetMap));
+                    out.write(packet.toString());
                     out.flush();
                     break;
                 case KeyEvent.VK_RIGHT:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "1");
                     packetMap.put("directionY", "0");
-                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
-                    out.write(packet);
+                    packet.setBody(objectMapper.writeValueAsString(packetMap));
+                    out.write(packet.toString());
                     out.flush();
                     break;
                 case KeyEvent.VK_DOWN:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "1");
-                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
-                    out.write(packet);
+                    packet.setBody(objectMapper.writeValueAsString(packetMap));
+                    out.write(packet.toString());
                     out.flush();
                     break;
                 case KeyEvent.VK_LEFT:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "-1");
                     packetMap.put("directionY", "0");
-                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
-                    out.write(packet);
+                    packet.setBody(objectMapper.writeValueAsString(packetMap));
+                    out.write(packet.toString());
                     out.flush();
                     break;
                 case KeyEvent.VK_SPACE:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "0");
-                    packet = objectMapper.writeValueAsString(packetMap) + "\n";
-                    out.write(packet);
+                    packet.setBody(objectMapper.writeValueAsString(packetMap));
+                    out.write(packet.toString());
                     out.flush();
                     break;
                 case KeyEvent.VK_W: // Placeholder
@@ -223,9 +182,9 @@ class SnakePanel extends JPanel implements Runnable {
         }
 
         // Draw all objects placed on the map
-        objects.forEach(obj -> {
-            // TODO: Draw map objects here
-        });
+//        objects.forEach(obj -> {
+//            // TODO: Draw map objects here
+//        });
     }
 
     private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
@@ -241,7 +200,6 @@ class SnakePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        // TODO: Keep receiving data from server
         ExecutorService executor = Executors.newFixedThreadPool(2);
         ClientUpdater updater = new ClientUpdater();
         ClientListener listener = new ClientListener(in, updater);
@@ -291,6 +249,36 @@ class SnakePanel extends JPanel implements Runnable {
             packets.add(packet);
         }
 
+        private void parsePacket(String packetJson){
+            Packet packet = new Packet(packetJson);
+            Map packetMap;
+            Player packetPlayer = new Player(null);
+            switch (packet.header){
+                case EMPTY:
+                    break;
+                case ID:
+                    Id = (String)packet.parseBody().get(packet.header.toString());
+                    System.out.println("Client ID: " + Id);
+                    break;
+                case CLIENTPLAYER:
+                    packetMap = packet.parseBody();
+                    packetPlayer.mapToObject(packetMap);
+                    currentPlayer = packetPlayer;
+                    break;
+                case PLAYER:
+                    packetMap = packet.parseBody();
+                    packetPlayer.mapToObject(packetMap);
+                    if(packetPlayer.getId() != null)
+                        if(!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);
+                        else snakes.replace(packetPlayer.getId(), packetPlayer);
+                    break;
+
+                default:
+                    System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
+                    break;
+            }
+        }
+
         @Override
         public void run() {
             while(true) {
@@ -299,17 +287,7 @@ class SnakePanel extends JPanel implements Runnable {
                     try { this.wait(); } catch (Exception e) { }
                 } else {
                     sleeping = false;
-                    Player tempPlayer = new Player(null);
-                    try {
-                        tempPlayer.jsonToObject(packets.pop());
-                    } catch (Exception e) {
-                        System.out.println("Error: Couldn't parse received packet.");
-//                        e.printStackTrace();
-                        continue;
-                    }
-                    if(tempPlayer.getId() != null)
-                        if(!snakes.containsKey(tempPlayer)) snakes.put(tempPlayer.getId(), tempPlayer);
-                        else snakes.replace(tempPlayer.getId(), tempPlayer);
+                    parsePacket(packets.pop());
                     repaint();
                 }
             }

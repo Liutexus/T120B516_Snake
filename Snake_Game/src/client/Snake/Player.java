@@ -2,6 +2,7 @@ package client.Snake;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import client.Snake.Entity.Snake;
 import com.fasterxml.jackson.core.*;
@@ -79,6 +80,32 @@ public class Player implements java.io.Serializable {
             e.printStackTrace();
             return;
         }
+        map.forEach((field, obj) -> {
+            switch (field){
+                case "id":
+                    this.id = (String)obj;
+                    break;
+                case "snake":
+                    HashMap snakeMap = (HashMap) obj;
+                    this.snake.mapToObject(snakeMap);
+                    break;
+                case "score":
+                    this.score = (int)obj;
+                    break;
+                case "color":
+                    this.color = (String) obj;
+                    break;
+                case "isGameOver":
+                    this.isGameOver = (boolean) obj;
+                    break;
+                default:
+                    System.out.println("Attribute: '" + field + "' is not recognised.");
+                    break;
+            }
+        });
+    }
+
+    public void mapToObject(Map<String, Object> map){
         map.forEach((field, obj) -> {
             switch (field){
                 case "id":

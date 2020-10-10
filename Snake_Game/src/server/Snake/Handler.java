@@ -3,7 +3,9 @@
 package server.Snake;
 
 import client.Snake.Player;
-import server.Snake.Interface.Observer;
+import server.Snake.Interface.IObserver;
+import server.Snake.Packet.EPacketHeader;
+import server.Snake.Packet.Packet;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,16 +17,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Handler implements Runnable, Observer {
+public class Handler implements Runnable, IObserver {
     private Socket serverSocket;
     private MatchInstance match;
-    private static GameLogic gameLogic;
+    private GameLogic gameLogic;
     private OutputStream out;
     private InputStream in;
 
     private Player clientPlayer;
     private String clientId;
-    public static Map<String, Player> players = new ConcurrentHashMap<>();
+    public Map<String, Player> players = new ConcurrentHashMap<>();
 
     public Handler(Socket serverSocket) {
         this.serverSocket = serverSocket; // Current socket object
@@ -65,7 +67,6 @@ public class Handler implements Runnable, Observer {
     public void setPlayers(Map players) {
         this.players = players;
     }
-
 
     @Override
     public void run() {
@@ -137,16 +138,33 @@ public class Handler implements Runnable, Observer {
             this.in = in;
         }
 
+        private void parsePacket(String packetJson){
+            Packet packet = new Packet(packetJson);
+            switch (packet.header){
+                case EMPTY:
+                    break;
+                case CLIENTRESPONSE:
+                    gameLogic.updatePlayerField(packet.parseBody());
+                    break;
+                default:
+                    System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
+                    break;
+            }
+        }
+
         @Override
         public void run() {
             BufferedReader inb = new BufferedReader(in);
+            Packet packet;
             while(true) {
                 try {
-                    gameLogic.updatePlayerField(inb.readLine());
+                    parsePacket(inb.readLine());
+//                    System.out.println(inb.readLine());
+//                    gameLogic.updatePlayerField(packet.getBody());
                 } catch (Exception e) {
                     if(serverSocket.isClosed()) break;
                     System.out.println("Couldn't receive packet from the client.");
-//                    e.printStackTrace();
+                    e.printStackTrace();
                     continue;
                 }
             }
@@ -166,7 +184,7 @@ public class Handler implements Runnable, Observer {
             try {
                 synchronized (players){
                     players.forEach((key, value) -> {
-                        sendPacket(value.toString());
+                        sendPacket(EPacketHeader.PLAYER, value.toString());
                     });
                 }
             } catch (Exception e) {
@@ -177,20 +195,18 @@ public class Handler implements Runnable, Observer {
 
         public void sendClientLogin() {
             clientId = randomId();
-            sendPacket(clientId);
+            sendPacket(EPacketHeader.ID, clientId);
 
             clientPlayer = createPlayer(clientId);
-            sendPacket(clientPlayer.toString());
+            sendPacket(EPacketHeader.CLIENTPLAYER, clientPlayer.toString());
         }
 
-        private void sendPacket(String packet) {
+        private void sendPacket(EPacketHeader header, String body) {
             BufferedWriter bfw = new BufferedWriter(out);
             try {
-                if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough
-                if(!packet.endsWith("\n")) packet += "\n";
-
+                Packet packet = new Packet(header, body);
 //                System.out.println(packet);
-                bfw.write(packet);
+                bfw.write(packet.toString());
                 bfw.flush();
             } catch (IOException e) {
                 System.out.println("Error sending packet to client.");
