@@ -125,23 +125,18 @@ class SnakePanel extends JPanel implements Runnable {
     private void keyResponse(KeyEvent key) {
         try {
             ObjectWriter objectMapper = new ObjectMapper().writer();
-            HashMap<Object, Object> packetMap;
-//            String packet = "";
+            HashMap<Object, Object> packetMap = new HashMap<>();
             Packet packet = new Packet(EPacketHeader.CLIENTRESPONSE);
+            packetMap.put("id", this.Id);
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "-1");
                     packet.setBody(objectMapper.writeValueAsString(packetMap));
-                    System.out.println(this.Id);
                     out.write(packet.toString());
                     out.flush();
                     break;
                 case KeyEvent.VK_RIGHT:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "1");
                     packetMap.put("directionY", "0");
                     packet.setBody(objectMapper.writeValueAsString(packetMap));
@@ -149,8 +144,6 @@ class SnakePanel extends JPanel implements Runnable {
                     out.flush();
                     break;
                 case KeyEvent.VK_DOWN:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "1");
                     packet.setBody(objectMapper.writeValueAsString(packetMap));
@@ -158,8 +151,6 @@ class SnakePanel extends JPanel implements Runnable {
                     out.flush();
                     break;
                 case KeyEvent.VK_LEFT:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "-1");
                     packetMap.put("directionY", "0");
                     packet.setBody(objectMapper.writeValueAsString(packetMap));
@@ -167,8 +158,6 @@ class SnakePanel extends JPanel implements Runnable {
                     out.flush();
                     break;
                 case KeyEvent.VK_SPACE:
-                    packetMap = new HashMap<>();
-                    packetMap.put("id", this.Id);
                     packetMap.put("directionX", "0");
                     packetMap.put("directionY", "0");
                     packet.setBody(objectMapper.writeValueAsString(packetMap));
@@ -315,7 +304,6 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case PLAYER:
                     packetMap = packet.parseBody();
-//                    System.out.println(packetMap);
                     packetPlayer.mapToObject(packetMap);
                     if(packetPlayer.getId() != null)
                         if(!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);

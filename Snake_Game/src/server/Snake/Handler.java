@@ -138,13 +138,29 @@ public class Handler implements Runnable, IObserver {
             this.in = in;
         }
 
+        private void parsePacket(String packetJson){
+            Packet packet = new Packet(packetJson);
+            Map packetMap;
+            Player packetPlayer = new Player(null);
+            switch (packet.header){
+                case EMPTY:
+                    break;
+                case CLIENTRESPONSE:
+                    gameLogic.updatePlayerField(packet.parseBody());
+                    break;
+                default:
+                    System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
+                    break;
+            }
+        }
+
         @Override
         public void run() {
             BufferedReader inb = new BufferedReader(in);
             Packet packet;
             while(true) {
                 try {
-                    packet = new Packet(inb.readLine());
+                    parsePacket(inb.readLine());
 //                    System.out.println(inb.readLine());
 //                    gameLogic.updatePlayerField(packet.getBody());
                 } catch (Exception e) {
@@ -191,7 +207,7 @@ public class Handler implements Runnable, IObserver {
             BufferedWriter bfw = new BufferedWriter(out);
             try {
                 Packet packet = new Packet(header, body);
-                System.out.println(packet);
+//                System.out.println(packet);
                 bfw.write(packet.toString());
                 bfw.flush();
             } catch (IOException e) {

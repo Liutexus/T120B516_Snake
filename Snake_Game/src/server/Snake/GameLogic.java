@@ -59,11 +59,9 @@ public class GameLogic implements Runnable {
         return map;
     }
 
-    public void updatePlayerField(String json) {
-        HashMap<String, Object> fields = parseJSon(json);
-
-        if(fields.containsKey("directionX") && fields.containsKey("directionY"))
-            players.get(fields.get("id")).getSnake().setVelocity(Float.parseFloat((String)fields.get("directionX")), Float.parseFloat((String)fields.get("directionY")));
+    public void updatePlayerField(Map map) {
+        if(map.containsKey("directionX") && map.containsKey("directionY"))
+            players.get(map.get("id")).getSnake().setVelocity(Float.parseFloat((String)map.get("directionX")), Float.parseFloat((String)map.get("directionY")));
     }
 
     @Override

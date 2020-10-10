@@ -32,14 +32,19 @@ public class Packet {
         try {
             map = objectMapper.readValue(json, new TypeReference<>(){});
             for (EPacketHeader item: EPacketHeader.values())
-                if(item.toString().compareTo((String) map.keySet().toArray()[0]) == 0)
+                if(item.toString().compareTo((String) map.keySet().toArray()[0]) == 0){
                     this.header = item;
+                    break;
+                }
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-        this.body = json
-                .substring(this.header.toString().length() + 4, json.length() - 1); // 4 is there for additional characters "{,"" and :"
+
+        if(map.get(this.header.toString()).getClass() == String.class)
+            this.body = (String) map.get(this.header.toString());
+        else
+            this.body = json.substring(this.header.toString().length() + 4, json.length() - 1); // 4 is there for additional characters "{,"" and :"
     }
 
     public void setBody(String body){
@@ -49,7 +54,6 @@ public class Packet {
             if(!body.startsWith("\""))
                 this.body = '"' + this.body;
         }
-        if(!body.endsWith("\n")) body += "\n";
         this.body = body;
     }
 
