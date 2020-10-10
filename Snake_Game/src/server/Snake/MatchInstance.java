@@ -10,12 +10,12 @@ import java.util.concurrent.Executors;
 
 public class MatchInstance implements Runnable, ISubject {
     private static int concurrentThreads = 5;
-    private static Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
-    private static Map<Integer, Handler> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
+    private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
+    private Map<Integer, Handler> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
 
-    private static GameLogic gameLogic;
-    private static int maxPlayerCount = 4;
-    private static int currentPlayerCount = 0;
+    private GameLogic gameLogic;
+    private int maxPlayerCount = 2;
+    private int currentPlayerCount = 0;
 
     private boolean gameStarted = false;
 

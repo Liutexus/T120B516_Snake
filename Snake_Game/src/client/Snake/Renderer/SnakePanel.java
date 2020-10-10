@@ -257,7 +257,7 @@ class SnakePanel extends JPanel implements Runnable {
                 case EMPTY:
                     break;
                 case ID:
-                    Id = packet.getBody();
+                    Id = (String)packet.parseBody().get(packet.header.toString());
                     System.out.println("Client ID: " + Id);
                     break;
                 case CLIENTPLAYER:

@@ -20,13 +20,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Handler implements Runnable, IObserver {
     private Socket serverSocket;
     private MatchInstance match;
-    private static GameLogic gameLogic;
+    private GameLogic gameLogic;
     private OutputStream out;
     private InputStream in;
 
     private Player clientPlayer;
     private String clientId;
-    public static Map<String, Player> players = new ConcurrentHashMap<>();
+    public Map<String, Player> players = new ConcurrentHashMap<>();
 
     public Handler(Socket serverSocket) {
         this.serverSocket = serverSocket; // Current socket object

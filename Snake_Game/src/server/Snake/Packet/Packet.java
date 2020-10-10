@@ -2,6 +2,7 @@ package server.Snake.Packet;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.binding.ObjectBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Map;
 public class Packet {
     public EPacketHeader header;
     private String body;
+    private HashMap<String, Object> map;
 
     public Packet(){
         this.header = EPacketHeader.EMPTY;
@@ -41,9 +43,11 @@ public class Packet {
             return;
         }
         if(map.get(this.header.toString()).getClass() == String.class)
-            this.body = (String) map.get(this.header.toString());
+            this.body = String.valueOf(map.get(this.header.toString()));
         else
             this.body = json.substring(this.header.toString().length() + 4, json.length() - 1); // 4 is there for additional characters "{,"" and :"
+        map.replace(this.header.toString(), this.body);
+        this.map = map;
     }
 
     public void setBody(String body){
@@ -63,12 +67,11 @@ public class Packet {
 
     public Map parseBody(){
         ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> map;
+        HashMap<String, Object> map = new HashMap<>();
         try {
-            map = objectMapper.readValue(this.body, new TypeReference<>(){});
+            map = objectMapper.readValue((String)this.map.get(this.header.toString()), new TypeReference<>(){});
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return this.map;
         }
         return map;
     }
