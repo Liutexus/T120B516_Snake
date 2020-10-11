@@ -97,11 +97,25 @@ public class Snake extends AbstractMovingEntity {
         positionX += velocityX;
         positionY += velocityY;
 
-        // TODO: Check if new position do not collide with previous positions or another player.
+        try {
+            for (int i = 0; i < this.tailLength; i++) {
+                if(this.previousPositionsX.get(i) == positionX &&
+                        this.previousPositionsY.get(i) == positionY &&
+                        (this.velocityX != 0 ||
+                        this.velocityY != 0)) {
+                    int initTailSize = this.tailLength;
+                    this.deltaTailLength(-(initTailSize - i));
+                    // TODO: Point/health reduction
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // Just to reduce some headache
+        }
+
         return true;
     }
 
-    // TODO: Implement Snake<->Snake collision handling.
     @Override
     public void onCollide(Object collider) {
         try {
@@ -112,6 +126,8 @@ public class Snake extends AbstractMovingEntity {
                         int initTailSize = ((Snake)collider).tailLength;
                         ((Snake)collider).deltaTailLength(-(initTailSize - i));
                         this.deltaTailLength(initTailSize - i);
+                        // TODO: Point/health distribution
+                        break;
                     }
                 }
             }
