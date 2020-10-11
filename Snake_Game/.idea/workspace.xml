@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Snake.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Snake.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Entity/Snake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

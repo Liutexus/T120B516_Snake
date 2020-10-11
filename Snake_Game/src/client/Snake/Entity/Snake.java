@@ -91,6 +91,7 @@ public class Snake extends AbstractMovingEntity {
 
     @Override
     public boolean move() {
+        // TODO: Don't move the tail if the velocity is (0,0)
         this.AddPreviousPositionX(positionX);
         this.AddPreviousPositionY(positionY);
 
@@ -120,6 +121,7 @@ public class Snake extends AbstractMovingEntity {
     public void onCollide(Object collider) {
         try {
             if(collider.getClass() == Snake.class){
+                // TODO: If both snakes are going one at another, stop/stun/etc. them
                 for (int i = 0; i < ((Snake)collider).tailLength; i++){
                     if(((Snake)collider).previousPositionsX.get(i) == this.positionX &&
                             ((Snake)collider).previousPositionsY.get(i) == this.positionY) {
