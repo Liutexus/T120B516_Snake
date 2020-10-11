@@ -7,7 +7,7 @@ public enum EPacketHeader {
     FLOAT,
     ARRAY,
     ID,
-    MAP,
+    TERRAIN,
     PLAYER,
     MATCH,
     SERVER,

@@ -260,7 +260,10 @@ class SnakePanel extends JPanel implements Runnable {
                         if(!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);
                         else snakes.replace(packetPlayer.getId(), packetPlayer);
                     break;
-
+                case TERRAIN:
+                    packetMap = packet.parseBody();
+                    System.out.println(packetMap);
+                    break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                     break;

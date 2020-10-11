@@ -3,6 +3,7 @@ package server.Snake;
 import client.Snake.Player;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
+import server.Snake.Packet.EPacketHeader;
 import server.Snake.Utility.BitmapConverter;
 
 import java.util.Map;
@@ -16,7 +17,7 @@ public class MatchInstance implements Runnable, ISubject {
 
     private GameLogic gameLogic;
     private BitmapConverter.Terrain[][] terrain;
-    private int maxPlayerCount = 4;
+    private int maxPlayerCount = 1;
     private int currentPlayerCount = 0;
 
     private boolean gameStarted = false;
@@ -24,6 +25,7 @@ public class MatchInstance implements Runnable, ISubject {
     public MatchInstance() {
         this.gameLogic = new GameLogic(this.handlers, this.players);
         this.terrain = BitmapConverter.BMPToTerrain("img/seaside_road.bmp", 50, 50);
+
 
         System.out.println(terrain);
     }
@@ -57,11 +59,16 @@ public class MatchInstance implements Runnable, ISubject {
                     handler.setPlayers(this.players);
                     pool.execute(handler);
                 });
+
+                handlers.forEach((id, handlers) -> {
+                    handlers.sendLoginInfo();
+                    handlers.sendPacket(EPacketHeader.TERRAIN, BitmapConverter.terrainToJSON(this.terrain, 1)); // Sending terrain data
+                });
+
                 gameStarted = true;
             }
             try {Thread.sleep(100);} catch (Exception e) { };
         }
-
     }
 
     @Override

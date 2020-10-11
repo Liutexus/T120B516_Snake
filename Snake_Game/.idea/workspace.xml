@@ -3,22 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Utility/BitmapConverter$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Utility/BitmapConverter$Terrain.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Utility/BitmapConverter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/EPacketHeader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/EPacketHeader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Utility/BitmapConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/BitmapConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Packet/EPacketHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Packet/EPacketHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/BitmapConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/BitmapConverter.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -140,12 +134,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/Snake/MatchInstance.java</url>
-          <line>25</line>
+          <line>26</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/Snake/MatchInstance.java</url>
-          <line>27</line>
+          <line>29</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
