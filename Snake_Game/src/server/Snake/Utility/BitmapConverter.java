@@ -1,6 +1,5 @@
 package server.Snake.Utility;
 
-import client.Snake.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -8,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,12 +14,21 @@ import java.util.HashMap;
 public final class BitmapConverter {
     public enum Terrain {
         Sand,
-        Sea,
         Road,
-        Forest,
         Swamp,
+        Sea,
+        Forest,
         Snow
     }
+
+    public static HashMap<Integer, Color> indexToColorMap = new HashMap<>() {{
+        put(0, new Color(255, 209, 94));
+        put(1, new Color(48, 48, 48));
+        put(2, new Color(128, 128, 128));
+        put(3, new Color(0, 148, 255));
+        put(4, new Color(0, 127, 14));
+        put(5, new Color(255, 255, 255));
+    }};
 
     public static HashMap<Integer, Terrain> colorToTerrainMap = new HashMap<>() {{
         put(-11938, Terrain.Sand);
@@ -33,13 +40,18 @@ public final class BitmapConverter {
     }};
 
     public static HashMap<Integer, Integer> colorToIntMap = new HashMap<>() {{
-        put(-11938, 1);
-        put(-13619152, 2);
-        put(-8355712, 3);
-        put(-16739073, 4);
-        put(-16744690, 5);
-        put(-1, 6);
+        put(-11938, 0);
+        put(-13619152, 1);
+        put(-8355712, 2);
+        put(-16739073, 3);
+        put(-16744690, 4);
+        put(-1, 5);
     }};
+
+    public static Color getColorByIndex(int index) {
+        if(Terrain.values().length < index) return null;
+        return indexToColorMap.get(index);
+    }
 
     public static Terrain[][] BMPToTerrain(String imagePath) {
         try {
