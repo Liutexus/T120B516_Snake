@@ -32,6 +32,15 @@ public final class BitmapConverter {
         put(-1, Terrain.Snow);
     }};
 
+    public static HashMap<Integer, Integer> colorToIntMap = new HashMap<>() {{
+        put(-11938, 1);
+        put(-13619152, 2);
+        put(-8355712, 3);
+        put(-16739073, 4);
+        put(-16744690, 5);
+        put(-1, 6);
+    }};
+
     public static Terrain[][] BMPToTerrain(String imagePath) {
         try {
             File bitmapFile = new File(imagePath);
@@ -71,6 +80,26 @@ public final class BitmapConverter {
         }
     }
 
+    public static int[][] BMPToIntArray(String imagePath, int sizeX, int sizeY) {
+        try {
+            File bitmapFile = new File(imagePath);
+            BufferedImage imageBuff = ImageIO.read(bitmapFile);
+            BufferedImage scaledImageBuff = new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics2D = scaledImageBuff.createGraphics();
+            graphics2D.drawImage(imageBuff, 0, 0, sizeX, sizeY, null);
+            graphics2D.dispose();
+
+            int[][] terrainType = new int[sizeY][sizeX];
+            for(int i = 0; i < sizeY; i++)
+                for(int j = 0; j < sizeX; j++)
+                    terrainType[i][j] = colorToIntMap.get(scaledImageBuff.getRGB(j, i));
+            return terrainType;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new int[0][0];
+        }
+    }
+
     public static Color[][] BMPToColor(String imagePath) {
         try {
             File bitmapFile = new File(imagePath);
@@ -107,7 +136,22 @@ public final class BitmapConverter {
         return json;
     }
 
-    public static Terrain[][] JSONToTerrain() {
+    public static String intArrayToJSON(int[][] terrain, int index) {
+        if(terrain.length < index) return null;
+
+        ObjectWriter ow = new ObjectMapper().writer();
+        HashMap<String, int[]> map = new HashMap<>();
+        map.put(String.valueOf(index), terrain[index]);
+        String json = "";
+        try {
+            json = ow.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public static Terrain[][] JSONToIntArray() {
         // TODO
         return null;
     }

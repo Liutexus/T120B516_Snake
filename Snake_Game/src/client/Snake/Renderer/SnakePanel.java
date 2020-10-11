@@ -39,14 +39,14 @@ class SnakePanel extends JPanel implements Runnable {
 
     private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
     private Map<String, Entity> mapObjects;
-    private ArrayList terrain;
+    private Map<Integer, Integer[]> terrain;
 
     private SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
         this.mapObjects = new ConcurrentHashMap<>();
-        this.terrain = new ArrayList();
+        this.terrain = new ConcurrentHashMap<>();
 
         this.clientSocket = clientSocket;
         // Assign socket's input and output streams
@@ -262,7 +262,12 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case TERRAIN:
                     packetMap = packet.parseBody();
-                    System.out.println(packetMap);
+                    packetMap.forEach((key, array) -> {
+                        if(!terrain.containsKey(key)){
+                            System.out.println(array);
+//                            terrain.put((Integer) key, (Integer[]) array);
+                        }
+                    });
                     break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
