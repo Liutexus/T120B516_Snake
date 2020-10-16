@@ -6,6 +6,7 @@ import client.Snake.Player;
 import server.Snake.Interface.IObserver;
 import server.Snake.Packet.EPacketHeader;
 import server.Snake.Packet.Packet;
+import server.Snake.Utility.BitmapConverter;
 
 import java.io.*;
 import java.net.Socket;
@@ -24,6 +25,9 @@ public class Handler implements Runnable, IObserver {
     private OutputStream out;
     private InputStream in;
 
+    private Listener clientListener;
+    private Sender clientSender;
+
     private Player clientPlayer;
     private String clientId;
     public Map<String, Player> players = new ConcurrentHashMap<>();
@@ -39,6 +43,9 @@ public class Handler implements Runnable, IObserver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        clientListener = new Listener(new InputStreamReader(in));
+        clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
     }
 
     public Handler(Socket serverSocket, GameLogic gameLogic, Map players) {
@@ -54,6 +61,9 @@ public class Handler implements Runnable, IObserver {
         } catch (Exception e) {
 //            e.printStackTrace();
         }
+
+        clientListener = new Listener(new InputStreamReader(in));
+        clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
     }
 
     public void setMatchInstance(MatchInstance match) {
@@ -68,17 +78,19 @@ public class Handler implements Runnable, IObserver {
         this.players = players;
     }
 
+    public void sendLoginInfo() {
+        this.clientSender.sendClientLogin();
+    }
+
+    public void sendPacket(EPacketHeader header, String packet) {
+        this.clientSender.sendPacket(header, packet);
+    }
+
     @Override
     public void run() {
         System.out.println("Connected: " + serverSocket);
-
-        Listener clientListener = new Listener(new InputStreamReader(in));
-        Sender clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
-
         ExecutorService executor = Executors.newFixedThreadPool(2);
-
         try {
-            clientSender.sendClientLogin();
             executor.execute(clientListener);
             while (true) {
                 if(serverSocket.isClosed()) break;
@@ -199,6 +211,10 @@ public class Handler implements Runnable, IObserver {
 
             clientPlayer = createPlayer(clientId);
             sendPacket(EPacketHeader.CLIENTPLAYER, clientPlayer.toString());
+        }
+
+        public void sendTerrain(BitmapConverter.Terrain[][] terrain) {
+
         }
 
         private void sendPacket(EPacketHeader header, String body) {

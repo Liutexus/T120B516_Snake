@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import server.Snake.Packet.EPacketHeader;
 import server.Snake.Packet.Packet;
+import server.Snake.Utility.BitmapConverter;
 
 class SnakePanel extends JPanel implements Runnable {
     private static SnakePanel panelInstance = null;
@@ -39,14 +40,14 @@ class SnakePanel extends JPanel implements Runnable {
 
     private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
     private Map<String, Entity> mapObjects;
-    private ArrayList terrain;
+    private Map<Integer, ArrayList> terrain;
 
     private SnakePanel(Socket clientSocket) {
         setFocusable(true);
         requestFocusInWindow();
 
         this.mapObjects = new ConcurrentHashMap<>();
-        this.terrain = new ArrayList();
+        this.terrain = new ConcurrentHashMap<>();
 
         this.clientSocket = clientSocket;
         // Assign socket's input and output streams
@@ -128,18 +129,6 @@ class SnakePanel extends JPanel implements Runnable {
                     out.write(packet.toString());
                     out.flush();
                     break;
-                case KeyEvent.VK_W: // Placeholder
-//                player.deltaSize(1, 1);
-                    break;
-                case KeyEvent.VK_D: // Placeholder
-//                player.changeTailSize(1);
-                    break;
-                case KeyEvent.VK_S: // Placeholder
-//                player.deltaSize(-1, -1);
-                    break;
-                case KeyEvent.VK_A: // Placeholder
-//                player.changeTailSize(-1);
-                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
             }
@@ -158,6 +147,13 @@ class SnakePanel extends JPanel implements Runnable {
         cellWidth = (windowSize.width/horizontalCellCount);
         cellHeight = (windowSize.height/verticalCellCount);
 
+        // Drawing the terrain
+        terrain.forEach((y, arrayX) -> {
+            for(int i = 0; i < arrayX.size(); i++){
+                drawRect(g, new float[]{i, y}, new float[]{1, 1}, BitmapConverter.getColorByIndex((int)arrayX.get(i)));
+            }
+        });
+
         // Draw all players
         for (Map.Entry<String, Player> entry : snakes.entrySet()) {
             drawRect(g, entry.getValue().getSnake().getPosition(), entry.getValue().getSnake().getSize(), Color.RED); // Drawing the snake's head
@@ -171,7 +167,13 @@ class SnakePanel extends JPanel implements Runnable {
                     int colorStep = 255 / (entry.getValue().getSnake().getTailLength() + 1);
                     Color tailColor = new Color(colorStep * (entry.getValue().getSnake().getTailLength() - i), colorStep, colorStep);
                     prevPosX.get(i);
-                    drawRect(g, new float[]{(Float.parseFloat(prevPosX.get(i).toString())), Float.parseFloat(prevPosY.get(i).toString())}, entry.getValue().getSnake().getSize(), tailColor);
+                    drawRect(
+                            g,
+                            new float[]{(Float.parseFloat(prevPosX.get(i).toString())),
+                            Float.parseFloat(prevPosY.get(i).toString())},
+                            entry.getValue().getSnake().getSize(),
+                            tailColor
+                            );
                 } catch (Exception e) {
 //                    e.printStackTrace();
                     // Just to reduce headache from exceptions at the start of the game
@@ -249,12 +251,13 @@ class SnakePanel extends JPanel implements Runnable {
             packets.add(packet);
         }
 
-        private void parsePacket(String packetJson){
+        private void parsePacket(String packetJson) {
             Packet packet = new Packet(packetJson);
-            Map packetMap;
+            Map packetMap; // To store parsed packet map
             Player packetPlayer = new Player(null);
             switch (packet.header){
                 case EMPTY:
+                    // Placeholder for now
                     break;
                 case ID:
                     Id = (String)packet.parseBody().get(packet.header.toString());
@@ -272,7 +275,13 @@ class SnakePanel extends JPanel implements Runnable {
                         if(!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);
                         else snakes.replace(packetPlayer.getId(), packetPlayer);
                     break;
-
+                case TERRAIN:
+                    packetMap = packet.parseBody();
+                    packetMap.forEach((key, array) -> { // Because of laziness
+                        if(!terrain.containsKey(key)) // Do we already have this line of terrain?
+                            terrain.put(Integer.parseInt((String)key), (ArrayList) array); // Putting a new line of terrain
+                    });
+                    break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                     break;
