@@ -12,12 +12,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GameLogic implements Runnable {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
+    private int[][] terrain;
+
     private IFactory CollectibleFactory = new CollectibleFactory();
     private IFactory ObstacleFactory = new ObstacleFactory();
 
-    public GameLogic(Map handlers, Map players){
+    public GameLogic(Map handlers, Map players, int[][] terrain){
         this.handlers = handlers;
         this.players = players;
+        this.terrain = terrain;
     }
 
     // TODO: Add various functions which change players' state
