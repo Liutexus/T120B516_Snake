@@ -16,10 +16,7 @@ public class MatchInstance implements Runnable, ISubject {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
 
     private GameLogic gameLogic;
-<<<<<<< HEAD
-=======
     private int[][] terrain;
->>>>>>> master
     private int maxPlayerCount = 2;
     private int currentPlayerCount = 0;
 
