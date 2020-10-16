@@ -73,5 +73,5 @@ public abstract class AbstractMovingEntity extends Entity {
 
     public abstract boolean move();
 
-    public abstract void onCollide(Player player);
+    public abstract void onCollide(Object collider);
 }

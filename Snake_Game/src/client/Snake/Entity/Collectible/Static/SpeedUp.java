@@ -12,8 +12,8 @@ public class SpeedUp extends AbstractStaticEntity {
     @Override
     // TODO: Apply Speed buff in a smarter manner.
     // Doubles the current velocity of player snake.
-    public void onCollide(Player player) {
-        float[] originalVelocity = player.getSnake().getVelocity();
-        player.getSnake().setVelocity(originalVelocity[0] * 2, originalVelocity[1] * 2);
+    public void onCollide(Object collider) {
+        float[] originalVelocity = ((Player)collider).getSnake().getVelocity();
+        ((Player)collider).getSnake().setVelocity(originalVelocity[0] * 2, originalVelocity[1] * 2);
     }
 }

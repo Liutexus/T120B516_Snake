@@ -1,6 +1,5 @@
 package client.Snake;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,10 +134,10 @@ public class Player implements java.io.Serializable {
     public String toString() {
         ObjectWriter ow = new ObjectMapper().writer();
         String json = "";
-        this.snake.trimTailSizeAndPrevPos(snake.getTailLength());
-        Player convObj = this;
+        Player tempPlayer = this;
+        tempPlayer.getSnake().trimTailSizeAndPrevPos(tempPlayer.getSnake().getTailLength());
         try {
-            json = ow.writeValueAsString(convObj);
+            json = ow.writeValueAsString(tempPlayer);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

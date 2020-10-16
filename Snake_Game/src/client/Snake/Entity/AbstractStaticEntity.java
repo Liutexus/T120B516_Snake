@@ -1,5 +1,4 @@
 package client.Snake.Entity;
-import client.Snake.Player;
 
 public abstract class AbstractStaticEntity extends Entity {
 
@@ -7,5 +6,5 @@ public abstract class AbstractStaticEntity extends Entity {
         super(positionX, positionY);
     }
 
-    public abstract void onCollide(Player player);
+    public abstract void onCollide(Object collider);
 }

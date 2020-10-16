@@ -10,8 +10,10 @@ public class BearTrap extends AbstractStaticEntity {
     }
 
     @Override
-    public void onCollide(Player player) {
-        player.deltaScore(-100);
-        player.getSnake().setVelocity(0,0);
+    public void onCollide(Object collider) {
+        if(collider.getClass() == Player.class){
+            ((Player)collider).deltaScore(-100);
+            ((Player)collider).getSnake().setVelocity(0,0);
+        }
     }
 }

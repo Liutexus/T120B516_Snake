@@ -10,7 +10,7 @@ public class Leaf extends AbstractStaticEntity {
     }
 
     @Override
-    public void onCollide(Player player) {
-        player.deltaScore(50);
+    public void onCollide(Object collider) {
+        ((Player)collider).deltaScore(50);
     }
 }

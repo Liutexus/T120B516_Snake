@@ -91,19 +91,52 @@ public class Snake extends AbstractMovingEntity {
 
     @Override
     public boolean move() {
+        // TODO: Don't move the tail if the velocity is (0,0)
         this.AddPreviousPositionX(positionX);
         this.AddPreviousPositionY(positionY);
 
         positionX += velocityX;
         positionY += velocityY;
 
-        // TODO: Check if new position do not collide with previous positions or another player.
+        try {
+            for (int i = 0; i < this.tailLength; i++) {
+                if(this.previousPositionsX.get(i) == positionX &&
+                        this.previousPositionsY.get(i) == positionY &&
+                        (this.velocityX != 0 ||
+                        this.velocityY != 0)) {
+                    int initTailSize = this.tailLength;
+                    this.deltaTailLength(-(initTailSize - i));
+                    // TODO: Point/health reduction
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // Just to reduce some headache
+        }
+
         return true;
     }
 
-    // TODO: Implement Snake<->Snake collision handling.
     @Override
-    public void onCollide(Player player) {
-
+    public void onCollide(Object collider) {
+        try {
+            if(collider.getClass() == Snake.class){
+                // TODO: If both snakes are going one at another, stop/stun/etc. them
+                for (int i = 0; i < ((Snake)collider).tailLength; i++){
+                    if(((Snake)collider).previousPositionsX.get(i) == this.positionX &&
+                            ((Snake)collider).previousPositionsY.get(i) == this.positionY) {
+                        int initTailSize = ((Snake)collider).tailLength;
+                        ((Snake)collider).deltaTailLength(-(initTailSize - i));
+                        this.deltaTailLength(initTailSize - i);
+                        // TODO: Point/health distribution
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // TODO fix: This throws an exception at beginning of the match.
+//            System.out.println("Error at checking collisons for snake at (x: " + this.positionX + ", y: " + this.positionY + ").");
+//            e.printStackTrace();
+        }
     }
 }

@@ -27,7 +27,7 @@ public class Mouse extends AbstractMovingEntity {
     }
 
     @Override
-    public void onCollide(Player player) {
+    public void onCollide(Object collider) {
 
     }
 }

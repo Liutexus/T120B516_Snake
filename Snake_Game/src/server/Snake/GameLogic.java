@@ -42,19 +42,39 @@ public class GameLogic implements Runnable {
         }
     }
 
+    private void checkCollisions() {
+        players.forEach((id1, player1) -> {
+            players.forEach((id2, player2) -> {
+                if(player1 != player2) {
+                    player1.getSnake().onCollide(player2.getSnake());
+                }
+            });
+        });
+    }
+
     public void addPlayer(Player player) {
         players.put(player.getId(), player);
     }
 
     public void updatePlayerField(Map map) {
-        if(map.containsKey("directionX") && map.containsKey("directionY"))
-            players.get(map.get("id")).getSnake().setVelocity(Float.parseFloat((String)map.get("directionX")), Float.parseFloat((String)map.get("directionY")));
+        if(map.containsKey("directionX") && map.containsKey("directionY")) {
+            float currVelX = players.get(map.get("id")).getSnake().getVelocityX();
+            float currVelY = players.get(map.get("id")).getSnake().getVelocityY();
+
+            if((currVelX != -Float.parseFloat((String)map.get("directionX")) &&
+                    currVelY != -Float.parseFloat((String)map.get("directionY"))) ||
+                    (Float.parseFloat((String)map.get("directionX")) == 0 && Float.parseFloat((String)map.get("directionY")) == 0) ||
+                    (currVelX == 0 && currVelY == 0))
+                players.get(map.get("id")).getSnake().setVelocity(Float.parseFloat((String)map.get("directionX")), Float.parseFloat((String)map.get("directionY")));
+
+        }
     }
 
     @Override
     public void run() {
         while(true) { // Main game loop
             // Game logic goes here
+            checkCollisions();
             movePlayers();
 
             try {Thread.sleep(100);} catch (Exception e) { };
