@@ -18,7 +18,8 @@ public final class BitmapConverter {
         Swamp,
         Sea,
         Forest,
-        Snow
+        Snow,
+        Wall
     }
 
     public static HashMap<Integer, Color> indexToColorMap = new HashMap<>() {{
@@ -28,6 +29,7 @@ public final class BitmapConverter {
         put(3, new Color(0, 148, 255));
         put(4, new Color(0, 127, 14));
         put(5, new Color(255, 255, 255));
+        put(6, new Color(0, 0, 0));
     }};
 
     public static HashMap<Integer, Terrain> colorToTerrainMap = new HashMap<>() {{
@@ -37,6 +39,7 @@ public final class BitmapConverter {
         put(-16739073, Terrain.Sea);
         put(-16744690, Terrain.Forest);
         put(-1, Terrain.Snow);
+        put(-16777216, Terrain.Wall);
     }};
 
     public static HashMap<Integer, Integer> colorToIntMap = new HashMap<>() {{
@@ -46,6 +49,7 @@ public final class BitmapConverter {
         put(-16739073, 3);
         put(-16744690, 4);
         put(-1, 5);
+        put(-16777216, 6);
     }};
 
     public static Color getColorByIndex(int index) {
@@ -106,7 +110,7 @@ public final class BitmapConverter {
                 for(int j = 0; j < sizeX; j++)
                     terrainType[i][j] = colorToIntMap.get(scaledImageBuff.getRGB(j, i));
             return terrainType;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new int[0][0];
         }

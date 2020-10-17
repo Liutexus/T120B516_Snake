@@ -23,8 +23,6 @@ public class GameLogic implements Runnable {
         this.terrain = terrain;
     }
 
-    // TODO: Add various functions which change players' state
-
     private void movePlayers() {
         for (Player player : players.values()) {
             // --- JUST FOR FUN --- // For testing purposes
@@ -43,11 +41,23 @@ public class GameLogic implements Runnable {
     }
 
     private void checkCollisions() {
+        // Checking collisions with other players
         players.forEach((id1, player1) -> {
             players.forEach((id2, player2) -> {
                 if(player1 != player2)
                     player1.getSnake().onCollide(player2.getSnake());
             });
+
+            // Checking collisions with terrain obstacles
+            try {
+                if(terrain[(int)player1.getSnake().getPositionY()][(int)player1.getSnake().getPositionX()] == 6) { // '6' is an index for "Wall"
+                    System.out.println("HIT!");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            // TODO: Checking collisions with other entities
         });
     }
 

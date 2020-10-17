@@ -21,13 +21,13 @@ public class MatchInstance implements Runnable, ISubject {
 
     private GameLogic gameLogic;
     private int[][] terrain;
-    private int maxPlayerCount = 2;
+    private int maxPlayerCount = 1;
     private int currentPlayerCount = 0;
 
     private boolean gameStarted = false;
 
     public MatchInstance() {
-        this.terrain = BitmapConverter.BMPToIntArray("img/seaside_road.bmp", 50, 50);
+        this.terrain = BitmapConverter.BMPToIntArray("img/arena_test_01.png", 50, 50);
         this.gameLogic = new GameLogic(this.handlers, this.players, this.terrain);
     }
 
@@ -50,6 +50,12 @@ public class MatchInstance implements Runnable, ISubject {
         }
         int randX = ThreadLocalRandom.current().nextInt(5, 45);
         int randY = ThreadLocalRandom.current().nextInt(5, 45);
+
+        while(terrain[randY][randX] == 6) { // To make sure that player doesn't spawn in a Wall already
+            randX = ThreadLocalRandom.current().nextInt(5, 45);
+            randY = ThreadLocalRandom.current().nextInt(5, 45);
+        }
+
         // This could be improved by some more fancier initial position assignment
         Player player = new Player(id, randX, randY);
 
