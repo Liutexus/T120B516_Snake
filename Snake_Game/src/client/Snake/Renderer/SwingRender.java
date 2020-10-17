@@ -71,6 +71,7 @@ public class SwingRender extends JFrame implements Runnable {
                     gamePanel = SnakePanel.getInstance(clientSocket);
                     gamePanel.setPreferredSize(prefScreenSize);
                     this.add(gamePanel);
+                    gamePanel.requestFocus();
                     this.validate();
                     if(gamePanel.isDisplayable()) { // Is current panel is the game panel
                         gamePanel.run();
@@ -83,7 +84,6 @@ public class SwingRender extends JFrame implements Runnable {
                 default:
                     break;
             }
-            System.out.println("Hello");
             synchronized (this){
                 try { this.wait(); } catch (Exception e) { }
             }
