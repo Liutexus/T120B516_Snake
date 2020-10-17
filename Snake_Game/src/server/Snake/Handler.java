@@ -3,21 +3,19 @@
 package server.Snake;
 
 import client.Snake.Player;
+import server.Snake.Enums.EClientStatus;
 import server.Snake.Interface.IObserver;
-import server.Snake.Packet.EPacketHeader;
+import server.Snake.Enums.EPacketHeader;
 import server.Snake.Packet.Packet;
 
-import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Handler implements Runnable, IObserver {
     private Socket serverSocket;
@@ -29,12 +27,15 @@ public class Handler implements Runnable, IObserver {
     private Listener clientListener;
     private Sender clientSender;
 
+    private EClientStatus status;
+
     private Player clientPlayer;
     private String clientId;
     public Map<String, Player> players = new ConcurrentHashMap<>();
 
     public Handler(Socket serverSocket) {
         this.serverSocket = serverSocket; // Current socket object
+        this.status = EClientStatus.MENU;
 
         try {
             // We return data from server to the client through here
@@ -43,24 +44,6 @@ public class Handler implements Runnable, IObserver {
             in = serverSocket.getInputStream();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        clientListener = new Listener(new InputStreamReader(in));
-        clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
-    }
-
-    public Handler(Socket serverSocket, GameLogic gameLogic, Map players) {
-        this.serverSocket = serverSocket; // Current socket object
-        this.gameLogic = gameLogic;
-        this.players = players;
-
-        try {
-            // We return data from server to the client through here
-            out = serverSocket.getOutputStream();
-            // We listen to our client here
-            in = serverSocket.getInputStream();
-        } catch (Exception e) {
-//            e.printStackTrace();
         }
 
         clientListener = new Listener(new InputStreamReader(in));
@@ -81,6 +64,7 @@ public class Handler implements Runnable, IObserver {
 
     public void sendLoginInfo(String id, Player player) {
         this.clientSender.sendClientLogin(id, player);
+        this.status = EClientStatus.IN_GAME;
     }
 
     public void sendPacket(EPacketHeader header, String packet) {
@@ -95,9 +79,9 @@ public class Handler implements Runnable, IObserver {
             executor.execute(clientListener);
             while (true) {
                 if(serverSocket.isClosed()) break;
-//                long start = System.currentTimeMillis(); // Benchmarking
+
                 executor.execute(clientSender); // Sending packets to the client
-//                System.out.println("Milliseconds passed: " + (System.currentTimeMillis() - start));
+                
                 try {Thread.sleep(100);} catch (Exception e) { };
             }
         } catch (Exception e) {
@@ -108,7 +92,7 @@ public class Handler implements Runnable, IObserver {
 
     @Override
     public void update() {
-
+        // TODO: Change status here
     }
 
     // --- Client listener class ---
@@ -124,8 +108,11 @@ public class Handler implements Runnable, IObserver {
             switch (packet.header){
                 case EMPTY:
                     break;
-                case CLIENTRESPONSE:
+                case CLIENT_RESPONSE:
                     gameLogic.updatePlayerField(packet.parseBody());
+                    break;
+                case CLIENT_MATCH_REQUEST:
+                    Handler.this.status = EClientStatus.LOBBY;
                     break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
@@ -169,10 +156,13 @@ public class Handler implements Runnable, IObserver {
         @Override
         public void run() {
             try {
-                synchronized (players){
-                    players.forEach((key, value) -> {
-                        sendPacket(EPacketHeader.PLAYER, value.toString());
-                    });
+
+                if(Handler.this.status == EClientStatus.IN_GAME){ // if the player is in game
+                    synchronized (players){
+                        players.forEach((key, value) -> { // send all other match players
+                            sendPacket(EPacketHeader.PLAYER, value.toString());
+                        });
+                    }
                 }
             } catch (Exception e) {
 //                e.printStackTrace();
@@ -185,7 +175,7 @@ public class Handler implements Runnable, IObserver {
             sendPacket(EPacketHeader.ID, clientId);
 
             clientPlayer = player;
-            sendPacket(EPacketHeader.CLIENTPLAYER, clientPlayer.toString());
+            sendPacket(EPacketHeader.CLIENT_PLAYER, clientPlayer.toString());
         }
 
         private void sendPacket(EPacketHeader header, String body) {

@@ -2,9 +2,8 @@ package server.Snake.Packet;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.beans.binding.ObjectBinding;
+import server.Snake.Enums.EPacketHeader;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

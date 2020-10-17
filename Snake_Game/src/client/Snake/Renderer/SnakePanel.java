@@ -12,13 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.Snake.Entity.AbstractStaticEntity;
-import client.Snake.Entity.Collectible.Static.Leaf;
 import client.Snake.Entity.Entity;
 import client.Snake.Player;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import server.Snake.Packet.EPacketHeader;
+import server.Snake.Enums.EPacketHeader;
 import server.Snake.Packet.Packet;
 import server.Snake.Utility.BitmapConverter;
 
@@ -93,7 +91,7 @@ class SnakePanel extends JPanel implements Runnable {
         try {
             ObjectWriter objectMapper = new ObjectMapper().writer();
             HashMap<Object, Object> packetMap = new HashMap<>();
-            Packet packet = new Packet(EPacketHeader.CLIENTRESPONSE);
+            Packet packet = new Packet(EPacketHeader.CLIENT_RESPONSE);
             packetMap.put("id", this.Id);
             switch (key.getKeyCode()){
                 case KeyEvent.VK_UP:
@@ -286,7 +284,7 @@ class SnakePanel extends JPanel implements Runnable {
                     Id = (String)packet.parseBody().get(packet.header.toString());
                     System.out.println("Client ID: " + Id);
                     break;
-                case CLIENTPLAYER:
+                case CLIENT_PLAYER:
                     packetMap = packet.parseBody();
                     packetPlayer.mapToObject(packetMap);
                     currentPlayer = packetPlayer;

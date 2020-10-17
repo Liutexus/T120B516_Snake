@@ -1,5 +1,7 @@
 package server.Snake;
 
+import server.Snake.Utility.Utils;
+
 import java.net.ServerSocket;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,28 +28,13 @@ public class Server {
         }
     }
 
-    private static String randomId() {
-        int leftLimit = 97; // letter 'a'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
-        Random random = new Random();
-        StringBuilder buffer = new StringBuilder(targetStringLength);
-        for (int i = 0; i < targetStringLength; i++) {
-            int randomLimitedInt = leftLimit + (int)(random.nextFloat() * (rightLimit - leftLimit + 1));
-            buffer.append((char) randomLimitedInt);
-        }
-        String generatedString = buffer.toString();
-
-        return generatedString;
-    }
-
     private static MatchInstance returnAvailableMatch() {
         for (MatchInstance match: matches.values())
             if(match.getCurrentPlayerCount() < match.getMaxPlayerCount() && !match.isGameStarted())
                 return match;
         MatchInstance matchInstance = new MatchInstance();
         pool.execute(matchInstance);
-        matches.put(randomId(), matchInstance);
+        matches.put(Utils.randomId(), matchInstance);
         return matchInstance;
     }
 
