@@ -8,6 +8,7 @@ import server.Snake.Packet.EPacketHeader;
 import server.Snake.Packet.Packet;
 import server.Snake.Utility.BitmapConverter;
 
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -137,8 +138,11 @@ public class Handler implements Runnable, IObserver {
         // This could be improved by some more fancier initial position assignment
         Player player = new Player(id, randX, randY);
 
-        gameLogic.addPlayer(player);
-//        players.put(id, player); // Adding new client user to the players' pool
+        Random rand = new Random();
+        Color randomColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+        player.setColor(randomColor); // Assigning a random color for the player
+
+        gameLogic.addPlayer(player); // Adding new client user to the players' pool
         return player;
     }
 

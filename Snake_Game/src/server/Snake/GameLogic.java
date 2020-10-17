@@ -45,9 +45,8 @@ public class GameLogic implements Runnable {
     private void checkCollisions() {
         players.forEach((id1, player1) -> {
             players.forEach((id2, player2) -> {
-                if(player1 != player2) {
+                if(player1 != player2)
                     player1.getSnake().onCollide(player2.getSnake());
-                }
             });
         });
     }
@@ -66,7 +65,6 @@ public class GameLogic implements Runnable {
                     (Float.parseFloat((String)map.get("directionX")) == 0 && Float.parseFloat((String)map.get("directionY")) == 0) ||
                     (currVelX == 0 && currVelY == 0))
                 players.get(map.get("id")).getSnake().setVelocity(Float.parseFloat((String)map.get("directionX")), Float.parseFloat((String)map.get("directionY")));
-
         }
     }
 

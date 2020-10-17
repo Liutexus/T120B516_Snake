@@ -1,9 +1,11 @@
 package client.Snake;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
 import client.Snake.Entity.Snake;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
@@ -13,14 +15,14 @@ public class Player implements java.io.Serializable {
     private String id;
     private Snake snake;
     private int score;
-    private String color; // What color is the player?
+    private Color color; // What color is the player?
     private boolean isGameOver;
 
     public Player(String id) {
         this.id = id;
         this.snake = new Snake(0, 0);
         this.score = 0;
-        this.color = "BLACK";
+        this.color = Color.BLACK;
         this.isGameOver = false;
     }
 
@@ -28,7 +30,7 @@ public class Player implements java.io.Serializable {
         this.id = id;
         this.snake = new Snake(posX, posY);
         this.score = 0;
-        this.color = "BLACK";
+        this.color = Color.BLACK;
         this.isGameOver = false;
     }
 
@@ -40,11 +42,14 @@ public class Player implements java.io.Serializable {
         return this.snake;
     }
 
-    public String getColor() {
+    @JsonIgnore
+    public Color getColor() {
         return this.color;
     }
 
-    public void setColor(String color) {
+    public int getColorRGB() { return this.color.getRGB();}
+
+    public void setColor(Color color) {
         this.color = color;
     }
 
@@ -92,7 +97,7 @@ public class Player implements java.io.Serializable {
                     this.score = (int)obj;
                     break;
                 case "color":
-                    this.color = (String) obj;
+                    this.color = (Color) obj;
                     break;
                 case "isGameOver":
                     this.isGameOver = (boolean) obj;
@@ -117,8 +122,8 @@ public class Player implements java.io.Serializable {
                 case "score":
                     this.score = (int)obj;
                     break;
-                case "color":
-                    this.color = (String) obj;
+                case "colorRGB":
+                    this.color = new Color((int)obj);
                     break;
                 case "isGameOver":
                     this.isGameOver = (boolean) obj;
