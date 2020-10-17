@@ -1,6 +1,6 @@
 package client.Snake.Entity;
 
-import client.Snake.Player;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,9 @@ import java.util.HashMap;
 public class Snake extends AbstractMovingEntity {
     private int tailLength;
     private String boost; // What boost player currently has?
+    private int boostDuration; // How long does the boost last?
+    private String debuff; // What debuffs player current has?
+    private int debuffDuration; // How long does the debuff last?
     private String terrain; // What terrain is the player standing on?
 
     public Snake(float positionX, float positionY) {
@@ -42,6 +45,36 @@ public class Snake extends AbstractMovingEntity {
         }
         previousPositionsX = tempX;
         previousPositionsY = tempY;
+    }
+
+    public void setBoost(String boost, int duration){
+        this.boost = boost;
+        this.boostDuration = duration;
+    }
+
+    @JsonIgnore
+    public String getBoost(){
+        return this.boost;
+    }
+
+    @JsonIgnore
+    public int getBoostDuration() {
+        return this.boostDuration;
+    }
+
+    public void setDebuff(String debuff, int duration) {
+        this.debuff = debuff;
+        this.debuffDuration = duration;
+    }
+
+    @JsonIgnore
+    public String getDebuff(){
+        return this.debuff;
+    }
+
+    @JsonIgnore
+    public int getDebuffDuration() {
+        return this.debuffDuration;
     }
 
     public boolean checkCollisionWithTail() {

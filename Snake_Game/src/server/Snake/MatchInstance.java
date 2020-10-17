@@ -17,7 +17,7 @@ public class MatchInstance implements Runnable, ISubject {
 
     private GameLogic gameLogic;
     private int[][] terrain;
-    private int maxPlayerCount = 1;
+    private int maxPlayerCount = 2;
     private int currentPlayerCount = 0;
 
     private boolean gameStarted = false;
@@ -45,7 +45,7 @@ public class MatchInstance implements Runnable, ISubject {
         pool.execute(gameLogic);
         while(true){
             if(currentPlayerCount != maxPlayerCount) {
-                try {Thread.sleep(100);} catch (Exception e) { };
+                try {Thread.sleep(1000);} catch (Exception e) { };
                 continue;
             }
 

@@ -6,7 +6,6 @@ import client.Snake.Player;
 import server.Snake.Interface.IObserver;
 import server.Snake.Packet.EPacketHeader;
 import server.Snake.Packet.Packet;
-import server.Snake.Utility.BitmapConverter;
 
 import java.awt.*;
 import java.io.*;
@@ -172,18 +171,21 @@ public class Handler implements Runnable, IObserver {
         @Override
         public void run() {
             BufferedReader inb = new BufferedReader(in);
-            Packet packet;
             while(true) {
                 try {
                     parsePacket(inb.readLine());
-//                    System.out.println(inb.readLine());
-//                    gameLogic.updatePlayerField(packet.getBody());
                 } catch (Exception e) {
                     if(serverSocket.isClosed()) break;
-                    if(e instanceof SocketException) {
-//                        match.unregisterObserver();
-                    }
                     System.out.println("Couldn't receive packet from the client.");
+                    if(e instanceof SocketException) {
+                        try {
+                            serverSocket.close();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        match.unregisterObserver(Handler.this);
+                        break;
+                    }
                     e.printStackTrace();
                     continue;
                 }
@@ -221,20 +223,23 @@ public class Handler implements Runnable, IObserver {
             sendPacket(EPacketHeader.CLIENTPLAYER, clientPlayer.toString());
         }
 
-        public void sendTerrain(BitmapConverter.Terrain[][] terrain) {
-
-        }
-
         private void sendPacket(EPacketHeader header, String body) {
             BufferedWriter bfw = new BufferedWriter(out);
             try {
                 Packet packet = new Packet(header, body);
-//                System.out.println(packet);
                 bfw.write(packet.toString());
                 bfw.flush();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Error sending packet to client.");
-//                e.printStackTrace();
+                if(e instanceof SocketException) {
+                    try {
+                        serverSocket.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    match.unregisterObserver(Handler.this);
+                }
+                e.printStackTrace();
             }
         }
 
