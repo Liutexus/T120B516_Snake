@@ -11,6 +11,7 @@ import server.Snake.Utility.BitmapConverter;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Random;
@@ -179,6 +180,9 @@ public class Handler implements Runnable, IObserver {
 //                    gameLogic.updatePlayerField(packet.getBody());
                 } catch (Exception e) {
                     if(serverSocket.isClosed()) break;
+                    if(e instanceof SocketException) {
+//                        match.unregisterObserver();
+                    }
                     System.out.println("Couldn't receive packet from the client.");
                     e.printStackTrace();
                     continue;

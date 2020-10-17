@@ -12,6 +12,7 @@ public enum EPacketHeader {
     MATCH,
     SERVER,
     CLIENTPLAYER,
+    CLIENTREQUEST,
     CLIENTRESPONSE,
     ALLPLAYERS,
     STATICENTITY,

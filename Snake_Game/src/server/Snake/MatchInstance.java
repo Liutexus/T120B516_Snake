@@ -17,7 +17,7 @@ public class MatchInstance implements Runnable, ISubject {
 
     private GameLogic gameLogic;
     private int[][] terrain;
-    private int maxPlayerCount = 2;
+    private int maxPlayerCount = 1;
     private int currentPlayerCount = 0;
 
     private boolean gameStarted = false;

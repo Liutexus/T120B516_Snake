@@ -7,6 +7,7 @@ public class Client {
 
     void Start() {
         SwingRender render = new SwingRender();
+        render.run();
     }
 
     public static void main(String[] args) {

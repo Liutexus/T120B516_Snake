@@ -44,6 +44,7 @@ class SnakePanel extends JPanel implements Runnable {
 
     private SnakePanel(Socket clientSocket) {
         setFocusable(true);
+        setDoubleBuffered(true);
         requestFocusInWindow();
 
         this.mapObjects = new ConcurrentHashMap<>();
@@ -52,9 +53,11 @@ class SnakePanel extends JPanel implements Runnable {
         this.clientSocket = clientSocket;
         // Assign socket's input and output streams
         try {
-            out = new OutputStreamWriter(this.clientSocket.getOutputStream());
-            in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
-            System.out.println("Connection established with the server.");
+            if(this.clientSocket != null){
+                out = new OutputStreamWriter(this.clientSocket.getOutputStream());
+                in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
+                System.out.println("Connection established with the server.");
+            }
         } catch (IOException e) {
             System.out.println("Cannot establish connection to server.");
             e.printStackTrace();
@@ -83,7 +86,6 @@ class SnakePanel extends JPanel implements Runnable {
     public static SnakePanel getInstance(Socket clientSocket) {
         if (panelInstance == null)
             panelInstance = new SnakePanel(clientSocket);
-
         return panelInstance;
     }
 
@@ -162,9 +164,9 @@ class SnakePanel extends JPanel implements Runnable {
             ArrayList prevPosX = player.getSnake().getPreviousPositionsX();
             ArrayList prevPosY = player.getSnake().getPreviousPositionsY();
 
-            for(int i = 0; i < player.getSnake().getTailLength(); i++){
+            int tailLength = player.getSnake().getTailLength();
+            for(int i = 0; i < tailLength; i++){
                 try {
-                    int tailLength = player.getSnake().getTailLength();
                     int colorStepR = player.getColor().getRed() / (tailLength + 1);
                     int colorStepG = player.getColor().getGreen() / (tailLength + 1);
                     int colorStepB = player.getColor().getBlue() / (tailLength + 1);
@@ -208,6 +210,21 @@ class SnakePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        while(this.clientSocket == null){ // Just in case it somehow lost connection
+            try {
+                this.clientSocket = new Socket("localhost", 80);
+                out = new OutputStreamWriter(this.clientSocket.getOutputStream());
+                in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
+                System.out.println("Connection established with the server.");
+            } catch (Exception e) {
+                System.out.println("Cannot establish connection to server.");
+                synchronized (this){
+                    try { this.wait(1000); } catch (Exception ex) { }
+                }
+//                e.printStackTrace();
+            }
+        }
+
         ExecutorService executor = Executors.newFixedThreadPool(2);
         ClientUpdater updater = new ClientUpdater();
         ClientListener listener = new ClientListener(in, updater);
