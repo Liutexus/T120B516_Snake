@@ -79,8 +79,8 @@ public class Handler implements Runnable, IObserver {
         this.players = players;
     }
 
-    public void sendLoginInfo() {
-        this.clientSender.sendClientLogin();
+    public void sendLoginInfo(String id, Player player) {
+        this.clientSender.sendClientLogin(id, player);
     }
 
     public void sendPacket(EPacketHeader header, String packet) {
@@ -109,41 +109,6 @@ public class Handler implements Runnable, IObserver {
     @Override
     public void update() {
 
-    }
-
-    // Some utilities
-    // Used to generate a random ID for current client
-    private String randomId() {
-        int leftLimit = 97; // letter 'a'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
-        Random random = new Random();
-        StringBuilder buffer = new StringBuilder(targetStringLength);
-        for (int i = 0; i < targetStringLength; i++) {
-            int randomLimitedInt = leftLimit + (int)(random.nextFloat() * (rightLimit - leftLimit + 1));
-            buffer.append((char) randomLimitedInt);
-        }
-        String generatedString = buffer.toString();
-
-        return generatedString;
-    }
-
-    private Player createPlayer(String id) {
-        if(players.containsKey(id)) {
-            System.out.println("Player already exists.");
-            return null;
-        }
-        int randX = ThreadLocalRandom.current().nextInt(5, 45);
-        int randY = ThreadLocalRandom.current().nextInt(5, 45);
-        // This could be improved by some more fancier initial position assignment
-        Player player = new Player(id, randX, randY);
-
-        Random rand = new Random();
-        Color randomColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-        player.setColor(randomColor); // Assigning a random color for the player
-
-        gameLogic.addPlayer(player); // Adding new client user to the players' pool
-        return player;
     }
 
     // --- Client listener class ---
@@ -215,11 +180,11 @@ public class Handler implements Runnable, IObserver {
             }
         }
 
-        public void sendClientLogin() {
-            clientId = randomId();
+        public void sendClientLogin(String id, Player player) {
+            clientId = id;
             sendPacket(EPacketHeader.ID, clientId);
 
-            clientPlayer = createPlayer(clientId);
+            clientPlayer = player;
             sendPacket(EPacketHeader.CLIENTPLAYER, clientPlayer.toString());
         }
 
