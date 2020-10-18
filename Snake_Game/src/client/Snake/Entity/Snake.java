@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 public class Snake extends AbstractMovingEntity {
     private int tailLength;
-    private String boost; // What boost player currently has?
+    private EEffect boost = EEffect.NONE; // What boost player currently has?
     private int boostDuration; // How long does the boost last?
-    private String debuff; // What debuffs player current has?
+    private EEffect debuff = EEffect.NONE; // What debuffs player current has?
     private int debuffDuration; // How long does the debuff last?
     private String terrain; // What terrain is the player standing on?
 
@@ -47,13 +47,13 @@ public class Snake extends AbstractMovingEntity {
         previousPositionsY = tempY;
     }
 
-    public void setBoost(String boost, int duration){
+    public void setBoost(EEffect boost, int duration){
         this.boost = boost;
         this.boostDuration = duration;
     }
 
     @JsonIgnore
-    public String getBoost(){
+    public EEffect getBoost(){
         return this.boost;
     }
 
@@ -62,13 +62,13 @@ public class Snake extends AbstractMovingEntity {
         return this.boostDuration;
     }
 
-    public void setDebuff(String debuff, int duration) {
+    public void setDebuff(EEffect debuff, int duration) {
         this.debuff = debuff;
         this.debuffDuration = duration;
     }
 
     @JsonIgnore
-    public String getDebuff(){
+    public EEffect getDebuff(){
         return this.debuff;
     }
 
@@ -122,29 +122,43 @@ public class Snake extends AbstractMovingEntity {
 
     }
 
+    private void reactToEffect() {
+        if(this.debuff == EEffect.STUN){
+            this.debuffDuration--;
+        }
+        if(this.debuffDuration == 0){
+            this.debuff = EEffect.NONE;
+        }
+    }
+
     @Override
     public boolean move() {
-        // TODO: Don't move the tail if the velocity is (0,0)
-        this.AddPreviousPositionX(positionX);
-        this.AddPreviousPositionY(positionY);
+        if(this.debuff == EEffect.NONE){
+            this.AddPreviousPositionX(positionX);
+            this.AddPreviousPositionY(positionY);
 
-        positionX += velocityX;
-        positionY += velocityY;
+            positionX += velocityX;
+            positionY += velocityY;
 
-        try {
-            for (int i = 0; i < this.tailLength; i++) {
-                if(this.previousPositionsX.get(i) == positionX &&
-                        this.previousPositionsY.get(i) == positionY &&
-                        (this.velocityX != 0 ||
-                        this.velocityY != 0)) {
-                    int initTailSize = this.tailLength;
-                    this.deltaTailLength(-(initTailSize - i));
-                    // TODO: Point/health reduction
-                    break;
+            try {
+                for (int i = 0; i < this.tailLength; i++) {
+                    // Did the snake bite itself?
+                    if(this.previousPositionsX.get(i) == positionX &&
+                            this.previousPositionsY.get(i) == positionY &&
+                            (this.velocityX != 0 ||
+                                    this.velocityY != 0)) {
+                        int initTailSize = this.tailLength;
+                        this.deltaTailLength(-(initTailSize - i));
+                        // TODO: Point/health reduction
+                        break;
+                    }
                 }
+            } catch (Exception e) {
+                // Just to reduce some headache
+                return false;
             }
-        } catch (Exception e) {
-            // Just to reduce some headache
+        } else {
+            reactToEffect();
         }
 
         return true;

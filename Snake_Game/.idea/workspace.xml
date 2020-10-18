@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/img/arena_test_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Entity/EEffect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Snake.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Snake.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$Terrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$Terrain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Entity/Snake.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/BitmapConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/BitmapConverter.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
