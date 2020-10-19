@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Entity/EEffect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Snake.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Snake.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Entity/EEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Entity/ESnakeEffect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Entity/Snake.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

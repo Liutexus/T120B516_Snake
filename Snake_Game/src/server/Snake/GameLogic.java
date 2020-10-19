@@ -2,7 +2,7 @@
 package server.Snake;
 
 import client.Snake.Entity.Collectible.CollectibleFactory;
-import client.Snake.Entity.EEffect;
+import client.Snake.Entity.ESnakeEffect;
 import client.Snake.Entity.IFactory;
 import client.Snake.Entity.Obstacle.ObstacleFactory;
 import client.Snake.Player;
@@ -51,12 +51,12 @@ public class GameLogic implements Runnable {
 
             // Checking collisions with terrain obstacles
             try {
-                if(player1.getSnake().getDebuff() == EEffect.NONE){ // Is player alright?
+                if(player1.getSnake().getDebuff() == ESnakeEffect.NONE){ // Is player alright?
                     // Getting a position 'one ahead', to check if the player going to collide in the next move
                     int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
                     int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
                     if(terrain[tPosY][tPosX] == 6) { // '6' is an index for "Wall"
-                        player1.getSnake().setDebuff(EEffect.STUN, 10); // Apply a 'Stun' effect to the player for 10 moves
+                        player1.getSnake().setDebuff(ESnakeEffect.STUN, 10); // Apply a 'Stun' effect to the player for 10 moves
                         player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
                     }
                 }

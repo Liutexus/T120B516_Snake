@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 public class Snake extends AbstractMovingEntity {
     private int tailLength;
-    private EEffect boost = EEffect.NONE; // What boost player currently has?
+    private ESnakeEffect boost = ESnakeEffect.NONE; // What boost player currently has?
     private int boostDuration; // How long does the boost last?
-    private EEffect debuff = EEffect.NONE; // What debuffs player current has?
+    private ESnakeEffect debuff = ESnakeEffect.NONE; // What debuffs player current has?
     private int debuffDuration; // How long does the debuff last?
     private String terrain; // What terrain is the player standing on?
 
@@ -47,13 +47,13 @@ public class Snake extends AbstractMovingEntity {
         previousPositionsY = tempY;
     }
 
-    public void setBoost(EEffect boost, int duration){
+    public void setBoost(ESnakeEffect boost, int duration){
         this.boost = boost;
         this.boostDuration = duration;
     }
 
     @JsonIgnore
-    public EEffect getBoost(){
+    public ESnakeEffect getBoost(){
         return this.boost;
     }
 
@@ -62,13 +62,13 @@ public class Snake extends AbstractMovingEntity {
         return this.boostDuration;
     }
 
-    public void setDebuff(EEffect debuff, int duration) {
+    public void setDebuff(ESnakeEffect debuff, int duration) {
         this.debuff = debuff;
         this.debuffDuration = duration;
     }
 
     @JsonIgnore
-    public EEffect getDebuff(){
+    public ESnakeEffect getDebuff(){
         return this.debuff;
     }
 
@@ -123,17 +123,17 @@ public class Snake extends AbstractMovingEntity {
     }
 
     private void reactToEffect() {
-        if(this.debuff == EEffect.STUN){
+        if(this.debuff == ESnakeEffect.STUN){
             this.debuffDuration--;
         }
         if(this.debuffDuration == 0){
-            this.debuff = EEffect.NONE;
+            this.debuff = ESnakeEffect.NONE;
         }
     }
 
     @Override
     public boolean move() {
-        if(this.debuff == EEffect.NONE){
+        if(this.debuff == ESnakeEffect.NONE){
             this.AddPreviousPositionX(positionX);
             this.AddPreviousPositionY(positionY);
 

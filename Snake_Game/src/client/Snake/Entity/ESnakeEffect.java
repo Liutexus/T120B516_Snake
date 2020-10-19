@@ -1,6 +1,6 @@
 package client.Snake.Entity;
 
-public enum EEffect { // Place holder effects
+public enum ESnakeEffect { // Place holder effects
     NONE,
 
     // Positive effects
