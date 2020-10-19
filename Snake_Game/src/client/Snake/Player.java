@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 
-public class Player implements java.io.Serializable {
+public class Player implements Cloneable {
 
     private String id;
     private Snake snake;
@@ -135,11 +135,21 @@ public class Player implements java.io.Serializable {
         });
     }
 
+    public Player clone(){
+        try{
+            return (Player) super.clone();
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Couldn't clone '" + this.getClass() + "' class.");
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         ObjectWriter ow = new ObjectMapper().writer();
         String json = "";
-        Player tempPlayer = this;
+        Player tempPlayer = this.clone();
         tempPlayer.getSnake().trimTailSizeAndPrevPos(tempPlayer.getSnake().getTailLength());
         try {
             json = ow.writeValueAsString(tempPlayer);
