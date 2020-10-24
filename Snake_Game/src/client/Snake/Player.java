@@ -1,14 +1,10 @@
 package client.Snake;
 
 import java.awt.*;
-import java.util.HashMap;
 import java.util.Map;
 
 import client.Snake.Entity.Snake;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
 import server.Snake.Utility.Adapter;
 
 public class Player implements Cloneable {
@@ -84,10 +80,6 @@ public class Player implements Cloneable {
         this.isGameOver = isGameOver;
     }
 
-    public void mapToObject(Map<String, Object> map){
-        Adapter.mapToPlayer(this, map);
-    }
-
     public Player clone(){
         try{
             return (Player) super.clone();
@@ -96,6 +88,10 @@ public class Player implements Cloneable {
             System.out.println("Couldn't clone '" + this.getClass() + "' class.");
         }
         return null;
+    }
+
+    public void mapToObject(Map<String, Object> map){
+        Adapter.mapToPlayer(this, map);
     }
 
     @Override

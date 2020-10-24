@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import server.Snake.Enums.EPacketHeader;
 import server.Snake.Packet.Packet;
+import server.Snake.Utility.Adapter;
 import server.Snake.Utility.BitmapConverter;
 
 class SnakePanel extends JPanel implements Runnable {
@@ -277,21 +278,18 @@ class SnakePanel extends JPanel implements Runnable {
             Map packetMap; // To store parsed packet map
             Player packetPlayer = new Player(null);
             switch (packet.header){
-                case EMPTY:
-                    // Placeholder for now
-                    break;
                 case ID:
                     Id = (String)packet.parseBody().get(packet.header.toString());
                     System.out.println("Client ID: " + Id);
                     break;
                 case CLIENT_PLAYER:
                     packetMap = packet.parseBody();
-                    packetPlayer.mapToObject(packetMap);
+                    Adapter.mapToPlayer(packetPlayer, packetMap); // Parsing the received player packet
                     currentPlayer = packetPlayer;
                     break;
                 case PLAYER:
                     packetMap = packet.parseBody();
-                    packetPlayer.mapToObject(packetMap);
+                    Adapter.mapToPlayer(packetPlayer, packetMap); // Parsing the received player packet
                     if(packetPlayer.getId() != null)
                         if(!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);
                         else snakes.replace(packetPlayer.getId(), packetPlayer);
