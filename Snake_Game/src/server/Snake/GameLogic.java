@@ -1,11 +1,11 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
 package server.Snake;
 
-import client.Snake.Entity.Collectible.CollectibleFactory;
-import client.Snake.Entity.ESnakeEffect;
-import client.Snake.Entity.IFactory;
-import client.Snake.Entity.Obstacle.ObstacleFactory;
-import client.Snake.Player;
+import server.Snake.Entity.Collectible.CollectibleFactory;
+import server.Snake.Enums.ESnakeEffect;
+import server.Snake.Interface.IFactory;
+import server.Snake.Entity.Obstacle.ObstacleFactory;
+import client.Snake.Entity.Player;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,6 +61,7 @@ public class GameLogic implements Runnable {
                     }
                 }
             } catch (Exception e){
+                if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
                 e.printStackTrace();
             }
 

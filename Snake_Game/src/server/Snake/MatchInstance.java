@@ -1,6 +1,6 @@
 package server.Snake;
 
-import client.Snake.Player;
+import client.Snake.Entity.Player;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
 import server.Snake.Enums.EPacketHeader;
