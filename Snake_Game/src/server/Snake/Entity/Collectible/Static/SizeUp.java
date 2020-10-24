@@ -1,13 +1,15 @@
 package server.Snake.Entity.Collectible.Static;
 
 import server.Snake.Entity.AbstractStaticEntity;
+import server.Snake.Entity.Entity;
 import server.Snake.Entity.Snake;
 import client.Snake.Entity.Player;
+import server.Snake.Interface.IEntity;
 
-public class SizeUp extends AbstractStaticEntity {
+public class SizeUp extends AbstractStaticEntity implements IEntity {
 
-    public SizeUp(float positionX, float positionY) {
-        super(positionX, positionY);
+    public SizeUp(Entity entity){
+        super(entity);
     }
 
     @Override

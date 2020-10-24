@@ -2,14 +2,16 @@ package server.Snake.Entity.Obstacle.Moving;
 
 import server.Snake.Entity.AbstractMovingEntity;
 import client.Snake.Entity.Player;
+import server.Snake.Entity.Entity;
+import server.Snake.Handler;
 import server.Snake.Interface.IEntity;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Hawk extends AbstractMovingEntity implements IEntity {
 
-    public Hawk(float positionX, float positionY) {
-        super(positionX, positionY);
+    public Hawk(Entity entity){
+        super(entity);
     }
 
     // TODO: Implement smarter moving behaviour, perhaps the Hawk could chase snakes in a visibility range.

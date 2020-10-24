@@ -2,13 +2,14 @@ package server.Snake.Entity.Obstacle.Static;
 
 import server.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Entity.Player;
+import server.Snake.Entity.Entity;
 import server.Snake.Enums.ESnakeEffect;
 import server.Snake.Interface.IEntity;
 
 public class BearTrap extends AbstractStaticEntity implements IEntity {
 
-    public BearTrap(float positionX, float positionY) {
-        super(positionX, positionY);
+    public BearTrap(Entity entity){
+        super(entity);
     }
 
     @Override

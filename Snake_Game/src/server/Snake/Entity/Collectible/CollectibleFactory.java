@@ -6,6 +6,7 @@ import server.Snake.Entity.Collectible.Moving.Mouse;
 import server.Snake.Entity.Collectible.Static.Leaf;
 import server.Snake.Entity.Collectible.Static.SizeUp;
 import server.Snake.Entity.Collectible.Static.SpeedUp;
+import server.Snake.Entity.Entity;
 import server.Snake.Interface.IFactory;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,7 +16,7 @@ public class CollectibleFactory implements IFactory {
     // TODO: Implement a "smarter" way of using this factory, rather than just getting RNG types.
     @Override
     public AbstractMovingEntity createMoving(float positionX, float positionY) {
-        return new Mouse(positionX, positionY);
+        return new Mouse(new Entity(positionX, positionY));
     }
 
     @Override
@@ -23,11 +24,11 @@ public class CollectibleFactory implements IFactory {
         int randomCase = ThreadLocalRandom.current().nextInt(0, 3);
         switch (randomCase) {
             case 0:
-                return new Leaf(positionX, positionY);
+                return new Leaf(new Entity(positionX, positionY));
             case 1:
-                return new SizeUp(positionX, positionY);
+                return new SizeUp(new Entity(positionX, positionY));
             case 2:
-                return new SpeedUp(positionX, positionY);
+                return new SpeedUp(new Entity(positionX, positionY));
             default:
                 return null;
         }

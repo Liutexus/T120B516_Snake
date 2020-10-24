@@ -2,11 +2,13 @@ package server.Snake.Entity.Collectible.Static;
 
 import server.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Entity.Player;
+import server.Snake.Entity.Entity;
+import server.Snake.Interface.IEntity;
 
-public class Leaf extends AbstractStaticEntity {
+public class Leaf extends AbstractStaticEntity implements IEntity {
 
-    public Leaf(float positionX, float positionY) {
-        super(positionX, positionY);
+    public Leaf(Entity entity){
+        super(entity);
     }
 
     @Override

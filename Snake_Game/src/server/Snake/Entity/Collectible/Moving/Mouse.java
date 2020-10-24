@@ -1,13 +1,15 @@
 package server.Snake.Entity.Collectible.Moving;
 
 import server.Snake.Entity.AbstractMovingEntity;
+import server.Snake.Entity.Entity;
+import server.Snake.Interface.IEntity;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Mouse extends AbstractMovingEntity {
+public class Mouse extends AbstractMovingEntity implements IEntity {
 
-    public Mouse(float positionX, float positionY) {
-        super(positionX, positionY);
+    public Mouse(Entity entity) {
+        super(entity);
     }
 
     @Override

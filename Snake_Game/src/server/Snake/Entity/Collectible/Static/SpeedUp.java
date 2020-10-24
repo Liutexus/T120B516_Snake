@@ -2,11 +2,13 @@ package server.Snake.Entity.Collectible.Static;
 
 import server.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Entity.Player;
+import server.Snake.Entity.Entity;
+import server.Snake.Interface.IEntity;
 
-public class SpeedUp extends AbstractStaticEntity {
+public class SpeedUp extends AbstractStaticEntity implements IEntity {
 
-    public SpeedUp(float positionX, float positionY) {
-        super(positionX, positionY);
+    public SpeedUp(Entity entity){
+        super(entity);
     }
 
     @Override

@@ -11,6 +11,11 @@ public abstract class AbstractMovingEntity extends Entity {
     protected float velocityX; // How fast is the entity going horizontally?
     protected float velocityY; // How fast is the entity going vertically?
 
+
+    public AbstractMovingEntity(Entity entity){
+        super(entity.positionX, entity.positionY);
+    }
+
     public AbstractMovingEntity(float positionX, float positionY) {
         super(positionX, positionY);
         this.previousPositionsX = new ArrayList<Float>();
