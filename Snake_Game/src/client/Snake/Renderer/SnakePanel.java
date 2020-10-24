@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 
 import client.Snake.Entity.Entity;
 import client.Snake.Player;
+import client.Snake.Renderer.Command.PlayerMoveCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import server.Snake.Enums.EPacketHeader;
@@ -34,7 +35,7 @@ class SnakePanel extends JPanel implements Runnable {
     private int cellHeight;
 
     private Player currentPlayer;
-    private String Id;
+    private String id;
     private Socket clientSocket;
 
     private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
@@ -89,54 +90,24 @@ class SnakePanel extends JPanel implements Runnable {
     }
 
     private void keyResponse(KeyEvent key) {
-        try {
-            ObjectWriter objectMapper = new ObjectMapper().writer();
-            HashMap<Object, Object> packetMap = new HashMap<>();
-            Packet packet = new Packet(EPacketHeader.CLIENT_RESPONSE);
-            packetMap.put("id", this.Id);
-            switch (key.getKeyCode()){
-                case KeyEvent.VK_UP:
-                    packetMap.put("directionX", "0");
-                    packetMap.put("directionY", "-1");
-                    packet.setBody(objectMapper.writeValueAsString(packetMap));
-                    out.write(packet.toString());
-                    out.flush();
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    packetMap.put("directionX", "1");
-                    packetMap.put("directionY", "0");
-                    packet.setBody(objectMapper.writeValueAsString(packetMap));
-                    out.write(packet.toString());
-                    out.flush();
-                    break;
-                case KeyEvent.VK_DOWN:
-                    packetMap.put("directionX", "0");
-                    packetMap.put("directionY", "1");
-                    packet.setBody(objectMapper.writeValueAsString(packetMap));
-                    out.write(packet.toString());
-                    out.flush();
-                    break;
-                case KeyEvent.VK_LEFT:
-                    packetMap.put("directionX", "-1");
-                    packetMap.put("directionY", "0");
-                    packet.setBody(objectMapper.writeValueAsString(packetMap));
-                    out.write(packet.toString());
-                    out.flush();
-                    break;
-                case KeyEvent.VK_SPACE:
-                    packetMap.put("directionX", "0");
-                    packetMap.put("directionY", "0");
-                    packet.setBody(objectMapper.writeValueAsString(packetMap));
-                    out.write(packet.toString());
-                    out.flush();
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error sending an input to the server.");
-//            e.printStackTrace();
+        switch (key.getKeyCode()){
+            case KeyEvent.VK_UP:
+                PlayerMoveCommand.moveUp(this.id, out);
+                break;
+            case KeyEvent.VK_RIGHT:
+                PlayerMoveCommand.moveRight(this.id, out);
+                break;
+            case KeyEvent.VK_DOWN:
+                PlayerMoveCommand.moveDown(this.id, out);
+                break;
+            case KeyEvent.VK_LEFT:
+                PlayerMoveCommand.moveLeft(this.id, out);
+                break;
+            case KeyEvent.VK_SPACE:
+                PlayerMoveCommand.moveStop(this.id, out);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
         }
     }
 
@@ -279,8 +250,8 @@ class SnakePanel extends JPanel implements Runnable {
             Player packetPlayer = new Player(null);
             switch (packet.header){
                 case ID:
-                    Id = (String)packet.parseBody().get(packet.header.toString());
-                    System.out.println("Client ID: " + Id);
+                    id = (String)packet.parseBody().get(packet.header.toString());
+                    System.out.println("Client ID: " + id);
                     break;
                 case CLIENT_PLAYER:
                     packetMap = packet.parseBody();
