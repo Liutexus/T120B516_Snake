@@ -92,22 +92,28 @@ class SnakePanel extends JPanel implements Runnable {
     private void keyResponse(KeyEvent key) {
         switch (key.getKeyCode()){
             case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
                 PlayerMoveCommand.moveUp(this.id, out);
                 break;
             case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_D:
                 PlayerMoveCommand.moveRight(this.id, out);
                 break;
             case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
                 PlayerMoveCommand.moveDown(this.id, out);
                 break;
             case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_A:
                 PlayerMoveCommand.moveLeft(this.id, out);
                 break;
             case KeyEvent.VK_SPACE:
                 PlayerMoveCommand.moveStop(this.id, out);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
+
+                System.out.println("Not defined key press '" + key.getKeyChar() + "'");
+//                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
         }
     }
 
