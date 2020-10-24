@@ -1,14 +1,11 @@
 package client.Snake;
 
 import java.awt.*;
-import java.util.HashMap;
 import java.util.Map;
 
 import client.Snake.Entity.Snake;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
+import server.Snake.Utility.Adapter;
 
 public class Player implements Cloneable {
 
@@ -38,8 +35,16 @@ public class Player implements Cloneable {
         return this.id;
     }
 
+    public void setId(String id){
+        this.id = id;
+    }
+
     public Snake getSnake() {
         return this.snake;
+    }
+
+    public void setSnake(Snake snake) {
+        this.snake = snake;
     }
 
     @JsonIgnore
@@ -75,66 +80,6 @@ public class Player implements Cloneable {
         this.isGameOver = isGameOver;
     }
 
-    public void jsonToObject(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> map = new HashMap<>();
-        try {
-            map = objectMapper.readValue(json, new TypeReference<HashMap<String,Object>>(){});
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-        map.forEach((field, obj) -> {
-            switch (field){
-                case "id":
-                    this.id = (String)obj;
-                    break;
-                case "snake":
-                    HashMap snakeMap = (HashMap) obj;
-                    this.snake.mapToObject(snakeMap);
-                    break;
-                case "score":
-                    this.score = (int)obj;
-                    break;
-                case "color":
-                    this.color = (Color) obj;
-                    break;
-                case "isGameOver":
-                    this.isGameOver = (boolean) obj;
-                    break;
-                default:
-                    System.out.println("Attribute: '" + field + "' is not recognised.");
-                    break;
-            }
-        });
-    }
-
-    public void mapToObject(Map<String, Object> map){
-        map.forEach((field, obj) -> {
-            switch (field){
-                case "id":
-                    this.id = (String)obj;
-                    break;
-                case "snake":
-                    HashMap snakeMap = (HashMap) obj;
-                    this.snake.mapToObject(snakeMap);
-                    break;
-                case "score":
-                    this.score = (int)obj;
-                    break;
-                case "colorRGB":
-                    this.color = new Color((int)obj);
-                    break;
-                case "isGameOver":
-                    this.isGameOver = (boolean) obj;
-                    break;
-                default:
-                    System.out.println("Attribute: '" + field + "' is not recognised.");
-                    break;
-            }
-        });
-    }
-
     public Player clone(){
         try{
             return (Player) super.clone();
@@ -145,17 +90,12 @@ public class Player implements Cloneable {
         return null;
     }
 
+    public void mapToObject(Map<String, Object> map){
+        Adapter.mapToPlayer(this, map);
+    }
+
     @Override
     public String toString() {
-        ObjectWriter ow = new ObjectMapper().writer();
-        String json = "";
-        Player tempPlayer = this.clone();
-        tempPlayer.getSnake().trimTailSizeAndPrevPos(tempPlayer.getSnake().getTailLength());
-        try {
-            json = ow.writeValueAsString(tempPlayer);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return json;
+        return Adapter.playerToJson(this);
     }
 }

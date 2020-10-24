@@ -1,6 +1,7 @@
 package client.Snake.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import server.Snake.Utility.Adapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,39 +88,7 @@ public class Snake extends AbstractMovingEntity {
     }
 
     public void mapToObject(HashMap<String, Object> map) {
-        map.forEach((field, value) -> {
-            ArrayList<Object> temp;
-            switch (field){
-                case "previousPositionsX":
-                    this.previousPositionsX = (ArrayList<Float>)value;
-                    break;
-                case "previousPositionsY":
-                    this.previousPositionsY = (ArrayList<Float>)value;
-                    break;
-                case "tailLength":
-                    this.tailLength = (int)value;
-                    break;
-                case "velocity":
-                    temp = (ArrayList<Object>) value;
-                    this.velocityX = (float)(double)temp.get(0);
-                    this.velocityY = (float)(double)temp.get(1);
-                    break;
-                case "size":
-                    temp = (ArrayList<Object>) value;
-                    this.sizeX = (float)(double)temp.get(0);
-                    this.sizeY = (float)(double)temp.get(1);
-                    break;
-                case "position":
-                    temp = (ArrayList<Object>) value;
-                    this.positionX = (float)(double)temp.get(0);
-                    this.positionY = (float)(double)temp.get(1);
-                    break;
-                default:
-                    System.out.println("Attribute: '" + field + "' is not recognised.");
-                    break;
-            }
-        });
-
+        Adapter.mapToSnake(this, map);
     }
 
     private void reactToEffect() {
