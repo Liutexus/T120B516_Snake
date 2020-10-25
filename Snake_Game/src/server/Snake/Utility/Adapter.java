@@ -1,7 +1,7 @@
 package server.Snake.Utility;
 
-import client.Snake.Entity.Snake;
-import client.Snake.Player;
+import server.Snake.Entity.Snake;
+import client.Snake.Entity.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Adapter {
-
     public static void mapToPlayer(Player player, Map<String, Object> map){
         map.forEach((field, obj) -> {
             switch (field){

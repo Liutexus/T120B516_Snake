@@ -5,7 +5,40 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/AbstractStaticEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/AbstractStaticEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/CollectibleFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/CollectibleFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/Leaf.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/Leaf.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SizeUp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SizeUp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SpeedUp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SpeedUp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Entity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/BearTrap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/BearTrap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/PoisonousBerry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/PoisonousBerry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Snake.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Snake.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enums/EPacketHeader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enums/EPacketHeader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enums/ESnakeEffect.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractMovingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractMovingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/CollectibleFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/CollectibleFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/Leaf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/Leaf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/Reverse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/Reverse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SizeUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SizeUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SpeedUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SpeedUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Static/BearTrap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Static/BearTrap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Static/PoisonousBerry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Static/PoisonousBerry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/StaticEntityDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/StaticEntityDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Enums/EClientStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Enums/EClientStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Enums/EEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Enums/EEffect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Enums/EPacketHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Enums/EPacketHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

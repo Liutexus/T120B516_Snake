@@ -12,12 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.Snake.Entity.Entity;
-import client.Snake.Player;
+import server.Snake.Entity.Entity;
+import client.Snake.Entity.Player;
 import client.Snake.Renderer.Command.PlayerMoveCommand;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import server.Snake.Enums.EPacketHeader;
 import server.Snake.Packet.Packet;
 import server.Snake.Utility.Adapter;
 import server.Snake.Utility.BitmapConverter;
@@ -38,7 +35,7 @@ class SnakePanel extends JPanel implements Runnable {
     private String id;
     private Socket clientSocket;
 
-    private Map<String, Player> snakes = new ConcurrentHashMap<String, Player>();
+    private Map<String, Player> snakes = new ConcurrentHashMap<>();
     private Map<String, Entity> mapObjects;
     private Map<Integer, ArrayList> terrain;
 
@@ -277,6 +274,10 @@ class SnakePanel extends JPanel implements Runnable {
                         if(!terrain.containsKey(key)) // Do we already have this line of terrain?
                             terrain.put(Integer.parseInt((String)key), (ArrayList) array); // Putting a new line of terrain
                     });
+                    break;
+                case ENTITY:
+                    packetMap = packet.parseBody();
+                    // TODO: Parse and save as a terrain's entity
                     break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");

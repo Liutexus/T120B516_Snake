@@ -1,6 +1,7 @@
 package server.Snake;
 
-import client.Snake.Player;
+import client.Snake.Entity.Player;
+import server.Snake.Entity.Entity;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
 import server.Snake.Enums.EPacketHeader;
@@ -18,6 +19,7 @@ public class MatchInstance implements Runnable, ISubject {
     private static int concurrentThreads = 5;
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
+    private Map<Integer, Entity> terrainEntities = new ConcurrentHashMap<>(); // All collectibles on the map
 
     private GameLogic gameLogic;
     private int[][] terrain;
@@ -28,7 +30,7 @@ public class MatchInstance implements Runnable, ISubject {
 
     public MatchInstance() {
         this.terrain = BitmapConverter.BMPToIntArray("img/arena_test_01.png", 50, 50);
-        this.gameLogic = new GameLogic(this.handlers, this.players, this.terrain);
+        this.gameLogic = new GameLogic(this.handlers, this.players, this.terrainEntities, this.terrain);
     }
 
     public int getCurrentPlayerCount() {
@@ -82,6 +84,7 @@ public class MatchInstance implements Runnable, ISubject {
                     handler.setMatchInstance(this);
                     handler.setGameLogic(this.gameLogic);
                     handler.setPlayers(this.players);
+                    handler.setTerrainEntities(this.terrainEntities);
                     pool.execute(handler);
                 });
 
