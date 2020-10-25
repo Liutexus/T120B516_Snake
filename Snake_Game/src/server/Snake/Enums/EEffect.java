@@ -7,12 +7,15 @@ public enum ESnakeEffect { // Place holder effects
     HASTE,
     REGENERATION,
     INVISIBILITY,
+    POINT_INCREASE,
 
-    // Negative effects
+    // Negative effects,
     SLOW,
     STUN,
+    POINT_DECREASE,
 
     // Neutral
     ROLLBACK,
+    SIZE_UP,
 
 }
