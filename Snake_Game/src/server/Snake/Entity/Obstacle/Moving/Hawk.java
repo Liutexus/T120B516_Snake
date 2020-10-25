@@ -4,12 +4,10 @@ import server.Snake.Entity.AbstractMovingEntity;
 import client.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Strategy.HostileMovement;
-import server.Snake.Handler;
 import server.Snake.Interface.IEntity;
 import server.Snake.Interface.IMovingEntityBehaviour;
 
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Hawk extends AbstractMovingEntity implements IEntity {
     private IMovingEntityBehaviour movingStrategy;
@@ -28,7 +26,7 @@ public class Hawk extends AbstractMovingEntity implements IEntity {
 
     @Override
     public boolean move() {
-        this.movingStrategy.move(this);
+        this.movingStrategy.move(this, players);
         return true;
     }
 
