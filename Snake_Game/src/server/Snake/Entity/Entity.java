@@ -1,8 +1,11 @@
 package server.Snake.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import server.Snake.Enums.EEffect;
 import server.Snake.Interface.IEntity;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Entity implements IEntity {
@@ -10,6 +13,8 @@ public class Entity implements IEntity {
     protected float positionY;   // Current player vertical position
     protected float sizeX; // How big is the player by X axis
     protected float sizeY; // How big is the player by Y axis
+
+    protected Map<EEffect, Integer> effects = new ConcurrentHashMap<>();
 
     public Entity(float positionX, float positionY) {
         this.positionX = positionX;
@@ -81,4 +86,15 @@ public class Entity implements IEntity {
         this.sizeX += sizeX;
         this.sizeY += sizeY;
     }
+
+    public void setEffect(EEffect effect, int duration){
+        if(!this.effects.containsKey(effect)) this.effects.put(effect, duration);
+        else this.effects.replace(effect, duration);
+    }
+
+    @JsonIgnore
+    public Map<EEffect, Integer> getEffects(){
+        return this.effects;
+    }
+
 }

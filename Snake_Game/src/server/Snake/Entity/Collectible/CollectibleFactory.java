@@ -4,6 +4,7 @@ import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Collectible.Moving.Mouse;
 import server.Snake.Entity.Collectible.Static.Leaf;
+import server.Snake.Entity.Collectible.Static.Reverse;
 import server.Snake.Entity.Collectible.Static.SizeUp;
 import server.Snake.Entity.Collectible.Static.SpeedUp;
 import server.Snake.Entity.Entity;
@@ -21,7 +22,7 @@ public class CollectibleFactory implements IFactory {
 
     @Override
     public AbstractStaticEntity createStatic(float positionX, float positionY) {
-        int randomCase = ThreadLocalRandom.current().nextInt(0, 3);
+        int randomCase = ThreadLocalRandom.current().nextInt(0, 4);
         switch (randomCase) {
             case 0:
                 return new Leaf(new Entity(positionX, positionY));
@@ -29,6 +30,8 @@ public class CollectibleFactory implements IFactory {
                 return new SizeUp(new Entity(positionX, positionY));
             case 2:
                 return new SpeedUp(new Entity(positionX, positionY));
+            case 3:
+                return new Leaf(new SpeedUp(new Entity(positionX, positionY)));
             default:
                 return null;
         }

@@ -8,6 +8,7 @@ public enum EPacketHeader {
     ARRAY,
     ID,
     TERRAIN,
+    ENTITY,
     PLAYER,
     MATCH,
     SERVER,
@@ -16,5 +17,5 @@ public enum EPacketHeader {
     CLIENT_RESPONSE,
     ALL_PLAYERS,
     STATIC_ENTITY,
-    MOVING_ENTITY
+    MOVING_ENTITY,
 }

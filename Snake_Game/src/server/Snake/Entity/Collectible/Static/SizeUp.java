@@ -1,22 +1,22 @@
 package server.Snake.Entity.Collectible.Static;
 
-import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Entity;
-import server.Snake.Entity.Snake;
-import client.Snake.Entity.Player;
+import server.Snake.Entity.StaticEntityDecorator;
+import server.Snake.Enums.EEffect;
 import server.Snake.Interface.IEntity;
 
-public class SizeUp extends AbstractStaticEntity implements IEntity {
+import java.util.Map;
+
+public class SizeUp extends StaticEntityDecorator implements IEntity {
 
     public SizeUp(Entity entity){
         super(entity);
     }
 
     @Override
-    // TODO: Implement this size buff in a smarter manner (perhaps temporarily with a timer).
-    // Increases size of player snake by 1x1.
-    public void onCollide(Object collider) {
-        Snake playerSnake = ((Player)collider).getSnake();
-        playerSnake.deltaSize(1, 1);
+    public Map<EEffect, Integer> getEffects(){
+        super.effects.put(EEffect.SIZE_UP, 1);
+        return super.getEffects();
     }
+
 }

@@ -1,34 +1,20 @@
 package server.Snake.Entity;
 
-import server.Snake.Enums.ESnakeEffect;
+import server.Snake.Enums.EEffect;
 import server.Snake.Interface.IEntity;
 
-public abstract class EntityDecorator implements IEntity {
+import java.util.Map;
+
+public abstract class StaticEntityDecorator extends AbstractStaticEntity implements IEntity {
     private final IEntity decoratedEntity;
 
-    public EntityDecorator(IEntity entity){
+    public StaticEntityDecorator(IEntity entity){
+        super(entity);
         this.decoratedEntity = entity;
     }
 
     @Override
-    public ESnakeEffect getBoost(){
-
+    public Map<EEffect, Integer> getEffects(){
+        return decoratedEntity.getEffects();
     }
-
-    @Override
-    public int getBoostDuration(){
-
-    }
-
-    @Override
-    public ESnakeEffect getDebuff(){
-
-    }
-
-    @Override
-    public int getDebuffDuration(){
-
-    }
-
-
 }

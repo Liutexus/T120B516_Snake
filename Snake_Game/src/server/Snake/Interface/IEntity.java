@@ -1,5 +1,9 @@
 package server.Snake.Interface;
 
+import server.Snake.Enums.EEffect;
+
+import java.util.Map;
+
 public interface IEntity {
     float getPositionX();
     void setPositionX(float positionX);
@@ -15,4 +19,6 @@ public interface IEntity {
     float[] getSize();
     void setSize(float sizeX, float sizeY);
     void deltaSize(float sizeX, float sizeY);
+    void setEffect(EEffect effect, int duration);
+    Map getEffects();
 }

@@ -3,7 +3,9 @@
 package server.Snake;
 
 import client.Snake.Entity.Player;
+import server.Snake.Entity.Entity;
 import server.Snake.Enums.EClientStatus;
+import server.Snake.Interface.IEntity;
 import server.Snake.Interface.IObserver;
 import server.Snake.Enums.EPacketHeader;
 import server.Snake.Packet.Packet;
@@ -32,6 +34,7 @@ public class Handler implements Runnable, IObserver {
     private Player clientPlayer;
     private String clientId;
     public Map<String, Player> players = new ConcurrentHashMap<>();
+    public Map<String, Entity> terrainEntities = new ConcurrentHashMap<>();
 
     public Handler(Socket serverSocket) {
         this.serverSocket = serverSocket; // Current socket object
@@ -60,6 +63,10 @@ public class Handler implements Runnable, IObserver {
 
     public void setPlayers(Map players) {
         this.players = players;
+    }
+
+    public void setTerrainEntities(Map terrainEntities) {
+        this.terrainEntities = terrainEntities;
     }
 
     public void sendLoginInfo(String id, Player player) {
@@ -156,11 +163,15 @@ public class Handler implements Runnable, IObserver {
         @Override
         public void run() {
             try {
-
                 if(Handler.this.status == EClientStatus.IN_GAME){ // if the player is in game
                     synchronized (players){
                         players.forEach((key, value) -> { // send all other match players
                             sendPacket(EPacketHeader.PLAYER, value.toString());
+                        });
+                    }
+                    synchronized (terrainEntities){
+                        terrainEntities.forEach((key, value) -> { // send all other match players
+//                            sendPacket(EPacketHeader.ENTITY, value.toString()); // TODO: Convert value object into a nice JSON
                         });
                     }
                 }

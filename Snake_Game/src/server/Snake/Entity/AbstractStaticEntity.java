@@ -1,8 +1,11 @@
 package server.Snake.Entity;
 
+import client.Snake.Entity.Player;
+import server.Snake.Interface.IEntity;
+
 public abstract class AbstractStaticEntity extends Entity {
 
-    public AbstractStaticEntity(Entity entity) {
+    public AbstractStaticEntity(IEntity entity) {
         super(entity.getPositionX(), entity.getPositionY());
     }
 
@@ -10,5 +13,9 @@ public abstract class AbstractStaticEntity extends Entity {
         super(positionX, positionY);
     }
 
-    public abstract void onCollide(Object collider);
+    public void onCollide(Object collider) {
+        super.effects.forEach((k, v) -> {
+            ((Player)collider).getSnake().setEffect(k, v);
+        });
+    };
 }

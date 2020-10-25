@@ -1,6 +1,5 @@
 package server.Snake.Entity;
 
-import server.Snake.Entity.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;

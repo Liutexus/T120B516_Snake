@@ -1,22 +1,23 @@
 package server.Snake.Entity.Obstacle.Static;
 
-import server.Snake.Entity.AbstractStaticEntity;
-import client.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
-import server.Snake.Enums.ESnakeEffect;
+import server.Snake.Entity.StaticEntityDecorator;
+import server.Snake.Enums.EEffect;
 import server.Snake.Interface.IEntity;
 
-public class PoisonousBerry extends AbstractStaticEntity implements IEntity {
+import java.util.Map;
+
+public class PoisonousBerry extends StaticEntityDecorator implements IEntity {
 
     public PoisonousBerry(Entity entity){
         super(entity);
     }
 
     @Override
-    public void onCollide(Object collider) {
-        if(collider.getClass() == Player.class){
-            ((Player)collider).deltaScore(-50);
-            ((Player)collider).getSnake().setDebuff(ESnakeEffect.SLOW, 50);
-        }
+    public Map<EEffect, Integer> getEffects(){
+        super.effects.put(EEffect.POINT_DECREASE, 50);
+        super.effects.put(EEffect.SLOW, 50);
+        return super.getEffects();
     }
+
 }

@@ -1,18 +1,11 @@
 package server.Snake.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import server.Snake.Enums.ESnakeEffect;
-import server.Snake.Utility.Adapter;
+import server.Snake.Enums.EEffect;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Snake extends AbstractMovingEntity {
     private int tailLength;
-    private ESnakeEffect boost = ESnakeEffect.NONE; // What boost player currently has?
-    private int boostDuration; // How long does the boost last?
-    private ESnakeEffect debuff = ESnakeEffect.NONE; // What debuffs player current has?
-    private int debuffDuration; // How long does the debuff last?
     private String terrain; // What terrain is the player standing on?
 
     public Snake(float positionX, float positionY) {
@@ -49,36 +42,6 @@ public class Snake extends AbstractMovingEntity {
         previousPositionsY = tempY;
     }
 
-    public void setBoost(ESnakeEffect boost, int duration){
-        this.boost = boost;
-        this.boostDuration = duration;
-    }
-
-    @JsonIgnore
-    public ESnakeEffect getBoost(){
-        return this.boost;
-    }
-
-    @JsonIgnore
-    public int getBoostDuration() {
-        return this.boostDuration;
-    }
-
-    public void setDebuff(ESnakeEffect debuff, int duration) {
-        this.debuff = debuff;
-        this.debuffDuration = duration;
-    }
-
-    @JsonIgnore
-    public ESnakeEffect getDebuff(){
-        return this.debuff;
-    }
-
-    @JsonIgnore
-    public int getDebuffDuration() {
-        return this.debuffDuration;
-    }
-
     public boolean checkCollisionWithTail() {
         try {
             for (int i = 0; i < this.tailLength; i++) {
@@ -99,32 +62,31 @@ public class Snake extends AbstractMovingEntity {
         return false;
     }
 
-    public void mapToObject(HashMap<String, Object> map) {
-        Adapter.mapToSnake(this, map);
-    }
-
     private void reactToEffect() {
-        if(this.debuff == ESnakeEffect.STUN){
-            this.debuffDuration--;
+        if(this.effects.containsKey(EEffect.STUN)){
+            this.effects.replace(EEffect.STUN, this.effects.get(EEffect.STUN) - 1);
         }
-        if(this.debuffDuration == 0){
-            this.debuff = ESnakeEffect.NONE;
-        }
+        // TODO: Add checks for every effect and respond accordingly
+
+        this.effects.forEach((k, v) -> {
+            v--;
+            if(v <= 0) effects.remove(k);
+        });
     }
 
     @Override
     public boolean move() {
-        if(this.debuff == ESnakeEffect.NONE){
+        if(this.effects.size() == 0){
             this.AddPreviousPositionX(positionX);
             this.AddPreviousPositionY(positionY);
 
             positionX += velocityX;
             positionY += velocityY;
 
-            checkCollisionWithTail();
         } else {
             reactToEffect();
         }
+        checkCollisionWithTail();
 
         return true;
     }

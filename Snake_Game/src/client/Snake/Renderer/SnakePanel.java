@@ -275,6 +275,10 @@ class SnakePanel extends JPanel implements Runnable {
                             terrain.put(Integer.parseInt((String)key), (ArrayList) array); // Putting a new line of terrain
                     });
                     break;
+                case ENTITY:
+                    packetMap = packet.parseBody();
+                    // TODO: Parse and save as a terrain's entity
+                    break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                     break;

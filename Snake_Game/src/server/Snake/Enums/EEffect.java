@@ -1,6 +1,6 @@
 package server.Snake.Enums;
 
-public enum ESnakeEffect { // Place holder effects
+public enum EEffect {
     NONE,
 
     // Positive effects
@@ -17,5 +17,6 @@ public enum ESnakeEffect { // Place holder effects
     // Neutral
     ROLLBACK,
     SIZE_UP,
+    SIZE_DOWN,
 
 }

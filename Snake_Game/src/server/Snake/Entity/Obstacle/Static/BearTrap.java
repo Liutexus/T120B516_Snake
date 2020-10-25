@@ -1,22 +1,23 @@
 package server.Snake.Entity.Obstacle.Static;
 
-import server.Snake.Entity.AbstractStaticEntity;
-import client.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
-import server.Snake.Enums.ESnakeEffect;
+import server.Snake.Entity.StaticEntityDecorator;
+import server.Snake.Enums.EEffect;
 import server.Snake.Interface.IEntity;
 
-public class BearTrap extends AbstractStaticEntity implements IEntity {
+import java.util.Map;
+
+public class BearTrap extends StaticEntityDecorator implements IEntity {
 
     public BearTrap(Entity entity){
         super(entity);
     }
 
     @Override
-    public void onCollide(Object collider) {
-        if(collider.getClass() == Player.class){
-            ((Player)collider).deltaScore(-100);
-            ((Player)collider).getSnake().setDebuff(ESnakeEffect.STUN, 50);
-        }
+    public Map<EEffect, Integer> getEffects(){
+        super.effects.put(EEffect.POINT_DECREASE, 100);
+        super.effects.put(EEffect.STUN, 20);
+        return super.getEffects();
     }
+
 }

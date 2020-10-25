@@ -5,5 +5,5 @@ public enum EClientStatus {
     MENU,
     LOBBY,
     IN_GAME,
-    POST_GAME
+    POST_GAME,
 }
