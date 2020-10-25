@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/NeutralMovement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IMovingEntityBehaviour.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Points/PointsAdd.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Points/PointsBonus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Points/PointsLoose.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Points/PointsStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Moving/Hawk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Moving/Hawk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/ObstacleFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/ObstacleFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/NeutralMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/NeutralMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

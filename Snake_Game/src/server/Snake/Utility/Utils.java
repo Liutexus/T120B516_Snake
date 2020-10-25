@@ -26,8 +26,18 @@ public class Utils {
     }
 
     public static float[] vectorToPoint(float x1, float y1, float x2, float y2){
-        // TODO: for NPC walking
-        return null;
+        float a = x1 - x2;
+        float b = y1 - y2;
+
+        if(Math.abs(a) > Math.abs(b)){
+            if(a > 0)
+                return new float[]{1, 0};
+            return new float[]{-1, 0};
+        } else {
+            if(b > 0)
+                return new float[]{0, 1};
+            return new float[]{0, -1};
+        }
     }
 
 }
