@@ -29,17 +29,6 @@ public class GameLogic implements Runnable {
 
     private void movePlayers() {
         for (Player player : players.values()) {
-            // --- JUST FOR FUN --- // For testing purposes
-//            float[] directs = player.getSnake().getVelocity();
-//            int randx = ThreadLocalRandom.current().nextInt(-1, 2);
-//            if(randx == directs[0]*-1) randx = (int)directs[0];
-//
-//            int randy = 0;
-//            if(randx == 0){
-//                randy = ThreadLocalRandom.current().nextInt(-1, 2);
-//            }
-//            player.getSnake().setVelocity(randx, randy);
-            // --- FUN ZONE OVER ---
             player.getSnake().move();
         }
     }
@@ -74,6 +63,7 @@ public class GameLogic implements Runnable {
 
     private void checkTerrainEntities() {
         if(!terrainEntities.containsKey("Food")) terrainEntities.put("Food", addStaticCollectible());
+        if(!terrainEntities.containsKey("Hawk")) terrainEntities.put("Hawk", addMovingObstacle());
     }
 
     public void addPlayer(Player player) {
@@ -105,13 +95,10 @@ public class GameLogic implements Runnable {
         }
     }
 
-    // TODO: Add functionality to be able to add any Entity type to game grid.
-    private void addObstacle() {
-        // TODO: Add clauses which specify more concretely when to make which kind of obstacle (certain number of static/moving obstacles per map and etc.)
-        this.ObstacleFactory.createMoving(5, 5);
-        this.ObstacleFactory.createStatic(5, 5);
-        // TODO: Add created Obstacle to game grid.
+    private Entity addMovingObstacle(){
+        return this.ObstacleFactory.createMoving(15, 15, players);
     }
+
     private Entity addStaticCollectible() {
         return this.CollectibleFactory.createStatic(5, 5);
     }
