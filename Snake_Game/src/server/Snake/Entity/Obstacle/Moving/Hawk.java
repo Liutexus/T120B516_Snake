@@ -3,29 +3,32 @@ package server.Snake.Entity.Obstacle.Moving;
 import server.Snake.Entity.AbstractMovingEntity;
 import client.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
+import server.Snake.Entity.Strategy.HostileMovement;
 import server.Snake.Handler;
 import server.Snake.Interface.IEntity;
+import server.Snake.Interface.IMovingEntityBehaviour;
 
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Hawk extends AbstractMovingEntity implements IEntity {
+    private IMovingEntityBehaviour movingStrategy;
+    private Map<String, Player> players;
 
     public Hawk(Entity entity){
         super(entity);
+        this.movingStrategy = new HostileMovement();
     }
 
-    // TODO: Implement smarter moving behaviour, perhaps the Hawk could chase snakes in a visibility range.
+    public Hawk(Entity entity, Map players){
+        super(entity);
+        this.movingStrategy = new HostileMovement();
+        this.players = players;
+    }
+
     @Override
     public boolean move() {
-        // RNG chance to change direction, brainlessly.
-        int changeDirection = ThreadLocalRandom.current().nextInt(0, 100) + 1;
-        if (changeDirection > 90) {
-            // Normalize range [0; 1] to [-1; 1]
-            this.velocityX = ThreadLocalRandom.current().nextFloat() * 2 - 1;
-            this.velocityY = ThreadLocalRandom.current().nextFloat() * 2 - 1;
-        }
-        this.positionX += velocityX;
-        this.positionY += velocityY;
+        this.movingStrategy.move(this);
         return true;
     }
 

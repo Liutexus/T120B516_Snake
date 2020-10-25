@@ -18,4 +18,16 @@ public class Utils {
 
         return generatedString;
     }
+
+    public static float vectorLengthToPoint(float x1, float y1, float x2, float y2) {
+        float a = (float)Math.pow(x1 - x2, 2);
+        float b = (float)Math.pow(y1 - y2, 2);
+        return (float)Math.sqrt(a+b);
+    }
+
+    public static float[] vectorToPoint(float x1, float y1, float x2, float y2){
+        // TODO: for NPC walking
+        return null;
+    }
+
 }
