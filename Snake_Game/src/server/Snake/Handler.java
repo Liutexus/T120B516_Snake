@@ -5,8 +5,6 @@ package server.Snake;
 import client.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
 import server.Snake.Enums.EClientStatus;
-import server.Snake.Interface.IEntity;
-import server.Snake.Interface.IObserver;
 import server.Snake.Enums.EPacketHeader;
 import server.Snake.Packet.Packet;
 
@@ -151,12 +149,7 @@ public class Handler implements Runnable {
                     if(serverSocket.isClosed()) break;
                     System.out.println("Couldn't receive packet from the client.");
                     if(e instanceof SocketException) {
-                        try {
-                            serverSocket.close();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-//                        match.unregisterObserver(Handler.this);
+                        // TODO: Unregister this handler as observer
                         break;
                     }
                     e.printStackTrace();
@@ -212,12 +205,7 @@ public class Handler implements Runnable {
             } catch (Exception e) {
                 System.out.println("Error sending packet to client.");
                 if(e instanceof SocketException) {
-                    try {
-                        serverSocket.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-//                    match.unregisterObserver(Handler.this);
+                    // TODO: Unregister this handler as observer
                 }
                 e.printStackTrace();
             }
