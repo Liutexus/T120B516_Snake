@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Handler implements Runnable, IObserver {
+public class Handler implements Runnable {
     private Socket serverSocket;
     private MatchInstance match;
     private GameLogic gameLogic;
@@ -36,7 +36,26 @@ public class Handler implements Runnable, IObserver {
     public Map<String, Player> players = new ConcurrentHashMap<>();
     public Map<String, Entity> terrainEntities = new ConcurrentHashMap<>();
 
+    public Handler(){}
+
     public Handler(Socket serverSocket) {
+        this.serverSocket = serverSocket; // Current socket object
+        this.status = EClientStatus.MENU;
+
+        try {
+            // We return data from server to the client through here
+            out = serverSocket.getOutputStream();
+            // We listen to our client here
+            in = serverSocket.getInputStream();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        clientListener = new Listener(new InputStreamReader(in));
+        clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
+    }
+
+    public void setServerSocket(Socket serverSocket){
         this.serverSocket = serverSocket; // Current socket object
         this.status = EClientStatus.MENU;
 
@@ -97,11 +116,6 @@ public class Handler implements Runnable, IObserver {
         }
     }
 
-    @Override
-    public void update() {
-        // TODO: Change status here
-    }
-
     // --- Client listener class ---
     private class Listener implements Runnable {
         InputStreamReader in;
@@ -142,7 +156,7 @@ public class Handler implements Runnable, IObserver {
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
-                        match.unregisterObserver(Handler.this);
+//                        match.unregisterObserver(Handler.this);
                         break;
                     }
                     e.printStackTrace();
@@ -203,7 +217,7 @@ public class Handler implements Runnable, IObserver {
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-                    match.unregisterObserver(Handler.this);
+//                    match.unregisterObserver(Handler.this);
                 }
                 e.printStackTrace();
             }
