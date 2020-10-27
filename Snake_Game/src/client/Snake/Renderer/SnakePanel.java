@@ -166,7 +166,15 @@ class SnakePanel extends JPanel implements Runnable {
 
         // Draw all objects placed on the map
         mapObjects.forEach((y, arrayX) -> {
-            drawRect(g, arrayX.getPosition(), arrayX.getSize(), new Color(153,255,10) );
+            int startx = (int)(((int)(arrayX.getPositionX()) * windowSize.width)/horizontalCellCount + ((int)(arrayX.getPositionX() + 1) * windowSize.width)/horizontalCellCount) / 2;
+            int starty = (int)(((int)(arrayX.getPositionY()) * windowSize.height)/horizontalCellCount + ((int)(arrayX.getPositionY() + 1) * windowSize.height)/horizontalCellCount) / 2;
+            Polygon polygon1 = new Polygon();
+            int points = arrayX.getShape().getPoints();
+            for (int i = 0; i < points; i++){
+                polygon1.addPoint((int) (startx + 10 * Math.cos(i * 2 * Math.PI / points)),
+                        (int) (starty  + 10 * Math.sin(i * 2 * Math.PI / points)));}
+            arrayX.getShape().applyColor(g);
+            g.fillPolygon(polygon1);
         });
     }
 
@@ -277,7 +285,7 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case ENTITY:
                     packetMap = packet.parseBody();
-                    mapObjects.put("Food", Adapter.mapToEntity(packetMap));
+                        mapObjects.put("Food", Adapter.mapToEntity(packetMap));
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                     break;

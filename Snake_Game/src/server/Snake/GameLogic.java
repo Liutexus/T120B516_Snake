@@ -1,6 +1,10 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
 package server.Snake;
 
+import server.Snake.Entity.Collectible.Bridge.BlueColor;
+import server.Snake.Entity.Collectible.Bridge.Polygon;
+import server.Snake.Entity.Collectible.Bridge.RedColor;
+import server.Snake.Entity.Collectible.Bridge.Triangle;
 import server.Snake.Entity.Collectible.CollectibleFactory;
 import server.Snake.Entity.Entity;
 import server.Snake.Enums.EEffect;
@@ -9,6 +13,7 @@ import server.Snake.Entity.Obstacle.ObstacleFactory;
 import client.Snake.Entity.Player;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GameLogic implements Runnable {
@@ -58,12 +63,22 @@ public class GameLogic implements Runnable {
             }
 
             try {
+                if(terrain[(int)terrainEntities.get("Food").getPositionY()][(int)terrainEntities.get("Food").getPositionX()] == 6) {
+                    terrainEntities.clear(); // food in wall, remove it
+                }
+            } catch (Exception e){
+                if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
+                e.printStackTrace();
+            }
+
+            try {
                 if(player1.getSnake().getEffects().size() == 0){ // Is player alright?
                     // Getting a position 'one ahead', to check if the player going to collide in the next move
                     int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
                     int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
                     if(terrainEntities.get("Food").getPositionX() == tPosX && terrainEntities.get("Food").getPositionY() == tPosY){
                         terrainEntities.clear(); //took food ADD points do magic
+                        player1.getSnake().deltaTailLength(1); // increase snake tail +1
                     }
                 }
             } catch (Exception e){
@@ -74,7 +89,9 @@ public class GameLogic implements Runnable {
     }
 
     private void checkTerrainEntities() {
-        if(!terrainEntities.containsKey("Food")) terrainEntities.put("Food", addStaticCollectible());
+        if(!terrainEntities.containsKey("Food")){
+            terrainEntities.put("Food", addStaticCollectible());
+        }
         //if(!terrainEntities.containsKey("Hawk")) terrainEntities.put("Hawk", addMovingObstacle());
     }
 
@@ -112,7 +129,10 @@ public class GameLogic implements Runnable {
     }
 
     private Entity addStaticCollectible() {
-        //remove if created on map
-        return this.CollectibleFactory.createStatic((int) ((Math.random() * (49 - 1)) + 1), (int) ((Math.random() * (49 - 1)) + 1));
+        Entity ee = CollectibleFactory.createStatic((int) ((Math.random() * (49 - 1)) + 1), (int) ((Math.random() * (49 - 1)) + 1));
+        Random rand = new Random();
+        int random = rand.nextInt(4)+1;
+        ee.setShapetype(random);
+        return ee;
     }
 }
