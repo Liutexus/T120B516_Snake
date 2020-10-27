@@ -24,7 +24,7 @@ public class SwingRender extends JFrame implements Runnable {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try { // Connecting to the server
-            this.clientSocket = new Socket("localhost", 80);
+            this.clientSocket = new Socket("78.61.32.8", 42069);
             this.serverConnected = true;
         } catch (Exception e) {
             System.out.println("No server to connect to.");
