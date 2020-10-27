@@ -24,7 +24,7 @@ public class MatchInstance implements Runnable, ISubject {
 
     private GameLogic gameLogic;
     private int[][] terrain;
-    private int maxPlayerCount = 2;
+    private int maxPlayerCount = Integer.parseInt(Utils.parseConfig("server", "maxPlayersPerMatch"));
     private int currentPlayerCount = 0;
 
     private boolean gameStarted = false;
