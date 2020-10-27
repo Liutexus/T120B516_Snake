@@ -1,5 +1,6 @@
 package server.Snake;
 
+import server.Snake.Builder.HandlerBuilder;
 import server.Snake.Utility.Utils;
 
 import java.net.ServerSocket;
@@ -18,9 +19,10 @@ public class Server {
             System.out.println("The server is running...");
 
             while (true) {
-                Handler handler = new Handler(listener.accept());
+                HandlerBuilder handlerBuilder = new HandlerBuilder();
+                handlerBuilder.setSocket(listener.accept());
                 MatchInstance matchInstance = returnAvailableMatch();
-                matchInstance.registerObserver(handler);
+                matchInstance.registerObserver(handlerBuilder);
             }
         } catch (Exception e) {
             System.out.println("Error running the server. Aborting...");

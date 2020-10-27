@@ -5,8 +5,6 @@ package server.Snake;
 import client.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
 import server.Snake.Enums.EClientStatus;
-import server.Snake.Interface.IEntity;
-import server.Snake.Interface.IObserver;
 import server.Snake.Enums.EPacketHeader;
 import server.Snake.Packet.Packet;
 
@@ -19,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Handler implements Runnable, IObserver {
+public class Handler implements Runnable {
     private Socket serverSocket;
     private MatchInstance match;
     private GameLogic gameLogic;
@@ -36,7 +34,26 @@ public class Handler implements Runnable, IObserver {
     public Map<String, Player> players = new ConcurrentHashMap<>();
     public Map<String, Entity> terrainEntities = new ConcurrentHashMap<>();
 
+    public Handler(){}
+
     public Handler(Socket serverSocket) {
+        this.serverSocket = serverSocket; // Current socket object
+        this.status = EClientStatus.MENU;
+
+        try {
+            // We return data from server to the client through here
+            out = serverSocket.getOutputStream();
+            // We listen to our client here
+            in = serverSocket.getInputStream();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        clientListener = new Listener(new InputStreamReader(in));
+        clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
+    }
+
+    public void setServerSocket(Socket serverSocket){
         this.serverSocket = serverSocket; // Current socket object
         this.status = EClientStatus.MENU;
 
@@ -97,11 +114,6 @@ public class Handler implements Runnable, IObserver {
         }
     }
 
-    @Override
-    public void update() {
-        // TODO: Change status here
-    }
-
     // --- Client listener class ---
     private class Listener implements Runnable {
         InputStreamReader in;
@@ -137,12 +149,7 @@ public class Handler implements Runnable, IObserver {
                     if(serverSocket.isClosed()) break;
                     System.out.println("Couldn't receive packet from the client.");
                     if(e instanceof SocketException) {
-                        try {
-                            serverSocket.close();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        match.unregisterObserver(Handler.this);
+                        // TODO: Unregister this handler as observer
                         break;
                     }
                     e.printStackTrace();
@@ -198,12 +205,7 @@ public class Handler implements Runnable, IObserver {
             } catch (Exception e) {
                 System.out.println("Error sending packet to client.");
                 if(e instanceof SocketException) {
-                    try {
-                        serverSocket.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    match.unregisterObserver(Handler.this);
+                    // TODO: Unregister this handler as observer
                 }
                 e.printStackTrace();
             }
