@@ -3,7 +3,7 @@ package server.Snake;
 
 import server.Snake.Entity.Collectible.CollectibleEntityFactory;
 import server.Snake.Entity.Entity;
-import server.Snake.Enums.EEffect;
+import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntityFactory;
 import server.Snake.Entity.Obstacle.ObstacleEntityFactory;
 import client.Snake.Entity.Player;

@@ -1,6 +1,6 @@
 package server.Snake.Entity;
 
-import server.Snake.Enums.EEffect;
+import server.Snake.Enumerator.EEffect;
 
 import java.util.ArrayList;
 

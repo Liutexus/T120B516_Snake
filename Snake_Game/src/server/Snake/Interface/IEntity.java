@@ -1,6 +1,6 @@
 package server.Snake.Interface;
 
-import server.Snake.Enums.EEffect;
+import server.Snake.Enumerator.EEffect;
 
 import java.util.Map;
 

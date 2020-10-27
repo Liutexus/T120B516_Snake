@@ -5,7 +5,7 @@ import server.Snake.Builder.HandlerBuilder;
 import server.Snake.Entity.Entity;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
-import server.Snake.Enums.EPacketHeader;
+import server.Snake.Enumerator.EPacketHeader;
 import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.Utils;
 
