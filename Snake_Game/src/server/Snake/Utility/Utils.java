@@ -1,5 +1,17 @@
 package server.Snake.Utility;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Utils {
@@ -38,6 +50,20 @@ public class Utils {
                 return new float[]{0, 1};
             return new float[]{0, -1};
         }
+    }
+
+    public static String parseConfig(String root, String element){
+        Path fileName = Path.of("config.json");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, Object> map = new HashMap<>();
+        try {
+            map = objectMapper.readValue(Files.readString(fileName), new TypeReference<>(){});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return String.valueOf(((HashMap)map.get(root)).get(element));
     }
 
 }
