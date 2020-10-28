@@ -1,5 +1,8 @@
 package server.Snake.Utility;
 
+import server.Snake.Entity.Collectible.Bridge.*;
+import server.Snake.Entity.Collectible.Bridge.Polygon;
+import server.Snake.Entity.Collectible.Bridge.Shape;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Snake;
 import client.Snake.Entity.Player;
@@ -112,6 +115,23 @@ public class Adapter {
                     break;
                 case "size":
                     // set other params
+                case "shapetype":
+                    String s = ""+obj;
+                    switch(s)
+                    {
+                        case "1":
+                            ent.setShape(new Triangle(new RedColor()));
+                            break;
+                        case "2":
+                            ent.setShape(new Polygon(new RedColor()));
+                            break;
+                        case "3":
+                            ent.setShape(new Polygon(new BlueColor()));
+                            break;
+                        case "4":
+                            ent.setShape(new Triangle(new BlueColor()));
+                            break;
+                    }
                 default:
                     System.out.println("Attribute: '" + field + "' is not recognised.");
                     break;
