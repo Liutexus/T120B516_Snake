@@ -2,7 +2,7 @@
   <library name="com.fasterxml.jackson.core:jackson-annotations:2.11.2" type="repository">
     <properties maven-id="com.fasterxml.jackson.core:jackson-annotations:2.11.2" />
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libs/jackson-annotations-2.11.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.11.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

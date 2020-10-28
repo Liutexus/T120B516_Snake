@@ -37,7 +37,104 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Snake_Game_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Snake_Game_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_annotations_2_11_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_annotations_2_11_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_core_2_10_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_core_2_10_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/com_liferay_com_fasterxml_jackson_databind_2_10_3_LIFERAY_PATCHED_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/com_liferay_com_fasterxml_jackson_databind_2_10_3_LIFERAY_PATCHED_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_apiguardian_apiguardian_api_1_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_apiguardian_apiguardian_api_1_1_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_5_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_5_7_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_api_5_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_api_5_7_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_engine_5_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_engine_5_7_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_params_5_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_junit_jupiter_junit_jupiter_params_5_7_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_junit_platform_junit_platform_commons_1_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_junit_platform_junit_platform_commons_1_7_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_junit_platform_junit_platform_engine_1_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_junit_platform_junit_platform_engine_1_7_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_opentest4j_opentest4j_1_2_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake_Game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Snake_Game.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/arena_test_01.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/arena_test_01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/seaside_road.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/resources/seaside_road.bmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/terrain_test.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/resources/terrain_test.bmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/META-INF/Snake_Game.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Collectible.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Entity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Food.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Player$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entities/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Entity/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/ICommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/ICommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveDown.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveDown.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveLeft.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveLeft.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveRight.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveRight.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveStop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveStop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveUp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand$MoveUp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Command/PlayerMoveCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Components/MenuButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/Components/MenuButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/MenuPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/MenuPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel$ClientUpdater.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SnakePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender$ViewStates.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender$ViewStates.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Renderer/SwingRender.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Utilities/BitmapConverter$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Utilities/BitmapConverter$Terrain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/client/Snake/Utilities/BitmapConverter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Builder/HandlerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Builder/HandlerBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/AbstractMovingEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/AbstractMovingEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/AbstractStaticEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/AbstractStaticEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/BlueColor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/BlueColor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/Polygon.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/Polygon.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/RedColor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/RedColor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/Shape.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/Shape.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/Triangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Bridge/Triangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/CollectibleEntityFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/CollectibleEntityFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Moving/Mouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Moving/Mouse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/Leaf.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/Leaf.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/Reverse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/Reverse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SizeUp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SizeUp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SpeedUp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Collectible/Static/SpeedUp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Entity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Moving/Hawk.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Moving/Hawk.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/ObstacleEntityFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/ObstacleEntityFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/BearTrap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/BearTrap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/PoisonousBerry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Obstacle/Static/PoisonousBerry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Snake.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Snake.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/StaticEntityDecorator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/StaticEntityDecorator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Strategy/HostileMovement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Strategy/HostileMovement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Strategy/NeutralMovement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Strategy/NeutralMovement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Strategy/ScaredMovement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Entity/Strategy/ScaredMovement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enumerator/EClientStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enumerator/EClientStatus.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enumerator/EEffect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enumerator/EEffect.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enumerator/EPacketHeader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Enumerator/EPacketHeader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/GameLogic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Listener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Sender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler$Sender.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Handler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IColor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IColor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IEntityFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IEntityFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IHandlerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IHandlerBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IMovingEntityBehaviour.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IMovingEntityBehaviour.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IObserver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/IObserver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/ISubject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Interface/ISubject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/MatchInstance.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/Packet$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/Packet$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/Packet$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/Packet$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/Packet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Packet/Packet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/Adapter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/Adapter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$Terrain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter$Terrain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/BitmapConverter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/Utils$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/Utils$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/Utils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/Utility/Utils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Snake_Game/server/Snake/server.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +174,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/libs/jackson-core-2.9.9.jar!/" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4948216" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -161,10 +258,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="Dependencies are deleted and ignored, instead auto-downloaded via Maven" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="440" y="94" key="#Project_Structure" timestamp="1603888651697">
+    <state x="440" y="94" key="#Project_Structure" timestamp="1603904799619">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603888651697" />
+    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603904799619" />
+    <state x="761" y="276" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1603904991697">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="761" y="276" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603904991697" />
     <state x="689" y="382" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1603889162564">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -189,10 +290,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603894622067" />
-    <state x="440" y="94" key="SettingsEditor" timestamp="1603889742806">
+    <state x="440" y="94" key="SettingsEditor" timestamp="1603904794564">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603889742806" />
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603904794564" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1603890191375">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -201,10 +302,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="664" y="411" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603889693805" />
-    <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1603890219596">
+    <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1603905071473">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603890219596" />
+    <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1603905071473" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Snake_Game$Client.ic" NAME="Client Coverage Results" MODIFIED="1602964595680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
