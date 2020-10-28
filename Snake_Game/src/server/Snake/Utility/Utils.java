@@ -14,8 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Utils {
-
+public final class Utils {
     public static String randomId() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'

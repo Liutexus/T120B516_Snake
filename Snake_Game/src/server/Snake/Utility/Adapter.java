@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Adapter {
+public final class Adapter {
     public static void mapToPlayer(Player player, Map<String, Object> map){
         map.forEach((field, obj) -> {
             switch (field){
