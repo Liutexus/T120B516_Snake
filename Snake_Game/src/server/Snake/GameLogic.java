@@ -5,11 +5,11 @@ import server.Snake.Entity.Collectible.Bridge.BlueColor;
 import server.Snake.Entity.Collectible.Bridge.Polygon;
 import server.Snake.Entity.Collectible.Bridge.RedColor;
 import server.Snake.Entity.Collectible.Bridge.Triangle;
-import server.Snake.Entity.Collectible.CollectibleFactory;
+import server.Snake.Entity.Collectible.CollectibleEntityFactory;
 import server.Snake.Entity.Entity;
-import server.Snake.Enums.EEffect;
-import server.Snake.Interface.IFactory;
-import server.Snake.Entity.Obstacle.ObstacleFactory;
+import server.Snake.Enumerator.EEffect;
+import server.Snake.Interface.IEntityFactory;
+import server.Snake.Entity.Obstacle.ObstacleEntityFactory;
 import client.Snake.Entity.Player;
 
 import java.util.Map;
@@ -22,8 +22,8 @@ public class GameLogic implements Runnable {
     private Map<String, Entity> terrainEntities = new ConcurrentHashMap<>(); // All entities on the map
     private int[][] terrain;
 
-    private IFactory CollectibleFactory = new CollectibleFactory();
-    private IFactory ObstacleFactory = new ObstacleFactory();
+    private IEntityFactory CollectibleFactory = new CollectibleEntityFactory();
+    private IEntityFactory ObstacleFactory = new ObstacleEntityFactory();
 
     public GameLogic(Map handlers, Map players, Map terrainEntities, int[][] terrain){
         this.handlers = handlers;

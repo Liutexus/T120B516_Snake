@@ -6,7 +6,7 @@ import server.Snake.Entity.Collectible.Bridge.RedColor;
 import server.Snake.Entity.Collectible.Bridge.Triangle;
 import server.Snake.Entity.Collectible.Bridge.Polygon;
 import server.Snake.Entity.Collectible.Bridge.Shape;
-import server.Snake.Enums.EEffect;
+import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 import server.Snake.Utility.Adapter;
 
