@@ -1,12 +1,16 @@
 package server.Snake.Entity;
 
 import client.Snake.Entity.Player;
+import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 
 public abstract class AbstractStaticEntity extends Entity {
 
     public AbstractStaticEntity(IEntity entity) {
         super(entity.getPositionX(), entity.getPositionY());
+        entity.getEffects().forEach((effect, duration) -> {
+            super.setEffect((EEffect) effect, (Integer) duration);
+        });
     }
 
     public AbstractStaticEntity(float positionX, float positionY) {
