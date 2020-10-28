@@ -178,7 +178,7 @@ public class Handler implements Runnable {
                     }
                     synchronized (terrainEntities){
                         terrainEntities.forEach((key, value) -> { // send all other match players
-//                            sendPacket(EPacketHeader.ENTITY, value.toString()); // TODO: Convert value object into a nice JSON
+                            sendPacket(EPacketHeader.ENTITY, value.toString());
                         });
                     }
                 }

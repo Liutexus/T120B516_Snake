@@ -165,9 +165,9 @@ class SnakePanel extends JPanel implements Runnable {
         }
 
         // Draw all objects placed on the map
-//        objects.forEach(obj -> {
-//            // TODO: Draw map objects here
-//        });
+        mapObjects.forEach((y, arrayX) -> {
+            drawRect(g, arrayX.getPosition(), arrayX.getSize(), new Color(153,255,10) );
+        });
     }
 
     private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
@@ -277,8 +277,7 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case ENTITY:
                     packetMap = packet.parseBody();
-                    // TODO: Parse and save as a terrain's entity
-                    break;
+                    mapObjects.put("Food", Adapter.mapToEntity(packetMap));
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                     break;

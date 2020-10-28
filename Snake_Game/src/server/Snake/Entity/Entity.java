@@ -3,6 +3,7 @@ package server.Snake.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
+import server.Snake.Utility.Adapter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -95,6 +96,11 @@ public class Entity implements IEntity {
     @JsonIgnore
     public Map<EEffect, Integer> getEffects(){
         return this.effects;
+    }
+
+    @Override
+    public String toString() {
+        return Adapter.entityToString(this);
     }
 
 }

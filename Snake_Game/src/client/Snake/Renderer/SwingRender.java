@@ -1,5 +1,7 @@
 package client.Snake.Renderer;
 
+import server.Snake.Utility.Utils;
+
 import javax.swing.JFrame;
 import java.awt.*;
 import java.net.Socket;
@@ -20,11 +22,13 @@ public class SwingRender extends JFrame implements Runnable {
 
     public SwingRender() {
         // Creating this client's window
-        super("imma sssessee sneekk hehehe boii");
+        super(Utils.parseConfig("client", "name"));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try { // Connecting to the server
-            this.clientSocket = new Socket("78.61.32.8", 42069);
+            this.clientSocket = new Socket(
+                    Utils.parseConfig("network", "address"),
+                    Integer.parseInt(Utils.parseConfig("network", "port")));
             this.serverConnected = true;
         } catch (Exception e) {
             System.out.println("No server to connect to.");

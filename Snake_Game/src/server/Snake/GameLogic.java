@@ -57,13 +57,25 @@ public class GameLogic implements Runnable {
                 e.printStackTrace();
             }
 
-            // TODO: Checking collisions with other entities
+            try {
+                if(player1.getSnake().getEffects().size() == 0){ // Is player alright?
+                    // Getting a position 'one ahead', to check if the player going to collide in the next move
+                    int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
+                    int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
+                    if(terrainEntities.get("Food").getPositionX() == tPosX && terrainEntities.get("Food").getPositionY() == tPosY){
+                        terrainEntities.clear(); //took food ADD points do magic
+                    }
+                }
+            } catch (Exception e){
+                if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
+                e.printStackTrace();
+            }
         });
     }
 
     private void checkTerrainEntities() {
         if(!terrainEntities.containsKey("Food")) terrainEntities.put("Food", addStaticCollectible());
-        if(!terrainEntities.containsKey("Hawk")) terrainEntities.put("Hawk", addMovingObstacle());
+        //if(!terrainEntities.containsKey("Hawk")) terrainEntities.put("Hawk", addMovingObstacle());
     }
 
     public void addPlayer(Player player) {
@@ -96,10 +108,11 @@ public class GameLogic implements Runnable {
     }
 
     private Entity addMovingObstacle(){
-        return this.ObstacleFactory.createMoving(15, 15, players);
+        return this.ObstacleFactory.createMoving((int) ((Math.random() * (49 - 1)) + 1), (int) ((Math.random() * (49 - 1)) + 1), players);
     }
 
     private Entity addStaticCollectible() {
-        return this.CollectibleFactory.createStatic(5, 5);
+        //remove if created on map
+        return this.CollectibleFactory.createStatic((int) ((Math.random() * (49 - 1)) + 1), (int) ((Math.random() * (49 - 1)) + 1));
     }
 }

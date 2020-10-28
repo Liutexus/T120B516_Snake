@@ -1,0 +1,14 @@
+{
+  "client": {
+    "name": "imma sssessee sneekk hehehe boii"
+  },
+  "server": {
+    "name": "imma sssessee sneekk hehehe boii server",
+    "maxMatches": 64,
+    "maxPlayersPerMatch": 2
+  },
+  "network": {
+    "address": "localhost",
+    "port": "42069"
+  }
+}

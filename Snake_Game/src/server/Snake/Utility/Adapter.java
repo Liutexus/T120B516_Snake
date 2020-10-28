@@ -1,5 +1,6 @@
 package server.Snake.Utility;
 
+import server.Snake.Entity.Entity;
 import server.Snake.Entity.Snake;
 import client.Snake.Entity.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,5 +87,36 @@ public class Adapter {
             }
         });
         return snake;
+    }
+
+    public static String entityToString(Entity ent) {
+        ObjectWriter ow = new ObjectMapper().writer();
+        String json = "";
+        try {
+            json = ow.writeValueAsString(ent);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public static Entity mapToEntity(Map<String, Object> map){
+        Entity ent = new Entity(0,0);
+        map.forEach((field, obj) -> {
+            switch (field){
+                case "position":
+                    ArrayList<Double> a = (ArrayList) obj;
+                    Float sizex = ((Double) a.get(0)).floatValue();
+                    Float sizey = ((Double) a.get(1)).floatValue();
+                    ent.setPosition(sizex, sizey);
+                    break;
+                case "size":
+                    // set other params
+                default:
+                    System.out.println("Attribute: '" + field + "' is not recognised.");
+                    break;
+            }
+        });
+        return ent;
     }
 }
