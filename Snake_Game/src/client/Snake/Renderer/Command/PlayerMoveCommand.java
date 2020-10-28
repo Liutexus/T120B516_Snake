@@ -2,7 +2,7 @@ package client.Snake.Renderer.Command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import server.Snake.Enums.EPacketHeader;
+import server.Snake.Enumerator.EPacketHeader;
 import server.Snake.Packet.Packet;
 
 import java.io.OutputStreamWriter;

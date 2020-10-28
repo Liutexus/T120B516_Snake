@@ -5,7 +5,7 @@ import server.Snake.Entity.AbstractStaticEntity;
 
 import java.util.Map;
 
-public interface IFactory {
+public interface IEntityFactory {
     AbstractMovingEntity createMoving(float positionX, float positionY);
     AbstractMovingEntity createMoving(float positionX, float positionY, Map players);
     AbstractStaticEntity createStatic(float positionX, float positionY);

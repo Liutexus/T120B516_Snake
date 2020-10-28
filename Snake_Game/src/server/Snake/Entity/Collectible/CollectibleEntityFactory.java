@@ -4,16 +4,15 @@ import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Collectible.Moving.Mouse;
 import server.Snake.Entity.Collectible.Static.Leaf;
-import server.Snake.Entity.Collectible.Static.Reverse;
 import server.Snake.Entity.Collectible.Static.SizeUp;
 import server.Snake.Entity.Collectible.Static.SpeedUp;
 import server.Snake.Entity.Entity;
-import server.Snake.Interface.IFactory;
+import server.Snake.Interface.IEntityFactory;
 
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CollectibleFactory implements IFactory {
+public class CollectibleEntityFactory implements IEntityFactory {
 
     // TODO: Implement a "smarter" way of using this factory, rather than just getting RNG types.
     @Override

@@ -3,7 +3,7 @@ package server.Snake.Entity.Obstacle;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Entity;
-import server.Snake.Interface.IFactory;
+import server.Snake.Interface.IEntityFactory;
 import server.Snake.Entity.Obstacle.Moving.Hawk;
 import server.Snake.Entity.Obstacle.Static.BearTrap;
 import server.Snake.Entity.Obstacle.Static.PoisonousBerry;
@@ -11,7 +11,7 @@ import server.Snake.Entity.Obstacle.Static.PoisonousBerry;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ObstacleFactory implements IFactory {
+public class ObstacleEntityFactory implements IEntityFactory {
 
     @Override
     public AbstractMovingEntity createMoving(float positionX, float positionY) {

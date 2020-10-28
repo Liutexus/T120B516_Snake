@@ -1,4 +1,4 @@
-package server.Snake.Enums;
+package server.Snake.Enumerator;
 
 public enum EPacketHeader {
     EMPTY,

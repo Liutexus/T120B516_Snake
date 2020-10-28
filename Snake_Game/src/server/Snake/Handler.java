@@ -4,8 +4,8 @@ package server.Snake;
 
 import client.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
-import server.Snake.Enums.EClientStatus;
-import server.Snake.Enums.EPacketHeader;
+import server.Snake.Enumerator.EClientStatus;
+import server.Snake.Enumerator.EPacketHeader;
 import server.Snake.Packet.Packet;
 
 import java.io.*;
