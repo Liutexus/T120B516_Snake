@@ -129,6 +129,6 @@ class EntityTest {
     @Test
     void testToString() {
         Entity testEntity = new Entity(1.2f, 3.4f);
-        assertEquals("{\"shape\":null,\"shapeType\":0,\"size\":[1.0,1.0],\"position\":[1.2,3.4]}", testEntity.toString());
+        assertEquals("{\"shape\":null,\"shapetype\":0,\"size\":[1.0,1.0],\"position\":[1.2,3.4]}", testEntity.toString());
     }
 }

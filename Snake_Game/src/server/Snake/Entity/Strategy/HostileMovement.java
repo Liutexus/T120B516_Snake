@@ -1,6 +1,6 @@
 package server.Snake.Entity.Strategy;
 
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Player;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Interface.IMovingEntityBehaviour;
 import server.Snake.Utility.Utils;

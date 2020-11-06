@@ -1,7 +1,7 @@
 package server.Snake.Entity.Obstacle.Moving;
 
 import server.Snake.Entity.AbstractMovingEntity;
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Strategy.HostileMovement;
 import server.Snake.Interface.IEntity;

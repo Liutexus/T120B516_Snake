@@ -2,7 +2,7 @@
 // receiving inputs and processing them accordingly.
 package server.Snake;
 
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EPacketHeader;

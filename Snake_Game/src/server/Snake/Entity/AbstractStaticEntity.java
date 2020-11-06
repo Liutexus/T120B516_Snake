@@ -1,6 +1,5 @@
 package server.Snake.Entity;
 
-import client.Snake.Entity.Player;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 

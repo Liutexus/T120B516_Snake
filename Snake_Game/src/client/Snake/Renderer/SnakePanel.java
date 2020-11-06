@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import server.Snake.Entity.Entity;
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Player;
 import client.Snake.Renderer.Command.PlayerMoveCommand;
 import server.Snake.Packet.Packet;
 import server.Snake.Utility.Adapter;
@@ -131,7 +131,7 @@ class SnakePanel extends JPanel implements Runnable {
 
         // Draw all players
         for (Player player : snakes.values()) {
-            drawRect(g, player.getSnake().getPosition(), player.getSnake().getSize(), player.getColor()); // Drawing the snake's head
+            drawRect(g, player.getSnake().getPosition(), player.getSnake().getSize(), player.getSnake().getColor()); // Drawing the snake's head
 
             // Drawing the tail
             ArrayList prevPosX = player.getSnake().getPreviousPositionsX();
@@ -140,9 +140,9 @@ class SnakePanel extends JPanel implements Runnable {
             int tailLength = player.getSnake().getTailLength();
             for(int i = 0; i < tailLength; i++){
                 try {
-                    int colorStepR = player.getColor().getRed() / (tailLength + 1);
-                    int colorStepG = player.getColor().getGreen() / (tailLength + 1);
-                    int colorStepB = player.getColor().getBlue() / (tailLength + 1);
+                    int colorStepR = player.getSnake().getColor().getRed() / (tailLength + 1);
+                    int colorStepG = player.getSnake().getColor().getGreen() / (tailLength + 1);
+                    int colorStepB = player.getSnake().getColor().getBlue() / (tailLength + 1);
                     Color tailColor = new Color(
                             colorStepR * (tailLength - i),
                             colorStepG * (tailLength - i),
@@ -166,15 +166,7 @@ class SnakePanel extends JPanel implements Runnable {
 
         // Draw all objects placed on the map
         mapObjects.forEach((y, arrayX) -> {
-            int startx = (int)(((int)(arrayX.getPositionX()) * windowSize.width)/horizontalCellCount + ((int)(arrayX.getPositionX() + 1) * windowSize.width)/horizontalCellCount) / 2;
-            int starty = (int)(((int)(arrayX.getPositionY()) * windowSize.height)/horizontalCellCount + ((int)(arrayX.getPositionY() + 1) * windowSize.height)/horizontalCellCount) / 2;
-            Polygon polygon1 = new Polygon();
-            int points = arrayX.getShape().getPoints();
-            for (int i = 0; i < points; i++){
-                polygon1.addPoint((int) (startx + 10 * Math.cos(i * 2 * Math.PI / points)),
-                        (int) (starty  + 10 * Math.sin(i * 2 * Math.PI / points)));}
-            arrayX.getShape().applyColor(g);
-            g.fillPolygon(polygon1);
+            drawRect(g, arrayX.getPosition(), arrayX.getSize(), new Color(153,255,10) );
         });
     }
 
@@ -285,7 +277,8 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case ENTITY:
                     packetMap = packet.parseBody();
-                        mapObjects.put("Food", Adapter.mapToEntity(packetMap));
+                    mapObjects.put("Food", Adapter.mapToEntity(packetMap));
+                    break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                     break;

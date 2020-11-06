@@ -1,26 +1,24 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
 package server.Snake;
 
-import server.Snake.Entity.Collectible.Bridge.BlueColor;
-import server.Snake.Entity.Collectible.Bridge.Polygon;
-import server.Snake.Entity.Collectible.Bridge.RedColor;
-import server.Snake.Entity.Collectible.Bridge.Triangle;
 import server.Snake.Entity.Collectible.CollectibleEntityFactory;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntityFactory;
 import server.Snake.Entity.Obstacle.ObstacleEntityFactory;
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Player;
+import server.Snake.Utility.Utils;
 
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GameLogic implements Runnable {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
     private Map<String, Entity> terrainEntities = new ConcurrentHashMap<>(); // All entities on the map
+
     private int[][] terrain;
+
 
     private IEntityFactory CollectibleFactory = new CollectibleEntityFactory();
     private IEntityFactory ObstacleFactory = new ObstacleEntityFactory();
@@ -56,30 +54,16 @@ public class GameLogic implements Runnable {
                         player1.getSnake().setEffect(EEffect.STUN, 10); // Apply a 'Stun' effect to the player for 10 moves
                         player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
                     }
-                }
-            } catch (Exception e){
-                if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
-                e.printStackTrace();
-            }
 
-            try {
-                if(terrain[(int)terrainEntities.get("Food").getPositionY()][(int)terrainEntities.get("Food").getPositionX()] == 6) {
-                    terrainEntities.clear(); // food in wall, remove it
-                }
-            } catch (Exception e){
-                if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
-                e.printStackTrace();
-            }
-
-            try {
-                if(player1.getSnake().getEffects().size() == 0){ // Is player alright?
-                    // Getting a position 'one ahead', to check if the player going to collide in the next move
-                    int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
-                    int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
-                    if(terrainEntities.get("Food").getPositionX() == tPosX && terrainEntities.get("Food").getPositionY() == tPosY){
-                        terrainEntities.clear(); //took food ADD points do magic
-                        player1.getSnake().deltaTailLength(1); // increase snake tail +1
-                    }
+                    terrainEntities.forEach((name, entity) -> { // Checking collision with entities on the map
+                        if(entity.getPositionX() == tPosX && entity.getPositionY() == tPosY){
+                            entity.getEffects().forEach((effect, duration) -> { // Transferring all terrain entities effects to player
+                                player1.getSnake().setEffect(effect, duration);
+                            });
+                            terrainEntities.remove(name);
+                            player1.getSnake().deltaTailLength(1); // increase snake tail +1
+                        }
+                    });
                 }
             } catch (Exception e){
                 if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
@@ -129,10 +113,11 @@ public class GameLogic implements Runnable {
     }
 
     private Entity addStaticCollectible() {
-        Entity ee = CollectibleFactory.createStatic((int) ((Math.random() * (49 - 1)) + 1), (int) ((Math.random() * (49 - 1)) + 1));
-        Random rand = new Random();
-        int random = rand.nextInt(4)+1;
-        ee.setShapetype(random);
+        int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
+        Entity ee = CollectibleFactory.createStatic(randPos[0], randPos[1]);
+//        Random rand = new Random();
+//        int random = rand.nextInt(4)+1;
+//        ee.setShapetype(random);
         return ee;
     }
 }

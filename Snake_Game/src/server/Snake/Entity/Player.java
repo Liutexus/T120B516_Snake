@@ -1,9 +1,8 @@
-package client.Snake.Entity;
+package server.Snake.Entity;
 
 import java.awt.*;
 import java.util.Map;
 
-import server.Snake.Entity.Snake;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Utility.Adapter;
 
@@ -12,14 +11,13 @@ public class Player implements Cloneable {
     private String id;
     private Snake snake;
     private int score;
-    private Color color; // What color is the player?
     private boolean isGameOver;
 
     public Player(String id) {
         this.id = id;
         this.snake = new Snake(0, 0);
         this.score = 0;
-        this.color = Color.BLACK;
+        this.snake.setColor(Color.BLACK);
         this.isGameOver = false;
     }
 
@@ -27,7 +25,7 @@ public class Player implements Cloneable {
         this.id = id;
         this.snake = new Snake(posX, posY);
         this.score = 0;
-        this.color = Color.BLACK;
+        this.snake.setColor(Color.BLACK);
         this.isGameOver = false;
     }
 
@@ -45,17 +43,6 @@ public class Player implements Cloneable {
 
     public void setSnake(Snake snake) {
         this.snake = snake;
-    }
-
-    @JsonIgnore
-    public Color getColor() {
-        return this.color;
-    }
-
-    public int getColorRGB() { return this.color.getRGB();}
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public int getScore() {

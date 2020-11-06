@@ -18,7 +18,6 @@ public class Server {
         try (var listener = new ServerSocket(Integer.parseInt(Utils.parseConfig("network", "port")))) {
             System.out.println("The server is running on port " + listener.getLocalPort());
 
-
             while (true) {
                 HandlerBuilder handlerBuilder = new HandlerBuilder();
                 handlerBuilder.setSocket(listener.accept());

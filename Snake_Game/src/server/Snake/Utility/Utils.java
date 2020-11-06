@@ -1,18 +1,14 @@
 package server.Snake.Utility;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import server.Snake.Entity.Player;
+import server.Snake.Entity.Snake;
 
-import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class Utils {
     public static String randomId() {
@@ -63,6 +59,57 @@ public final class Utils {
         }
 
         return String.valueOf(((HashMap)map.get(root)).get(element));
+    }
+
+    public static Map getPlayersTailsArray(Map<String, Player> players){
+        Map<String, ArrayList<Float>> tempMap = new HashMap<>();
+        ArrayList<Float> tempX = new ArrayList<>();
+        ArrayList<Float> tempY = new ArrayList<>();
+
+        players.forEach((id, player) -> {
+            Snake tempSnake = player.getSnake();
+            Float[] tempObjX = (Float[]) tempSnake.getPreviousPositionsX().subList(0, tempSnake.getTailLength()).toArray();
+            Float[] tempObjY = (Float[]) tempSnake.getPreviousPositionsY().subList(0, tempSnake.getTailLength()).toArray();
+
+            tempX.addAll(Arrays.asList(tempObjX));
+            tempY.addAll(Arrays.asList(tempObjY));
+        });
+
+        tempMap.put("x", tempX);
+        tempMap.put("Y", tempY);
+
+        return tempMap;
+    }
+    
+    public static int[] findFreeCell(int[][] array, int min, int max){
+        int randX = ThreadLocalRandom.current().nextInt(min, max);
+        int randY = ThreadLocalRandom.current().nextInt(min, max);
+
+        while(array[randY][randX] == 6) { // To make sure that player doesn't spawn in a Wall already
+            randX = ThreadLocalRandom.current().nextInt(5, 45);
+            randY = ThreadLocalRandom.current().nextInt(5, 45);
+        }
+
+        return new int[]{randX, randY};
+    }
+
+    public static int[] findFreeCell(int[][] array1, Map<String, Player> players, int min, int max){
+        int[] pos = findFreeCell(array1, min, max);
+
+        players.forEach((id, player) -> {
+            Snake tempSnake = player.getSnake();
+            int length = tempSnake.getTailLength();
+            if(tempSnake.getPreviousPositionsX().size() < length)
+                length = tempSnake.getPreviousPositionsX().size();
+
+            while(tempSnake.getPreviousPositionsX().subList(0, length).contains(pos[0]) &&
+                    tempSnake.getPreviousPositionsY().subList(0, length).contains(pos[1])){
+                pos[0] = ThreadLocalRandom.current().nextInt(min, max);
+                pos[1] = ThreadLocalRandom.current().nextInt(min, max);
+            }
+        });
+
+        return new int[]{pos[0], pos[1]};
     }
 
 }
