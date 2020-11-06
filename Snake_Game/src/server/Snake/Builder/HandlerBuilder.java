@@ -1,5 +1,6 @@
 package server.Snake.Builder;
 
+import server.Snake.Enumerator.EClientStatus;
 import server.Snake.GameLogic;
 import server.Snake.Handler;
 import server.Snake.Interface.IHandlerBuilder;
@@ -28,6 +29,12 @@ public class HandlerBuilder implements IHandlerBuilder, IObserver {
     }
 
     @Override
+    public Handler setStatus(EClientStatus status) {
+        this.handler.setStatus(status);
+        return this.handler;
+    }
+
+    @Override
     public Handler setMatchInstance(MatchInstance match) {
         this.handler.setMatchInstance(match);
         return this.handler;
@@ -36,6 +43,12 @@ public class HandlerBuilder implements IHandlerBuilder, IObserver {
     @Override
     public Handler setGameLogic(GameLogic gameLogic) {
         this.handler.setGameLogic(gameLogic);
+        return this.handler;
+    }
+
+    @Override
+    public Handler setBuilder(IHandlerBuilder builder){
+        this.handler.setBuilder(this);
         return this.handler;
     }
 

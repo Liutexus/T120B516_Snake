@@ -19,7 +19,6 @@ public class GameLogic implements Runnable {
 
     private int[][] terrain;
 
-
     private IEntityFactory CollectibleFactory = new CollectibleEntityFactory();
     private IEntityFactory ObstacleFactory = new ObstacleEntityFactory();
 

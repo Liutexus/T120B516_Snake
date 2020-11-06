@@ -1,6 +1,7 @@
 package server.Snake;
 
 import server.Snake.Builder.HandlerBuilder;
+import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Utility.Utils;
 
 import java.net.ServerSocket;
@@ -13,6 +14,7 @@ public class Server {
     private static int concurrentMatches = Integer.parseInt(Utils.parseConfig("server", "maxMatches")); // How maximum concurrent clients can we run?
     private static Map<String, MatchInstance> matches = new ConcurrentHashMap<>(); // All current matches
     private static ExecutorService pool = Executors.newFixedThreadPool(concurrentMatches); // To take in x amount of clients at a time
+    private static ExecutorService handlerPool = Executors.newFixedThreadPool(255);
 
     public static void main(String[] args) {
         try (var listener = new ServerSocket(Integer.parseInt(Utils.parseConfig("network", "port")))) {
@@ -21,11 +23,17 @@ public class Server {
             while (true) {
                 HandlerBuilder handlerBuilder = new HandlerBuilder();
                 handlerBuilder.setSocket(listener.accept());
+                handlerBuilder.setStatus(EClientStatus.MENU);
+                handlerPool.execute(handlerBuilder.getProduct());
+
+                System.out.println("Available matches: " + matches.size());
+
                 MatchInstance matchInstance = returnAvailableMatch();
                 matchInstance.registerObserver(handlerBuilder);
             }
         } catch (Exception e) {
             System.out.println("Error running the server. Aborting...");
+//            e.printStackTrace();
             return;
         }
     }
@@ -34,9 +42,10 @@ public class Server {
         for (MatchInstance match: matches.values())
             if(match.getCurrentPlayerCount() < match.getMaxPlayerCount() && !match.isGameStarted())
                 return match;
-        MatchInstance matchInstance = new MatchInstance();
+        String id = Utils.randomId();
+        MatchInstance matchInstance = new MatchInstance(id);
         pool.execute(matchInstance);
-        matches.put(Utils.randomId(), matchInstance);
+        matches.put(id, matchInstance);
         return matchInstance;
     }
 

@@ -80,7 +80,7 @@ public final class Utils {
 
         return tempMap;
     }
-    
+
     public static int[] findFreeCell(int[][] array, int min, int max){
         int randX = ThreadLocalRandom.current().nextInt(min, max);
         int randY = ThreadLocalRandom.current().nextInt(min, max);

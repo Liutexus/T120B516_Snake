@@ -2,6 +2,7 @@
 // receiving inputs and processing them accordingly.
 package server.Snake;
 
+import server.Snake.Builder.HandlerBuilder;
 import server.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EClientStatus;
@@ -16,11 +17,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Handler implements Runnable {
     private Socket serverSocket;
     private MatchInstance match;
     private GameLogic gameLogic;
+    private HandlerBuilder builder;
     private OutputStream out;
     private InputStream in;
 
@@ -74,8 +77,16 @@ public class Handler implements Runnable {
         this.match = match;
     }
 
+    public void setStatus(EClientStatus status){
+        this.status = status;
+    }
+
     public void setGameLogic(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
+    }
+
+    public void setBuilder(HandlerBuilder builder){
+        this.builder = builder;
     }
 
     public void setPlayers(Map players) {
@@ -92,7 +103,12 @@ public class Handler implements Runnable {
     }
 
     public void sendPacket(EPacketHeader header, String packet) {
-        this.clientSender.sendPacket(header, packet);
+        try {
+            this.clientSender.sendPacket(header, packet);
+        } catch (IOException e) {
+            System.out.println("Error sending a packet to the client.");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -100,18 +116,18 @@ public class Handler implements Runnable {
         System.out.println("Connected: " + serverSocket);
         ExecutorService executor = Executors.newFixedThreadPool(2);
         try {
-            executor.execute(clientListener);
-            while (true) {
-                if(serverSocket.isClosed()) break;
+            executor.execute(clientListener); // Listening to packets from client
+            executor.execute(clientSender); // Sending packets to the client
 
-                executor.execute(clientSender); // Sending packets to the client
-                
-                try {Thread.sleep(100);} catch (Exception e) { };
-            }
+            executor.shutdown();
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (Exception e) {
-//            e.printStackTrace();
             System.out.println("Error:" + serverSocket);
+            e.printStackTrace();
         }
+
+        this.match.unregisterObserver(this.builder);
+        System.out.println("Disconnected: " + serverSocket);
     }
 
     // --- Client listener class ---
@@ -147,12 +163,11 @@ public class Handler implements Runnable {
                     parsePacket(inb.readLine());
                 } catch (Exception e) {
                     if(serverSocket.isClosed()) break;
-                    System.out.println("Couldn't receive packet from the client.");
+//                    System.out.println("Couldn't receive packet from the client.");
                     if(e instanceof SocketException) {
-                        // TODO: Unregister this handler as observer
                         break;
                     }
-                    e.printStackTrace();
+//                    e.printStackTrace();
                     continue;
                 }
             }
@@ -169,46 +184,56 @@ public class Handler implements Runnable {
 
         @Override
         public void run() {
-            try {
-                if(Handler.this.status == EClientStatus.IN_GAME){ // if the player is in game
+            final boolean[] alive = {true};
+            while(alive[0]){
+                if(Handler.this.status == EClientStatus.IN_GAME){ // If the player is in game
                     synchronized (players){
-                        players.forEach((key, value) -> { // send all other match players
-                            sendPacket(EPacketHeader.PLAYER, value.toString());
+                        players.forEach((key, value) -> { // Send all other match players
+                            try {
+                                sendPacket(EPacketHeader.PLAYER, value.toString());
+                            } catch (IOException e) {
+                                alive[0] = false;
+                                System.out.println("Client disconnected");
+//                                e.printStackTrace();
+                            }
                         });
                     }
+                    if(!alive[0]) break;
                     synchronized (terrainEntities){
-                        terrainEntities.forEach((key, value) -> { // send all other match players
-                            sendPacket(EPacketHeader.ENTITY, value.toString());
+                        terrainEntities.forEach((key, value) -> { // Send all other match entities
+                            try {
+                                sendPacket(EPacketHeader.ENTITY, value.toString());
+                            } catch (IOException e) {
+                                alive[0] = false;
+                                System.out.println("Error sending a packet to the client.");
+//                                e.printStackTrace();
+                            }
                         });
                     }
                 }
-            } catch (Exception e) {
-//                e.printStackTrace();
-                System.out.println("Error sending a packet to the client.");
+                try {Thread.sleep(100);} catch (Exception e) { };
             }
         }
 
         public void sendClientLogin(String id, Player player) {
-            clientId = id;
-            sendPacket(EPacketHeader.ID, clientId);
+            try{
+                clientId = id;
+                sendPacket(EPacketHeader.ID, clientId);
 
-            clientPlayer = player;
-            sendPacket(EPacketHeader.CLIENT_PLAYER, clientPlayer.toString());
+                clientPlayer = player;
+                sendPacket(EPacketHeader.CLIENT_PLAYER, clientPlayer.toString());
+
+            } catch (Exception e) {
+                System.out.println("Error sending login info to the client.");
+//                e.printStackTrace();
+            }
         }
 
-        private void sendPacket(EPacketHeader header, String body) {
+        private void sendPacket(EPacketHeader header, String body) throws IOException {
             BufferedWriter bfw = new BufferedWriter(out);
-            try {
-                Packet packet = new Packet(header, body);
-                bfw.write(packet.toString());
-                bfw.flush();
-            } catch (Exception e) {
-                System.out.println("Error sending packet to client.");
-                if(e instanceof SocketException) {
-                    // TODO: Unregister this handler as observer
-                }
-                e.printStackTrace();
-            }
+            Packet packet = new Packet(header, body);
+            bfw.write(packet.toString());
+            bfw.flush();
         }
 
     }
