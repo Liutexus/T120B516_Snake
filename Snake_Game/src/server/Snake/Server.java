@@ -26,8 +26,6 @@ public class Server {
                 handlerBuilder.setStatus(EClientStatus.MENU);
                 handlerPool.execute(handlerBuilder.getProduct());
 
-                System.out.println("Available matches: " + matches.size());
-
                 MatchInstance matchInstance = returnAvailableMatch();
                 matchInstance.registerObserver(handlerBuilder);
             }
@@ -47,6 +45,10 @@ public class Server {
         pool.execute(matchInstance);
         matches.put(id, matchInstance);
         return matchInstance;
+    }
+
+    public static void unlistMatch(MatchInstance match){
+        matches.remove(match.getId());
     }
 
 }

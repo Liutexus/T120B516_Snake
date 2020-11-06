@@ -16,7 +16,6 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MatchInstance implements Runnable, ISubject {
     private String id;
@@ -37,6 +36,10 @@ public class MatchInstance implements Runnable, ISubject {
         this.id = id;
         this.terrain = BitmapConverter.BMPToIntArray("resources/arena_test_01.png", 50, 50);
         this.gameLogic = new GameLogic(this.handlers, this.players, this.terrainEntities, this.terrain);
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public int getCurrentPlayerCount() {
@@ -114,6 +117,7 @@ public class MatchInstance implements Runnable, ISubject {
         }
 
         System.out.println("Finishing match: " + this.id);
+        Server.unlistMatch(this);
     }
 
     @Override

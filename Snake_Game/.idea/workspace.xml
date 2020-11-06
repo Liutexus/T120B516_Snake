@@ -38,14 +38,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Builder/HandlerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Builder/HandlerBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IHandlerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IHandlerBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -304,8 +298,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/Snake/Server.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="11" />
+          <line>50</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
