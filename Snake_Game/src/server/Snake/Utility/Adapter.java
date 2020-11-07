@@ -1,6 +1,8 @@
 package server.Snake.Utility;
 
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Entity;
+import server.Snake.Entity.Snake;
+import server.Snake.Entity.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -30,14 +32,11 @@ public final class Adapter {
                 case "score":
                     player.setScore((int)obj);
                     break;
-                case "colorRGB":
-                    player.setColor(new Color((int)obj));
-                    break;
                 case "isGameOver":
                     player.setGameOver((boolean) obj);
                     break;
                 default:
-                    System.out.println("Attribute: '" + field + "' is not recognised.");
+                    System.out.println("Attribute: '" + field + "' is not recognised in " + Player.class);
                     break;
             }
         });
@@ -84,8 +83,11 @@ public final class Adapter {
                     snake.setPositionX((float)temp.get(0));
                     snake.setPositionY((float)temp.get(1));
                     break;
+                case "colorRGB":
+                    snake.setColor(new Color((int)value));
+                    break;
                 default:
-                    System.out.println("Attribute: '" + field + "' is not recognised.");
+                    System.out.println("Attribute: '" + field + "' is not recognised in " + Snake.class);
                     break;
             }
         });
@@ -104,39 +106,45 @@ public final class Adapter {
     }
 
     public static Entity mapToEntity(Map<String, Object> map){
-        Entity ent = new Entity(0,0);
+        Entity tempEntity = new Entity(0,0);
         map.forEach((field, obj) -> {
             switch (field){
                 case "position":
-                    ArrayList<Double> a = (ArrayList) obj;
-                    Float sizex = ((Double) a.get(0)).floatValue();
-                    Float sizey = ((Double) a.get(1)).floatValue();
-                    ent.setPosition(sizex, sizey);
+                    tempEntity.setPosition(
+                            ((Double) ((ArrayList) obj).get(0)).floatValue(),
+                            ((Double) ((ArrayList) obj).get(1)).floatValue()
+                    );
                     break;
                 case "size":
-                    // set other params
-                case "shapetype":
-                    String s = ""+obj;
+                    tempEntity.setSizeX(((Double) ((ArrayList) obj).get(0)).floatValue());
+                    tempEntity.setSizeY(((Double) ((ArrayList) obj).get(1)).floatValue());
+                    break;
+                case "colorRGB":
+                    tempEntity.setColor(new Color((int)obj));
+                    break;
+                case "shapeType":
+                    String s = "" + obj;
                     switch(s)
                     {
                         case "1":
-                            ent.setShape(new Triangle(new RedColor()));
+//                            ent.setShape(new Triangle(new RedColor()));
                             break;
                         case "2":
-                            ent.setShape(new Polygon(new RedColor()));
+//                            ent.setShape(new Polygon(new RedColor()));
                             break;
                         case "3":
-                            ent.setShape(new Polygon(new BlueColor()));
+//                            ent.setShape(new Polygon(new BlueColor()));
                             break;
                         case "4":
-                            ent.setShape(new Triangle(new BlueColor()));
+//                            ent.setShape(new Triangle(new BlueColor()));
                             break;
                     }
+                    break;
                 default:
-                    System.out.println("Attribute: '" + field + "' is not recognised.");
+                    System.out.println("Attribute: '" + field + "' is not recognised in " + Entity.class);
                     break;
             }
         });
-        return ent;
+        return tempEntity;
     }
 }

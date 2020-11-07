@@ -1,6 +1,6 @@
 package server.Snake.Entity.Collectible.Moving;
 
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Player;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Strategy.ScaredMovement;

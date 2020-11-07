@@ -37,12 +37,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
-      <change afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/EntityTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/server/Snake/HandlerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/server/Snake/MatchInstanceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/server/Snake/Packet/PacketTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Bridge/BlueColor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Bridge/Polygon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Bridge/RedColor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Bridge/Shape.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Bridge/Triangle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Moving/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Moving/Mouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Moving/Hawk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Moving/Hawk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/NeutralMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/NeutralMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IColor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IMovingEntityBehaviour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IMovingEntityBehaviour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Adapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Adapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Entity/EntityTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/EntityTest.java" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,6 +117,9 @@
       <recent name="server.Snake.Entity" />
       <recent name="server.Snake.Packet" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="server.Snake.Entity" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -105,7 +129,19 @@
       <recent name="C:\Users\Admin\Desktop\Snake_Game\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All Tests">
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.Snake.Client" />
       <module name="Snake_Game" />
@@ -132,9 +168,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All Tests" type="JUnit" factoryName="JUnit" temporary="true">
+    <configuration name="All Tests" type="JUnit" factoryName="JUnit">
       <module name="Snake_Game" />
-      <useClassPathOnly />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
@@ -149,13 +184,8 @@
       <item itemvalue="Application.Server" />
       <item itemvalue="JUnit.All Tests" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.All Tests" />
-      </list>
-    </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -182,12 +212,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Dependencies are deleted and ignored, instead auto-downloaded via Maven" />

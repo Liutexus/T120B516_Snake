@@ -5,7 +5,7 @@
   "server": {
     "name": "imma sssessee sneekk hehehe boii server",
     "maxMatches": 64,
-    "maxPlayersPerMatch": 2
+    "maxPlayersPerMatch": 1
   },
   "network": {
     "address": "localhost",

@@ -1,18 +1,12 @@
 package server.Snake.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import server.Snake.Entity.Collectible.Bridge.BlueColor;
-import server.Snake.Entity.Collectible.Bridge.RedColor;
-import server.Snake.Entity.Collectible.Bridge.Triangle;
-import server.Snake.Entity.Collectible.Bridge.Polygon;
-import server.Snake.Entity.Collectible.Bridge.Shape;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 import server.Snake.Utility.Adapter;
 
 import java.awt.*;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,8 +16,7 @@ public class Entity implements IEntity {
     protected float sizeX; // How big is the player by X axis
     protected float sizeY; // How big is the player by Y axis
 
-    public server.Snake.Entity.Collectible.Bridge.Shape shape;
-    public int shapetype;
+    private Color color = Color.BLACK; // What color is the entity?
 
     protected Map<EEffect, Integer> effects = new ConcurrentHashMap<>();
 
@@ -93,30 +86,25 @@ public class Entity implements IEntity {
         this.sizeY = sizeY;
     }
 
-    public void setShape(Shape s) {
-        this.shape = s;
-    }
-
-    public void setShapetype(int nr) {
-        this.shapetype = nr;
-    }
-
-    public int getShapetype() {
-        return this.shapetype;
-    }
-
     public void deltaSize(float sizeX, float sizeY) {
         this.sizeX += sizeX;
         this.sizeY += sizeY;
     }
 
+    @JsonIgnore
+    public Color getColor() {
+        return this.color;
+    }
+
+    public int getColorRGB() { return this.color.getRGB();}
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public void setEffect(EEffect effect, int duration){
         if(!this.effects.containsKey(effect)) this.effects.put(effect, duration);
         else this.effects.replace(effect, duration);
-    }
-
-    public Shape getShape(){
-        return this.shape;
     }
 
     @JsonIgnore

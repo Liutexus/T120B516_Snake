@@ -1,6 +1,6 @@
 package server.Snake.Interface;
 
-import client.Snake.Entity.Player;
+import server.Snake.Entity.Player;
 import server.Snake.Entity.AbstractMovingEntity;
 
 import java.util.Map;
