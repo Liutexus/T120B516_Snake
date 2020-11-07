@@ -12,12 +12,13 @@ public class SpeedUp extends StaticEntityDecorator implements IEntity {
 
     public SpeedUp(Entity entity){
         super(entity);
-        this.setColor(Color.YELLOW);
+        super.setColor(Color.YELLOW);
+        super.effects.put(EEffect.HASTE, 10);
     }
 
     @Override
     public Map<EEffect, Integer> getEffects(){
-        super.effects.put(EEffect.HASTE, 10);
+        super.getEffects().put(EEffect.HASTE, 10);
         return super.getEffects();
     }
 

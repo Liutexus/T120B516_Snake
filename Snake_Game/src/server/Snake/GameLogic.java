@@ -54,7 +54,6 @@ public class GameLogic implements Runnable {
                     player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
                 }
 
-                System.out.println(player1.getSnake().getEffects());
                 // Checking player collision with entities (collectibles, traps, etc)
                 terrainEntities.forEach((name, entity) -> { // Going through all entities
                     if(entity.getPositionX() == tPosX && entity.getPositionY() == tPosY){

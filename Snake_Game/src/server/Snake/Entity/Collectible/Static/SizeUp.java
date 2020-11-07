@@ -12,12 +12,12 @@ public class SizeUp extends StaticEntityDecorator implements IEntity {
 
     public SizeUp(Entity entity){
         super(entity);
-        this.setColor(Color.ORANGE);
+        super.setColor(Color.ORANGE);
     }
 
     @Override
     public Map<EEffect, Integer> getEffects(){
-        super.effects.put(EEffect.SIZE_UP, 1);
+        super.getEffects().put(EEffect.SIZE_UP, 1);
         return super.getEffects();
     }
 

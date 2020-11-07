@@ -149,7 +149,6 @@ public class Handler implements Runnable {
                 case CLIENT_REQUEST_MATCH_JOIN:
                     MatchInstance matchInstance = Server.returnAvailableMatch();
                     matchInstance.registerObserver(Handler.this.builder);
-                    System.out.println(packetJson);
                     break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");

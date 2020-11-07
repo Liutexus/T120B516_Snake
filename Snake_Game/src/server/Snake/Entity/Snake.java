@@ -64,13 +64,22 @@ public class Snake extends AbstractMovingEntity {
 
     private void reactToEffect() {
         if(this.effects.containsKey(EEffect.STUN)){
-            this.effects.replace(EEffect.STUN, this.effects.get(EEffect.STUN) - 1);
+//            this.effects.replace(EEffect.STUN, this.effects.get(EEffect.STUN) - 1);
+        }
+
+        if(this.effects.containsKey(EEffect.ROLLBACK)){
+            
+        }
+
+        if(this.effects.containsKey(EEffect.SIZE_UP)){
+            this.setSizeX(this.getSizeX() + this.effects.get(EEffect.SIZE_UP));
+            this.setSizeY(this.getSizeY() + this.effects.get(EEffect.SIZE_UP));
         }
         // TODO: Add checks for every effect and respond accordingly
 
-        this.effects.forEach((k, v) -> {
-            v--;
-            if(v <= 0) effects.remove(k);
+        this.effects.forEach((effect, duration) -> {
+            this.effects.replace(effect, this.effects.get(effect) - 1);
+            if(duration <= 0) effects.remove(effect);
         });
     }
 
@@ -83,9 +92,10 @@ public class Snake extends AbstractMovingEntity {
             positionX += velocityX;
             positionY += velocityY;
 
-        } else {
-            reactToEffect();
         }
+
+        reactToEffect();
+
         checkCollisionWithTail();
 
         return true;
