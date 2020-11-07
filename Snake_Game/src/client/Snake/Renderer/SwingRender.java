@@ -1,9 +1,12 @@
 package client.Snake.Renderer;
 
+import client.Snake.Renderer.Command.NetworkCommand;
 import server.Snake.Utility.Utils;
 
 import javax.swing.JFrame;
 import java.awt.*;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class SwingRender extends JFrame implements Runnable {
@@ -38,6 +41,11 @@ public class SwingRender extends JFrame implements Runnable {
         this.menuPanel = MenuPanel.getInstance();
         this.menuPanel.setPreferredSize(prefScreenSize);
         this.menuPanel.menuButtonMap.get("joinGame").addActionListener(actionEvent -> {
+            try {
+                NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.clientSocket.getOutputStream()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             this.currentState = ViewStates.INGAME;
             this.remove(this.menuPanel);
             this.invalidate();

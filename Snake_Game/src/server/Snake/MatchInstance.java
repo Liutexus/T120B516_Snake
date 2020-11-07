@@ -3,6 +3,7 @@ package server.Snake;
 import server.Snake.Entity.Player;
 import server.Snake.Builder.HandlerBuilder;
 import server.Snake.Entity.Entity;
+import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
 import server.Snake.Enumerator.EPacketHeader;
@@ -15,10 +16,11 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MatchInstance implements Runnable, ISubject {
-    private static int concurrentThreads = 5;
+    private String id;
+    private static int concurrentThreads = 1;
+
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
     private Map<Integer, HandlerBuilder> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
     private Map<Integer, Entity> terrainEntities = new ConcurrentHashMap<>(); // All collectibles on the map
@@ -30,9 +32,14 @@ public class MatchInstance implements Runnable, ISubject {
 
     private boolean gameStarted = false;
 
-    public MatchInstance() {
+    public MatchInstance(String id) {
+        this.id = id;
         this.terrain = BitmapConverter.BMPToIntArray("resources/arena_test_01.png", 50, 50);
         this.gameLogic = new GameLogic(this.handlers, this.players, this.terrainEntities, this.terrain);
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public int getCurrentPlayerCount() {
@@ -65,13 +72,13 @@ public class MatchInstance implements Runnable, ISubject {
         return player;
     }
 
-    private void matchSetup(ExecutorService pool) {
+    private void matchSetup() {
         handlers.forEach((index, handlerBuilder) -> { // Setting and starting up all handlers
             handlerBuilder.setMatchInstance(this);
             handlerBuilder.setGameLogic(this.gameLogic);
+            handlerBuilder.setStatus(EClientStatus.IN_GAME);
             handlerBuilder.setPlayers(this.players);
             handlerBuilder.setTerrainEntities(this.terrainEntities);
-            pool.execute(handlerBuilder.getProduct());
         });
 
         handlers.forEach((id, handlerBuilder) -> {
@@ -90,16 +97,26 @@ public class MatchInstance implements Runnable, ISubject {
         ExecutorService pool = Executors.newFixedThreadPool(concurrentThreads);
         pool.execute(gameLogic);
         while(true){
-            if(currentPlayerCount != maxPlayerCount) {
+            if(currentPlayerCount != maxPlayerCount && !gameStarted) {
+                handlers.forEach((index, handlerBuilder) -> {
+                    handlerBuilder.setStatus(EClientStatus.LOBBY);
+                });
+
                 try {Thread.sleep(1000);} catch (Exception e) { };
                 continue;
             }
 
-            if(!gameStarted){
-                matchSetup(pool);
-            }
+            if(!gameStarted) // To set up the match
+                matchSetup();
+
+            if(currentPlayerCount == 0) // If all players have left the match
+                break;
+
             try {Thread.sleep(100);} catch (Exception e) { };
         }
+
+        System.out.println("Finishing match: " + this.id);
+        Server.unlistMatch(this);
     }
 
     @Override
@@ -114,7 +131,13 @@ public class MatchInstance implements Runnable, ISubject {
 
     @Override
     public boolean unregisterObserver(IObserver o) {
-        handlers.remove(o);
+        try {
+            handlers.remove(o);
+            currentPlayerCount--;
+        } catch (Exception e){
+            return false;
+        }
+
         return true;
     }
 

@@ -2,20 +2,25 @@ package server.Snake.Enumerator;
 
 public enum EPacketHeader {
     EMPTY,
+
     INT,
     STRING,
     FLOAT,
     ARRAY,
+
     ID,
-    TERRAIN,
-    ENTITY,
     PLAYER,
     MATCH,
-    SERVER,
-    CLIENT_PLAYER,
-    CLIENT_MATCH_REQUEST,
-    CLIENT_RESPONSE,
+    ENTITY,
+    TERRAIN,
     ALL_PLAYERS,
     STATIC_ENTITY,
     MOVING_ENTITY,
+
+    CLIENT_PLAYER,
+    CLIENT_REQUEST_MATCH_JOIN,
+    CLIENT_REQUEST_MATCH_LEAVE,
+    CLIENT_LOGIN,
+    CLIENT_LOGOUT,
+    CLIENT_RESPONSE,
 }

@@ -19,7 +19,6 @@ public class GameLogic implements Runnable {
 
     private int[][] terrain;
 
-
     private IEntityFactory CollectibleFactory = new CollectibleEntityFactory();
     private IEntityFactory ObstacleFactory = new ObstacleEntityFactory();
 
@@ -44,27 +43,27 @@ public class GameLogic implements Runnable {
                     player1.getSnake().onCollide(player2.getSnake());
             });
 
-            // Checking collisions with terrain obstacles
+            // Checking collisions with terrain entities
             try {
-                if(player1.getSnake().getEffects().size() == 0){ // Is player alright?
-                    // Getting a position 'one ahead', to check if the player going to collide in the next move
-                    int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
-                    int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
-                    if(terrain[tPosY][tPosX] == 6) { // '6' is an index for "Wall"
-                        player1.getSnake().setEffect(EEffect.STUN, 10); // Apply a 'Stun' effect to the player for 10 moves
-                        player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
-                    }
-
-                    terrainEntities.forEach((name, entity) -> { // Checking collision with entities on the map
-                        if(entity.getPositionX() == tPosX && entity.getPositionY() == tPosY){
-                            entity.getEffects().forEach((effect, duration) -> { // Transferring all terrain entities effects to player
-                                player1.getSnake().setEffect(effect, duration);
-                            });
-                            terrainEntities.remove(name);
-                            player1.getSnake().deltaTailLength(1); // increase snake tail +1
-                        }
-                    });
+                // Checking player collision with map
+                // Getting a position 'one ahead', to check if the player going to collide in the next move
+                int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
+                int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
+                if(terrain[tPosY][tPosX] == 6 && !player1.getSnake().getEffects().containsKey(EEffect.STUN)) { // '6' is an index for "Wall"
+                    player1.getSnake().setEffect(EEffect.STUN, 10); // Apply a 'Stun' effect to the player for 10 moves
+                    player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
                 }
+
+                // Checking player collision with entities (collectibles, traps, etc)
+                terrainEntities.forEach((name, entity) -> { // Going through all entities
+                    if(entity.getPositionX() == tPosX && entity.getPositionY() == tPosY){
+                        entity.getEffects().forEach((effect, duration) -> { // Transferring all terrain entities effects to player
+                            player1.getSnake().setEffect(effect, duration);
+                        });
+                        terrainEntities.remove(name);
+                        player1.getSnake().deltaTailLength(1); // increase snake tail +1
+                    }
+                });
             } catch (Exception e){
                 if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
                 e.printStackTrace();
@@ -114,10 +113,10 @@ public class GameLogic implements Runnable {
 
     private Entity addStaticCollectible() {
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity ee = CollectibleFactory.createStatic(randPos[0], randPos[1]);
+        Entity entity = CollectibleFactory.createStatic(randPos[0], randPos[1]);
 //        Random rand = new Random();
 //        int random = rand.nextInt(4)+1;
 //        ee.setShapetype(random);
-        return ee;
+        return entity;
     }
 }
