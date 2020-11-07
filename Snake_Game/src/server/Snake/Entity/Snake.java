@@ -68,12 +68,16 @@ public class Snake extends AbstractMovingEntity {
         }
 
         if(this.effects.containsKey(EEffect.ROLLBACK)){
-            
+            // TODO: Try to implement Memento pattern here
         }
 
         if(this.effects.containsKey(EEffect.SIZE_UP)){
             this.setSizeX(this.getSizeX() + this.effects.get(EEffect.SIZE_UP));
             this.setSizeY(this.getSizeY() + this.effects.get(EEffect.SIZE_UP));
+        }
+
+        if(this.effects.containsKey(EEffect.POINT_INCREASE)){
+            // TODO: Add points to player
         }
         // TODO: Add checks for every effect and respond accordingly
 
