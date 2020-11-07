@@ -1,17 +1,17 @@
 package server.Snake.Utility;
 
-import server.Snake.Entity.Collectible.Bridge.*;
-import server.Snake.Entity.Collectible.Bridge.Polygon;
-import server.Snake.Entity.Collectible.Bridge.Shape;
-import server.Snake.Entity.Entity;
-import server.Snake.Entity.Snake;
 import client.Snake.Entity.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import server.Snake.Entity.Collectible.Bridge.BlueColor;
+import server.Snake.Entity.Collectible.Bridge.Polygon;
+import server.Snake.Entity.Collectible.Bridge.RedColor;
+import server.Snake.Entity.Collectible.Bridge.Triangle;
+import server.Snake.Entity.Entity;
+import server.Snake.Entity.Snake;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,18 +71,18 @@ public final class Adapter {
                     break;
                 case "velocity":
                     temp = (ArrayList<Object>) value;
-                    snake.setVelocityX((float)(double)temp.get(0));
-                    snake.setVelocityY((float)(double)temp.get(1));
+                    snake.setVelocityX((float)temp.get(0));
+                    snake.setVelocityY((float)temp.get(1));
                     break;
                 case "size":
                     temp = (ArrayList<Object>) value;
-                    snake.setSizeX((float)(double)temp.get(0));
-                    snake.setSizeY((float)(double)temp.get(1));
+                    snake.setSizeX((float)temp.get(0));
+                    snake.setSizeY((float)temp.get(1));
                     break;
                 case "position":
                     temp = (ArrayList<Object>) value;
-                    snake.setPositionX((float)(double)temp.get(0));
-                    snake.setPositionY((float)(double)temp.get(1));
+                    snake.setPositionX((float)temp.get(0));
+                    snake.setPositionY((float)temp.get(1));
                     break;
                 default:
                     System.out.println("Attribute: '" + field + "' is not recognised.");
