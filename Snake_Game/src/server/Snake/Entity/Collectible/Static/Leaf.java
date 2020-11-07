@@ -5,12 +5,14 @@ import server.Snake.Entity.StaticEntityDecorator;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 
+import java.awt.*;
 import java.util.Map;
 
 public class Leaf extends StaticEntityDecorator implements IEntity {
 
     public Leaf(Entity entity){
         super(entity);
+        this.setColor(Color.GREEN);
     }
 
     @Override

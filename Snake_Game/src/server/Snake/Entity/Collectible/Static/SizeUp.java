@@ -5,12 +5,14 @@ import server.Snake.Entity.StaticEntityDecorator;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 
+import java.awt.*;
 import java.util.Map;
 
 public class SizeUp extends StaticEntityDecorator implements IEntity {
 
     public SizeUp(Entity entity){
         super(entity);
+        this.setColor(Color.ORANGE);
     }
 
     @Override

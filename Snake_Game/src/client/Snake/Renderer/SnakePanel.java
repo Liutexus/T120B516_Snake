@@ -165,8 +165,8 @@ class SnakePanel extends JPanel implements Runnable {
         }
 
         // Draw all objects placed on the map
-        mapObjects.forEach((y, arrayX) -> {
-            drawRect(g, arrayX.getPosition(), arrayX.getSize(), new Color(153,255,10) );
+        mapObjects.forEach((type, entity) -> {
+            drawRect(g, entity.getPosition(), entity.getSize(), entity.getColor() );
         });
     }
 

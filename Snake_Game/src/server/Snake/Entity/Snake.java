@@ -76,7 +76,7 @@ public class Snake extends AbstractMovingEntity {
 
     @Override
     public boolean move() {
-        if(this.effects.size() == 0){
+        if(!this.effects.containsKey(EEffect.STUN)){
             this.AddPreviousPositionX(positionX);
             this.AddPreviousPositionY(positionY);
 

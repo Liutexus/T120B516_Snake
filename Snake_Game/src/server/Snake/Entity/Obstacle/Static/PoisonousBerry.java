@@ -5,12 +5,14 @@ import server.Snake.Entity.StaticEntityDecorator;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 
+import java.awt.*;
 import java.util.Map;
 
 public class PoisonousBerry extends StaticEntityDecorator implements IEntity {
 
     public PoisonousBerry(Entity entity){
         super(entity);
+        this.setColor(Color.MAGENTA);
     }
 
     @Override
