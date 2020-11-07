@@ -23,11 +23,9 @@ public class Server {
             while (true) {
                 HandlerBuilder handlerBuilder = new HandlerBuilder();
                 handlerBuilder.setSocket(listener.accept());
+                handlerBuilder.setBuilder(handlerBuilder);
                 handlerBuilder.setStatus(EClientStatus.MENU);
                 handlerPool.execute(handlerBuilder.getProduct());
-
-                MatchInstance matchInstance = returnAvailableMatch();
-                matchInstance.registerObserver(handlerBuilder);
             }
         } catch (Exception e) {
             System.out.println("Error running the server. Aborting...");
@@ -36,7 +34,7 @@ public class Server {
         }
     }
 
-    private static MatchInstance returnAvailableMatch() {
+    public static MatchInstance returnAvailableMatch() {
         for (MatchInstance match: matches.values())
             if(match.getCurrentPlayerCount() < match.getMaxPlayerCount() && !match.isGameStarted())
                 return match;

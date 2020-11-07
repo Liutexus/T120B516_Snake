@@ -77,7 +77,6 @@ public class MatchInstance implements Runnable, ISubject {
             handlerBuilder.setMatchInstance(this);
             handlerBuilder.setGameLogic(this.gameLogic);
             handlerBuilder.setStatus(EClientStatus.IN_GAME);
-            handlerBuilder.setBuilder(handlerBuilder);
             handlerBuilder.setPlayers(this.players);
             handlerBuilder.setTerrainEntities(this.terrainEntities);
         });
