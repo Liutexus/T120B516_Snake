@@ -6,12 +6,6 @@ import server.Snake.Entity.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import server.Snake.Entity.Collectible.Bridge.BlueColor;
-import server.Snake.Entity.Collectible.Bridge.Polygon;
-import server.Snake.Entity.Collectible.Bridge.RedColor;
-import server.Snake.Entity.Collectible.Bridge.Triangle;
-import server.Snake.Entity.Entity;
-import server.Snake.Entity.Snake;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -70,18 +64,18 @@ public final class Adapter {
                     break;
                 case "velocity":
                     temp = (ArrayList<Object>) value;
-                    snake.setVelocityX((float)temp.get(0));
-                    snake.setVelocityY((float)temp.get(1));
+                    snake.setVelocityX(parseToFloat(temp.get(0)));
+                    snake.setVelocityY(parseToFloat(temp.get(1)));
                     break;
                 case "size":
                     temp = (ArrayList<Object>) value;
-                    snake.setSizeX((float)temp.get(0));
-                    snake.setSizeY((float)temp.get(1));
+                    snake.setSizeX(parseToFloat(temp.get(0)));
+                    snake.setSizeY(parseToFloat(temp.get(1)));
                     break;
                 case "position":
                     temp = (ArrayList<Object>) value;
-                    snake.setPositionX((float)temp.get(0));
-                    snake.setPositionY((float)temp.get(1));
+                    snake.setPositionX(parseToFloat(temp.get(0)));
+                    snake.setPositionY(parseToFloat(temp.get(1)));
                     break;
                 case "colorRGB":
                     snake.setColor(new Color((int)value));
@@ -146,5 +140,18 @@ public final class Adapter {
             }
         });
         return tempEntity;
+    }
+
+    public static float parseToFloat(Object obj){
+        if(obj.getClass() == String.class){
+            return Float.parseFloat((String) obj);
+        } else
+        if(obj.getClass() == Double.class){
+            return ((Double)obj).floatValue();
+        } else
+        if(obj.getClass() == Float.class){
+            return (Float) obj;
+        }
+        return 0;
     }
 }

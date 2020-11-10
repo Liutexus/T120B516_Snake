@@ -29,7 +29,7 @@ public class Packet {
 
     public Packet(String json){
         ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, Object> map;
+        HashMap<String, Object> map = new HashMap<>();
         try {
             map = objectMapper.readValue(json, new TypeReference<>(){});
             for (EPacketHeader item: EPacketHeader.values())
@@ -38,10 +38,14 @@ public class Packet {
                     break;
                 }
         } catch (Exception e) {
-            e.printStackTrace();
+            this.header = EPacketHeader.EMPTY;
+        }
+        Object bodyObj = map.get(this.header.toString());
+        if(bodyObj == null) {
+            this.body = "";
             return;
         }
-        if(map.get(this.header.toString()).getClass() == String.class)
+        if(bodyObj.getClass() == String.class)
             this.body = String.valueOf(map.get(this.header.toString()));
         else
             this.body = json.substring(this.header.toString().length() + 4, json.length() - 1); // 4 is there for additional characters "{,"" and :"
@@ -77,20 +81,23 @@ public class Packet {
 
     @Override
     public String toString(){
+        if(this.header == null && this.body == "" && this.map == null){
+            return null;
+        }
         String packet = "{\"" + header.toString() + "\":"; // add packet opening parentheses and its header
-
-        if(!body.contains(":")) { // if body is only a simple string
-            if(!body.endsWith("\""))
-                this.body += '"';
-            if(!body.startsWith("\""))
-                this.body = '"' + this.body;
+        String tempBody = this.body;
+        if(!tempBody.contains(":")) { // if body is only a simple string
+            if(!tempBody.endsWith("\""))
+                tempBody += '"';
+            if(!tempBody.startsWith("\""))
+                tempBody = '"' + tempBody;
         }
 
-        if(!body.startsWith("{") && body.contains(":")) packet += "{"; // does body have object opening parentheses
+        if(!tempBody.startsWith("{") && tempBody.contains(":")) packet += "{"; // does body have object opening parentheses
 
-        packet += body;
+        packet += tempBody;
 
-        if(!body.endsWith("}") && body.contains(":")) packet += "}"; // does body have object closing parentheses
+        if(!tempBody.endsWith("}") && tempBody.contains(":")) packet += "}"; // does body have object closing parentheses
 
         packet += "}"; // add packet closing parentheses
         if(packet.length() < 8) packet = String.format("%" + -8 + "s", packet); // Making the packet big enough

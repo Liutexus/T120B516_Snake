@@ -3,6 +3,7 @@ package client.Snake.Entity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import server.Snake.Entity.Player;
 import server.Snake.Entity.Snake;
 
 import java.awt.*;
@@ -60,25 +61,25 @@ class PlayerTest {
     @Test
     void getColor() {
         Player testPlayer = new Player("");
-        assertEquals(Color.BLACK, testPlayer.getColor());
+        assertEquals(Color.BLACK, testPlayer.getSnake().getColor());
     }
 
     @Test
     void getColorRGB() {
         Player testPlayer = new Player("");
-        assertEquals(Color.BLACK.getRGB(), testPlayer.getColor().getRGB());
+        assertEquals(Color.BLACK.getRGB(), testPlayer.getSnake().getColor().getRGB());
     }
 
     @Test
     void setColor() {
         Player testPlayer = new Player("");
-        assertEquals(Color.BLACK, testPlayer.getColor());
-        testPlayer.setColor(Color.GREEN);
-        assertEquals(Color.GREEN, testPlayer.getColor());
-        testPlayer.setColor(Color.CYAN);
-        assertEquals(Color.CYAN, testPlayer.getColor());
-        testPlayer.setColor(Color.ORANGE);
-        assertEquals(Color.ORANGE, testPlayer.getColor());
+        assertEquals(Color.BLACK, testPlayer.getSnake().getColor());
+        testPlayer.getSnake().setColor(Color.GREEN);
+        assertEquals(Color.GREEN, testPlayer.getSnake().getColor());
+        testPlayer.getSnake().setColor(Color.CYAN);
+        assertEquals(Color.CYAN, testPlayer.getSnake().getColor());
+        testPlayer.getSnake().setColor(Color.ORANGE);
+        assertEquals(Color.ORANGE, testPlayer.getSnake().getColor());
     }
 
     @Test
@@ -176,6 +177,7 @@ class PlayerTest {
                     add(15.2f);
                 }
                 });
+                put("colorRGB", Color.ORANGE.getRGB());
             }
         };
 
@@ -184,7 +186,6 @@ class PlayerTest {
                 put("id", "t e s t");
                 put("snake", testSnakeMap);
                 put("score", 5000);
-                put("colorRGB", Color.ORANGE.getRGB());
                 put("isGameOver", true);
             }
 
@@ -206,7 +207,7 @@ class PlayerTest {
                 () -> assertEquals(15.2f, testPlayer.getSnake().getPositionY()),
 
                 () -> assertEquals(5000, testPlayer.getScore()),
-                () -> assertEquals(Color.ORANGE.getRGB(), testPlayer.getColorRGB()),
+                () -> assertEquals(Color.ORANGE.getRGB(), testPlayer.getSnake().getColorRGB()),
                 () -> assertTrue(testPlayer.getIsGameOver())
         );
     }
@@ -215,7 +216,6 @@ class PlayerTest {
     void testToString() {
         Player testPlayer = new Player("toStringTest", 0.5f, 1.5f);
         testPlayer.setGameOver(true);
-        testPlayer.setColor(Color.CYAN);
         testPlayer.setScore(556);
 
         Snake testSnake = new Snake(1.2f, 3.4f);
@@ -236,9 +236,10 @@ class PlayerTest {
             add(4.5f);
             add(5.5f);
         }});
+        testSnake.setColor(Color.CYAN);
 
         testPlayer.setSnake(testSnake);
-        assertEquals("{\"id\":\"toStringTest\",\"snake\":{\"shape\":null,\"shapetype\":0,\"previousPositionsX\":[1.0,2.0,3.0,4.0,5.0],\"previousPositionsY\":[1.5,2.5,3.5,4.5,5.5],\"tailLength\":12,\"velocity\":[9.1,10.11],\"size\":[5.6,7.8],\"position\":[1.2,3.4]},\"score\":556,\"isGameOver\":true,\"colorRGB\":-16711681}",
+        assertEquals("{\"id\":\"toStringTest\",\"snake\":{\"previousPositionsX\":[1.0,2.0,3.0,4.0,5.0],\"previousPositionsY\":[1.5,2.5,3.5,4.5,5.5],\"tailLength\":12,\"velocity\":[9.1,10.11],\"size\":[5.6,7.8],\"position\":[1.2,3.4],\"colorRGB\":-16711681},\"score\":556,\"isGameOver\":true}",
                              testPlayer.toString());
     }
 }
