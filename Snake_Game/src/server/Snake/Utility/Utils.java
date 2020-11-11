@@ -68,15 +68,17 @@ public final class Utils {
 
         players.forEach((id, player) -> {
             Snake tempSnake = player.getSnake();
-            Float[] tempObjX = (Float[]) tempSnake.getPreviousPositionsX().subList(0, tempSnake.getTailLength()).toArray();
-            Float[] tempObjY = (Float[]) tempSnake.getPreviousPositionsY().subList(0, tempSnake.getTailLength()).toArray();
+            int tailLength = tempSnake.getTailLength();
+            if(tailLength > tempSnake.getPreviousPositionsX().size()) tailLength = tempSnake.getPreviousPositionsX().size();
 
-            tempX.addAll(Arrays.asList(tempObjX));
-            tempY.addAll(Arrays.asList(tempObjY));
+            for(int i = 0; i < tailLength; i++){
+                tempX.add((Float) tempSnake.getPreviousPositionsX().get(i));
+                tempY.add((Float) tempSnake.getPreviousPositionsY().get(i));
+            }
         });
 
         tempMap.put("x", tempX);
-        tempMap.put("Y", tempY);
+        tempMap.put("y", tempY);
 
         return tempMap;
     }
