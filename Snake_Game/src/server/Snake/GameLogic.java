@@ -22,6 +22,8 @@ public class GameLogic implements Runnable {
     private IEntityFactory CollectibleFactory = new CollectibleEntityFactory();
     private IEntityFactory ObstacleFactory = new ObstacleEntityFactory();
 
+    public GameLogic(){}
+
     public GameLogic(Map handlers, Map players, Map terrainEntities, int[][] terrain){
         this.handlers = handlers;
         this.players = players;

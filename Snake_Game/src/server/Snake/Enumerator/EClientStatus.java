@@ -6,4 +6,6 @@ public enum EClientStatus {
     LOBBY,
     IN_GAME,
     POST_GAME,
+
+    DISCONNECTED,
 }

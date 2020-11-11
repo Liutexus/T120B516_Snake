@@ -32,6 +32,8 @@ public class Handler implements Runnable {
 
     private EClientStatus status;
 
+    private ExecutorService executor = Executors.newFixedThreadPool(2);;
+
     private Player clientPlayer;
     private String clientId;
     public Map<String, Player> players = new ConcurrentHashMap<>();
@@ -85,6 +87,10 @@ public class Handler implements Runnable {
         this.gameLogic = gameLogic;
     }
 
+    public GameLogic getGameLogic(){
+        return this.gameLogic;
+    }
+
     public void setBuilder(HandlerBuilder builder){
         this.builder = builder;
     }
@@ -93,8 +99,16 @@ public class Handler implements Runnable {
         this.players = players;
     }
 
+    public Map getPlayers(){
+        return this.players;
+    }
+
     public void setTerrainEntities(Map terrainEntities) {
         this.terrainEntities = terrainEntities;
+    }
+
+    public Map getTerrainEntities(){
+        return this.terrainEntities;
     }
 
     public void sendLoginInfo(String id, Player player) {
@@ -111,10 +125,18 @@ public class Handler implements Runnable {
         }
     }
 
+    public void shutdown(){
+        try {
+            this.status = EClientStatus.DISCONNECTED;
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         System.out.println("Connected: " + serverSocket);
-        ExecutorService executor = Executors.newFixedThreadPool(2);
         try {
             executor.execute(clientListener); // Listening to packets from client
             executor.execute(clientSender); // Sending packets to the client
@@ -138,6 +160,25 @@ public class Handler implements Runnable {
             this.in = in;
         }
 
+        @Override
+        public void run() {
+            BufferedReader inb = new BufferedReader(in);
+            while(true) {
+                if(Handler.this.serverSocket.isClosed() && Handler.this.status == EClientStatus.DISCONNECTED) break;
+                try {
+                    parsePacket(inb.readLine());
+                } catch (Exception e) {
+                    if(serverSocket.isClosed()) break;
+//                    System.out.println("Couldn't receive packet from the client.");
+                    if(e instanceof SocketException) {
+                        break;
+                    }
+                    e.printStackTrace();
+                    continue;
+                }
+            }
+        }
+
         private void parsePacket(String packetJson){
             Packet packet = new Packet(packetJson);
             switch (packet.header){
@@ -155,24 +196,6 @@ public class Handler implements Runnable {
                     break;
             }
         }
-
-        @Override
-        public void run() {
-            BufferedReader inb = new BufferedReader(in);
-            while(true) {
-                try {
-                    parsePacket(inb.readLine());
-                } catch (Exception e) {
-                    if(serverSocket.isClosed()) break;
-//                    System.out.println("Couldn't receive packet from the client.");
-                    if(e instanceof SocketException) {
-                        break;
-                    }
-                    e.printStackTrace();
-                    continue;
-                }
-            }
-        }
     }
 
     // --- Client sender class ---
@@ -187,6 +210,7 @@ public class Handler implements Runnable {
         public void run() {
             final boolean[] alive = {true};
             while(alive[0]){
+                if(Handler.this.serverSocket.isClosed() && Handler.this.status == EClientStatus.DISCONNECTED) break;
                 if(Handler.this.status == EClientStatus.IN_GAME){ // If the player is in game
                     synchronized (players){
                         players.forEach((key, value) -> { // Send all other match players
@@ -194,6 +218,7 @@ public class Handler implements Runnable {
                                 sendPacket(EPacketHeader.PLAYER, value.toString());
                             } catch (IOException e) {
                                 alive[0] = false;
+                                Handler.this.status = EClientStatus.DISCONNECTED;
                                 System.out.println("Client disconnected");
 //                                e.printStackTrace();
                             }

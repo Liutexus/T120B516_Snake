@@ -132,8 +132,10 @@ public class MatchInstance implements Runnable, ISubject {
     @Override
     public boolean unregisterObserver(IObserver o) {
         try {
-            handlers.remove(o);
-            currentPlayerCount--;
+            if(handlers.containsKey(o)){
+                handlers.remove(o);
+                currentPlayerCount--;
+            }
         } catch (Exception e){
             return false;
         }

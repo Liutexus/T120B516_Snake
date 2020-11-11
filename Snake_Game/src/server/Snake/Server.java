@@ -17,6 +17,10 @@ public class Server {
     private static ExecutorService handlerPool = Executors.newFixedThreadPool(255);
 
     public static void main(String[] args) {
+        run();
+    }
+
+    public static void run(){
         try (var listener = new ServerSocket(Integer.parseInt(Utils.parseConfig("network", "port")))) {
             System.out.println("The server is running on port " + listener.getLocalPort());
 
