@@ -2,6 +2,7 @@ package server.Snake;
 
 import server.Snake.Builder.HandlerBuilder;
 import server.Snake.Enumerator.EClientStatus;
+import server.Snake.Enumerator.EMatchStatus;
 import server.Snake.Utility.Utils;
 
 import java.net.ServerSocket;
@@ -40,7 +41,7 @@ public class Server {
 
     public static MatchInstance returnAvailableMatch() {
         for (MatchInstance match: matches.values())
-            if(match.getCurrentPlayerCount() < match.getMaxPlayerCount() && !match.isGameStarted())
+            if(match.getCurrentPlayerCount() < match.getMaxPlayerCount() && match.getMatchStatus() == EMatchStatus.WAITING)
                 return match;
         String id = Utils.randomId();
         MatchInstance matchInstance = new MatchInstance(id);

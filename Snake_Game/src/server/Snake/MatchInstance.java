@@ -4,6 +4,7 @@ import server.Snake.Entity.Player;
 import server.Snake.Builder.HandlerBuilder;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EClientStatus;
+import server.Snake.Enumerator.EMatchStatus;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
 import server.Snake.Enumerator.EPacketHeader;
@@ -30,12 +31,13 @@ public class MatchInstance implements Runnable, ISubject {
     private int maxPlayerCount = Integer.parseInt(Utils.parseConfig("server", "maxPlayersPerMatch"));
     private int currentPlayerCount = 0;
 
-    private boolean gameStarted = false;
+    private EMatchStatus status = EMatchStatus.UNDETERMINED;
 
     public MatchInstance(String id) {
         this.id = id;
         this.terrain = BitmapConverter.BMPToIntArray("resources/arena_test_01.png", 50, 50);
         this.gameLogic = new GameLogic(this.handlers, this.players, this.terrainEntities, this.terrain);
+        this.setMatchStatus(EMatchStatus.WAITING);
     }
 
     public String getId(){
@@ -50,8 +52,16 @@ public class MatchInstance implements Runnable, ISubject {
         return this.maxPlayerCount;
     }
 
-    public boolean isGameStarted() {
-        return gameStarted;
+    public Map getHandlers(){
+        return this.handlers;
+    }
+
+    public void setMatchStatus(EMatchStatus status){
+        this.status = status;
+    }
+
+    public EMatchStatus getMatchStatus() {
+        return this.status;
     }
 
     private Player createPlayer(String id) {
@@ -89,7 +99,7 @@ public class MatchInstance implements Runnable, ISubject {
             }
         });
 
-        gameStarted = true;
+        this.setMatchStatus(EMatchStatus.ONGOING);
     }
 
     @Override
@@ -97,7 +107,7 @@ public class MatchInstance implements Runnable, ISubject {
         ExecutorService pool = Executors.newFixedThreadPool(concurrentThreads);
         pool.execute(gameLogic);
         while(true){
-            if(currentPlayerCount != maxPlayerCount && !gameStarted) {
+            if(currentPlayerCount != maxPlayerCount && this.status != EMatchStatus.ONGOING) {
                 handlers.forEach((index, handlerBuilder) -> {
                     handlerBuilder.setStatus(EClientStatus.LOBBY);
                 });
@@ -106,13 +116,13 @@ public class MatchInstance implements Runnable, ISubject {
                 continue;
             }
 
-            if(!gameStarted) // To set up the match
-                matchSetup();
+            if(this.status == EMatchStatus.WAITING)
+                matchSetup(); // Start the match
 
-            if(currentPlayerCount == 0) // If all players have left the match
+            if(currentPlayerCount == 0 || this.status == EMatchStatus.FINISHED) // If all players have left the match or the match finished
                 break;
 
-            try {Thread.sleep(100);} catch (Exception e) { };
+            try {Thread.sleep(1000);} catch (Exception e) { };
         }
 
         System.out.println("Finishing match: " + this.id);
@@ -132,8 +142,14 @@ public class MatchInstance implements Runnable, ISubject {
     @Override
     public boolean unregisterObserver(IObserver o) {
         try {
-            if(handlers.containsKey(o)){
-                handlers.remove(o);
+            if(handlers.containsValue(o)){
+                int index = -1;
+                for (Map.Entry<Integer, HandlerBuilder> entry : handlers.entrySet()) {
+                    if (o == entry.getValue())
+                        index = entry.getKey();
+                }
+
+                handlers.remove(index);
                 currentPlayerCount--;
             }
         } catch (Exception e){

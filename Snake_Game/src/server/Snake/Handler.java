@@ -79,8 +79,16 @@ public class Handler implements Runnable {
         this.match = match;
     }
 
+    public MatchInstance getMatchInstance(){
+        return this.match;
+    }
+
     public void setStatus(EClientStatus status){
         this.status = status;
+    }
+
+    public EClientStatus getStatus(){
+        return this.status;
     }
 
     public void setGameLogic(GameLogic gameLogic) {
@@ -112,16 +120,20 @@ public class Handler implements Runnable {
     }
 
     public void sendLoginInfo(String id, Player player) {
-        this.clientSender.sendClientLogin(id, player);
-        this.status = EClientStatus.IN_GAME;
+        if(this.clientSender != null){
+            this.clientSender.sendClientLogin(id, player);
+            this.status = EClientStatus.IN_GAME;
+        }
     }
 
     public void sendPacket(EPacketHeader header, String packet) {
-        try {
-            this.clientSender.sendPacket(header, packet);
-        } catch (IOException e) {
-            System.out.println("Error sending a packet to the client.");
-            e.printStackTrace();
+        if(this.clientSender != null){
+            try {
+                this.clientSender.sendPacket(header, packet);
+            } catch (IOException e) {
+                System.out.println("Error sending a packet to the client.");
+                e.printStackTrace();
+            }
         }
     }
 

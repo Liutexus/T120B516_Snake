@@ -1,6 +1,7 @@
 package server.Snake.Builder;
 
 import server.Snake.Enumerator.EClientStatus;
+import server.Snake.Enumerator.EMatchStatus;
 import server.Snake.GameLogic;
 import server.Snake.Handler;
 import server.Snake.Interface.IHandlerBuilder;
@@ -71,6 +72,28 @@ public class HandlerBuilder implements IHandlerBuilder, IObserver {
 
     @Override
     public void update() {
+        if(this.handler.getMatchInstance() != null){
+            switch (this.handler.getMatchInstance().getMatchStatus()){
+                case UNDETERMINED:
+                    this.handler.setStatus(EClientStatus.MENU);
+                    break;
+                case ONGOING:
+                    this.handler.setStatus(EClientStatus.IN_GAME);
+                    break;
+                case WAITING:
+                    this.handler.setStatus(EClientStatus.LOBBY);
+                    break;
+                case CONCLUDING:
+                    this.handler.setStatus(EClientStatus.POST_GAME);
+                    break;
+                case FINISHED:
+                    this.handler.setStatus(EClientStatus.DISCONNECTED);
+                    break;
+                default:
+                    System.out.println("Unknown match state in class " + this.getClass());
+                    break;
+            }
 
+        }
     }
 }
