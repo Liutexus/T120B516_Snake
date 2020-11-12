@@ -105,13 +105,13 @@ public final class Adapter {
             switch (field){
                 case "position":
                     tempEntity.setPosition(
-                            ((Double) ((ArrayList) obj).get(0)).floatValue(),
-                            ((Double) ((ArrayList) obj).get(1)).floatValue()
+                            (parseToFloat(((ArrayList) obj).get(0))),
+                            (parseToFloat(((ArrayList) obj).get(1)))
                     );
                     break;
                 case "size":
-                    tempEntity.setSizeX(((Double) ((ArrayList) obj).get(0)).floatValue());
-                    tempEntity.setSizeY(((Double) ((ArrayList) obj).get(1)).floatValue());
+                    tempEntity.setSizeX(parseToFloat(((ArrayList) obj).get(0)));
+                    tempEntity.setSizeY(parseToFloat(((ArrayList) obj).get(1)));
                     break;
                 case "colorRGB":
                     tempEntity.setColor(new Color((int)obj));
@@ -151,7 +151,11 @@ public final class Adapter {
         } else
         if(obj.getClass() == Float.class){
             return (Float) obj;
+        } else
+        if(obj.getClass() == Integer.class){
+            return ((Integer) obj).floatValue();
         }
+
         return 0;
     }
 }
