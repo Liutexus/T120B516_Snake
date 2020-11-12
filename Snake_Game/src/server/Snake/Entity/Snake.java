@@ -31,7 +31,7 @@ public class Snake extends AbstractMovingEntity {
         if(previousPositionsX.size() < maxLength || previousPositionsY.size() < maxLength)
             return;
 
-        this.tailLength = maxLength;
+        this.tailLength = Math.min(this.tailLength, maxLength);
         ArrayList tempX = new ArrayList();
         ArrayList tempY = new ArrayList();
         for(int i = 0; i < maxLength; i++){
