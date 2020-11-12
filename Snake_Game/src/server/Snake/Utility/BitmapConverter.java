@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -60,31 +61,36 @@ public final class BitmapConverter {
     public static Terrain[][] BMPToTerrain(String imagePath) {
         try {
             File bitmapFile = new File(imagePath);
+            if(!bitmapFile.exists()) {
+                System.out.println("File \"" + imagePath + "\" does not exist");
+                return null;
+            }
             BufferedImage image = ImageIO.read(bitmapFile);
-
             int width = image.getWidth();
             int height = image.getHeight();
             Terrain[][] terrainType = new Terrain[height][width];
-
             for(int i = 0; i < height; i++)
                 for(int j = 0; j < width; j++)
                     terrainType[i][j] = colorToTerrainMap.get(image.getRGB(j, i));
             return terrainType;
         } catch (IOException e) {
-            System.out.println(e.toString());
-            return new Terrain[0][0];
+            e.printStackTrace();
+            return null;
         }
     }
 
     public static Terrain[][] BMPToTerrain(String imagePath, int sizeX, int sizeY) {
         try {
             File bitmapFile = new File(imagePath);
+            if(!bitmapFile.exists()) {
+                System.out.println("File \"" + imagePath + "\" does not exist");
+                return null;
+            }
             BufferedImage imageBuff = ImageIO.read(bitmapFile);
             BufferedImage scaledImageBuff = new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics2D = scaledImageBuff.createGraphics();
             graphics2D.drawImage(imageBuff, 0, 0, sizeX, sizeY, null);
             graphics2D.dispose();
-
             Terrain[][] terrainType = new Terrain[sizeY][sizeX];
             for(int i = 0; i < sizeY; i++)
                 for(int j = 0; j < sizeX; j++)
@@ -92,19 +98,22 @@ public final class BitmapConverter {
             return terrainType;
         } catch (IOException e) {
             e.printStackTrace();
-            return new Terrain[0][0];
+            return null;
         }
     }
 
     public static int[][] BMPToIntArray(String imagePath, int sizeX, int sizeY) {
         try {
             File bitmapFile = new File(imagePath);
+            if(!bitmapFile.exists()) {
+                System.out.println("File \"" + imagePath + "\" does not exist");
+                return null;
+            }
             BufferedImage imageBuff = ImageIO.read(bitmapFile);
             BufferedImage scaledImageBuff = new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics2D = scaledImageBuff.createGraphics();
             graphics2D.drawImage(imageBuff, 0, 0, sizeX, sizeY, null);
             graphics2D.dispose();
-
             int[][] terrainType = new int[sizeY][sizeX];
             for(int i = 0; i < sizeY; i++)
                 for(int j = 0; j < sizeX; j++)
@@ -112,49 +121,35 @@ public final class BitmapConverter {
             return terrainType;
         } catch (Exception e) {
             e.printStackTrace();
-            return new int[0][0];
+            return null;
         }
     }
 
     public static Color[][] BMPToColor(String imagePath) {
         try {
             File bitmapFile = new File(imagePath);
+            if(!bitmapFile.exists()) {
+                System.out.println("File \"" + imagePath + "\" does not exist");
+                return null;
+            }
             BufferedImage image = ImageIO.read(bitmapFile);
-
             int width = image.getWidth();
             int height = image.getHeight();
             Color[][] colorValues = new Color[height][width];
-
             for(int i = 0; i < height; i++) {
                 for(int j = 0; j < width; j++) {
                     colorValues[i][j] = new Color(image.getRGB(j, i));
                 }
             }
             return colorValues;
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            return new Color[0][0];
-        }
-    }
-
-    public static String terrainToJSON(Terrain[][] terrain, int index) {
-        if(terrain.length < index) return null;
-
-        ObjectWriter ow = new ObjectMapper().writer();
-        HashMap<String, Terrain[][]> map = new HashMap<>();
-        map.put(String.valueOf(index), terrain);
-        String json = "";
-        try {
-            json = ow.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return json;
     }
 
     public static String intArrayToJSON(int[][] terrain, int index) {
         if(terrain.length < index) return null;
-
         ObjectWriter ow = new ObjectMapper().writer();
         HashMap<String, int[]> map = new HashMap<>();
         map.put(String.valueOf(index), terrain[index]);
@@ -165,10 +160,5 @@ public final class BitmapConverter {
             e.printStackTrace();
         }
         return json;
-    }
-
-    public static Terrain[][] JSONToIntArray() {
-        // TODO
-        return null;
     }
 }
