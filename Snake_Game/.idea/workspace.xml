@@ -37,9 +37,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
-      <change afterPath="$PROJECT_DIR$/tests/server/Snake/Utility/AdapterTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/client/Snake/Renderer/Command/NetworkCommandTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/client/Snake/Renderer/Command/PlayerMoveCommandTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/server/Snake/GameLogicTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Adapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Adapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/MatchInstanceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/MatchInstanceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/NetworkCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/NetworkCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/server/Snake/MatchInstanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/MatchInstanceTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +53,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="125" />
+    <option name="myElementSize" value="95" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -91,8 +96,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="server.Snake.Utility" />
+      <recent name="client.Snake.Renderer.Command" />
       <recent name="server.Snake" />
+      <recent name="server.Snake.Utility" />
       <recent name="server.Snake.Entity" />
       <recent name="server.Snake.Packet" />
     </key>
@@ -295,7 +301,7 @@
     <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1604612150742" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605188084242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605204324287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Snake_Game$HandlerTest_setServerSocket__1_.ic" NAME="HandlerTest.setServerSocket (1) Coverage Results" MODIFIED="1605093670756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.*</FILTER>
     </SUITE>
@@ -304,6 +310,9 @@
     </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$Server.ic" NAME="Server Coverage Results" MODIFIED="1601736902985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>client.Snake.Entities.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Snake_Game$PlayerMoveCommandTest_moveStop.ic" NAME="PlayerMoveCommandTest.moveStop Coverage Results" MODIFIED="1605203724346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>client.Snake.Renderer.Command.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$PacketTest_constructors.ic" NAME="PacketTest.constructors Coverage Results" MODIFIED="1605043155808" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Packet.*</FILTER>

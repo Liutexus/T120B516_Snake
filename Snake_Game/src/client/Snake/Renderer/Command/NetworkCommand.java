@@ -34,6 +34,10 @@ public class NetworkCommand {
         action.execute(id, out);
     }
 
+    public static void undo(String id, OutputStreamWriter out){
+        action.undo(id, out);
+    }
+
     private static class RequestLogin implements ICommand{
         @Override
         public void execute(String id, OutputStreamWriter out) {
@@ -99,7 +103,7 @@ public class NetworkCommand {
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new RequestLogout();
+            action = new RequestMatchLeave();
             action.execute(id, out);
         }
     }
@@ -123,7 +127,7 @@ public class NetworkCommand {
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new RequestLogout();
+            action = new RequestMatchJoin();
             action.execute(id, out);
         }
     }

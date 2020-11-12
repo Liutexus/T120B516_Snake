@@ -37,10 +37,6 @@ class MatchInstanceTest {
 
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void getCurrentPlayerCount() {
         assertEquals(1, this.testMatch.getCurrentPlayerCount());

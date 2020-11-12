@@ -39,6 +39,10 @@ public class PlayerMoveCommand {
         action.execute(id, out);
     }
 
+    public static void undo(String id, OutputStreamWriter out){
+        action.undo(id, out);
+    }
+
     private static class MoveUp implements ICommand{
         @Override
         public void execute(String id, OutputStreamWriter out) {
