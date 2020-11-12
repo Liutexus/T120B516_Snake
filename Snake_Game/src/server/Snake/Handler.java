@@ -75,6 +75,10 @@ public class Handler implements Runnable {
         clientSender = new Sender(new OutputStreamWriter(out, StandardCharsets.UTF_8));
     }
 
+    public Socket getServerSocket(){
+        return this.serverSocket;
+    }
+
     public void setMatchInstance(MatchInstance match) {
         this.match = match;
     }
@@ -101,6 +105,10 @@ public class Handler implements Runnable {
 
     public void setBuilder(HandlerBuilder builder){
         this.builder = builder;
+    }
+
+    public HandlerBuilder getBuilder(){
+        return this.builder;
     }
 
     public void setPlayers(Map players) {

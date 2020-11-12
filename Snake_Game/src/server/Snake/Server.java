@@ -17,6 +17,8 @@ public class Server {
     private static ExecutorService pool = Executors.newFixedThreadPool(concurrentMatches); // To take in x amount of clients at a time
     private static ExecutorService handlerPool = Executors.newFixedThreadPool(255);
 
+    private static boolean alive = true;
+
     public static void main(String[] args) {
         run();
     }
@@ -25,7 +27,7 @@ public class Server {
         try (var listener = new ServerSocket(Integer.parseInt(Utils.parseConfig("network", "port")))) {
             System.out.println("The server is running on port " + listener.getLocalPort());
 
-            while (true) {
+            while (alive) {
                 HandlerBuilder handlerBuilder = new HandlerBuilder();
                 handlerBuilder.setSocket(listener.accept());
                 handlerBuilder.setBuilder(handlerBuilder);
@@ -52,6 +54,10 @@ public class Server {
 
     public static void unlistMatch(MatchInstance match){
         matches.remove(match.getId());
+    }
+
+    public static void close(){
+        alive = false;
     }
 
 }
