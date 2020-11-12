@@ -13,14 +13,14 @@ public class SwingRender extends JFrame implements Runnable {
     private static Socket clientSocket;
     private static boolean serverConnected = false;
 
-    private static ViewStates currentState = ViewStates.MENU;
+    private static ERendererState currentState = ERendererState.MENU;
 
     private Dimension prefScreenSize = new Dimension(1000, 1000);
     private SnakePanel gamePanel;
     private MenuPanel menuPanel; // Placeholder
 
-    enum ViewStates {
-        MENU, SETTINGS, INGAME, POSTGAME
+    enum ERendererState {
+        UNDETERMINED, MENU, SETTINGS, INGAME, POSTGAME, CLOSED, TESTING
     }
 
     public SwingRender() {
@@ -37,34 +37,34 @@ public class SwingRender extends JFrame implements Runnable {
             System.out.println("No server to connect to.");
         }
 
-        // TODO: Join game view here
-        this.menuPanel = MenuPanel.getInstance();
-        this.menuPanel.setPreferredSize(prefScreenSize);
-        this.menuPanel.menuButtonMap.get("joinGame").addActionListener(actionEvent -> {
-            try {
-                NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.clientSocket.getOutputStream()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            this.currentState = ViewStates.INGAME;
-            this.remove(this.menuPanel);
-            this.invalidate();
-            this.validate();
-            synchronized (this){
-                this.notify();
-            }
-        });
-        this.menuPanel.add(menuPanel.menuButtonMap.get("joinGame"));
+        // 'Join game view button' here
+        initiateMenuButton();
 
         // TODO: Host game view here
 
     }
 
+    public void setCurrentState(ERendererState state){
+        this.currentState = state;
+    }
+
+    public ERendererState getCurrentState(){
+        return this.currentState;
+    }
+
+    public void close(){
+        this.setCurrentState(ERendererState.CLOSED);
+        synchronized (this){
+            this.notify();
+        }
+    }
+
     @Override
     public void run() {
-        while(true) {
+        while(this.currentState != ERendererState.CLOSED) {
             // Switch between views
             switch(currentState) {
+                case TESTING:
                 case MENU:
                     this.add(menuPanel);
                     this.pack();
@@ -91,5 +91,27 @@ public class SwingRender extends JFrame implements Runnable {
                 try { this.wait(); } catch (Exception e) { }
             }
         }
+    }
+
+    private void initiateMenuButton(){
+        this.menuPanel = MenuPanel.getInstance();
+        this.menuPanel.setPreferredSize(prefScreenSize);
+        this.menuPanel.menuButtonMap.get("joinGame").addActionListener(actionEvent -> {
+            try {
+                if(this.clientSocket != null){
+                    NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.clientSocket.getOutputStream()));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.setCurrentState(ERendererState.INGAME);
+            this.remove(this.menuPanel);
+            this.invalidate();
+            this.validate();
+            synchronized (this){
+                this.notify();
+            }
+        });
+        this.menuPanel.add(menuPanel.menuButtonMap.get("joinGame"));
     }
 }
