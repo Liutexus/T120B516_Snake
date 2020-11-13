@@ -44,7 +44,7 @@ class NeutralMovementTest {
         float initPosX = this.testEntity.getPositionX();
         float initPosY = this.testEntity.getPositionY();
 
-        while(initPosX == this.testEntity.getPositionX() && initPosY == this.testEntity.getPositionY())
+        while(initPosX == this.testEntity.getPositionX() || initPosY == this.testEntity.getPositionY())
             for(int i = 0; i < 10; i++)
                 this.testMovingStrategy.move(this.testEntity);
 
@@ -57,7 +57,7 @@ class NeutralMovementTest {
         float initPosX = this.testEntity.getPositionX();
         float initPosY = this.testEntity.getPositionY();
 
-        while(initPosX == this.testEntity.getPositionX() && initPosY == this.testEntity.getPositionY())
+        while(initPosX == this.testEntity.getPositionX() || initPosY == this.testEntity.getPositionY())
             for(int i = 0; i < 10; i++)
                 this.testMovingStrategy.move(this.testEntity);
 

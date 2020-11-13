@@ -38,8 +38,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/HostileMovementTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/HostileMovementTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/NeutralMovementTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/NeutralMovementTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/ScaredMovementTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/ScaredMovementTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/HostileMovementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/HostileMovementTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/NeutralMovementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/NeutralMovementTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/ScaredMovementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/ScaredMovementTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -296,7 +300,7 @@
     <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1604612150742" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605260163967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605273173028" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Snake_Game$HandlerTest_setServerSocket__1_.ic" NAME="HandlerTest.setServerSocket (1) Coverage Results" MODIFIED="1605093670756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.*</FILTER>
     </SUITE>
@@ -327,7 +331,7 @@
     <SUITE FILE_PATH="coverage/Snake_Game$ScaredMovementTest_move.ic" NAME="ScaredMovementTest.move Coverage Results" MODIFIED="1605255591150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Entity.Strategy.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Snake_Game$NeutralMovementTest_testMove.ic" NAME="NeutralMovementTest.testMove Coverage Results" MODIFIED="1605260158639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Snake_Game$NeutralMovementTest_testMove.ic" NAME="NeutralMovementTest.testMove Coverage Results" MODIFIED="1605272733833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Entity.Strategy.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$PacketTest_constructors.ic" NAME="PacketTest.constructors Coverage Results" MODIFIED="1605043155808" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
