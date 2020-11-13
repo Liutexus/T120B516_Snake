@@ -296,15 +296,27 @@
     <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1604612150742" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605260163967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Snake_Game$HandlerTest_setServerSocket__1_.ic" NAME="HandlerTest.setServerSocket (1) Coverage Results" MODIFIED="1605093670756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>server.Snake.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Snake_Game$Server.ic" NAME="Server Coverage Results" MODIFIED="1601736902985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>client.Snake.Entities.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Snake_Game$PlayerMoveCommandTest_moveStop.ic" NAME="PlayerMoveCommandTest.moveStop Coverage Results" MODIFIED="1605203724346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>client.Snake.Renderer.Command.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Snake_Game$NeutralMovementTest_move.ic" NAME="NeutralMovementTest.move Coverage Results" MODIFIED="1605260130682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>server.Snake.Entity.Strategy.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Snake_Game$PacketTest_jsonConstructor.ic" NAME="PacketTest.jsonConstructor Coverage Results" MODIFIED="1605040053292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>server.Snake.Packet.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$HandlerBuilderTest_setSocket.ic" NAME="HandlerBuilderTest.setSocket Coverage Results" MODIFIED="1605211380984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Builder.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605255989312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Snake_Game$SnakePanelTest_getInstance.ic" NAME="SnakePanelTest.getInstance Coverage Results" MODIFIED="1605218280031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>client.Snake.Renderer.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/Snake_Game$HandlerTest_setServerSocket__1_.ic" NAME="HandlerTest.setServerSocket (1) Coverage Results" MODIFIED="1605093670756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>server.Snake.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$SwingRenderTest_run.ic" NAME="SwingRenderTest.run Coverage Results" MODIFIED="1605210709509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>client.Snake.Renderer.*</FILTER>
@@ -315,16 +327,10 @@
     <SUITE FILE_PATH="coverage/Snake_Game$ScaredMovementTest_move.ic" NAME="ScaredMovementTest.move Coverage Results" MODIFIED="1605255591150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Entity.Strategy.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Snake_Game$Server.ic" NAME="Server Coverage Results" MODIFIED="1601736902985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>client.Snake.Entities.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/Snake_Game$PlayerMoveCommandTest_moveStop.ic" NAME="PlayerMoveCommandTest.moveStop Coverage Results" MODIFIED="1605203724346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>client.Snake.Renderer.Command.*</FILTER>
+    <SUITE FILE_PATH="coverage/Snake_Game$NeutralMovementTest_testMove.ic" NAME="NeutralMovementTest.testMove Coverage Results" MODIFIED="1605260158639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>server.Snake.Entity.Strategy.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$PacketTest_constructors.ic" NAME="PacketTest.constructors Coverage Results" MODIFIED="1605043155808" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>server.Snake.Packet.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/Snake_Game$PacketTest_jsonConstructor.ic" NAME="PacketTest.jsonConstructor Coverage Results" MODIFIED="1605040053292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Packet.*</FILTER>
     </SUITE>
   </component>

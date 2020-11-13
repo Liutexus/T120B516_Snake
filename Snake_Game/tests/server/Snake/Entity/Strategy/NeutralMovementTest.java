@@ -57,17 +57,9 @@ class NeutralMovementTest {
         float initPosX = this.testEntity.getPositionX();
         float initPosY = this.testEntity.getPositionY();
 
-        boolean loop = true;
-        while(loop){
-            for (Player player : this.testPlayers.values()) {
-
-                if(this.testEntity.getPositionX() != player.getSnake().getPositionX() &&
-                        this.testEntity.getVelocityX() != player.getSnake().getPositionY())
-                    this.testMovingStrategy.move(this.testEntity, this.testPlayers);
-                else
-                    loop = false;
-            }
-        }
+        while(initPosX == this.testEntity.getPositionX() && initPosY == this.testEntity.getPositionY())
+            for(int i = 0; i < 10; i++)
+                this.testMovingStrategy.move(this.testEntity);
 
         assertNotEquals(initPosX, this.testEntity.getPositionX());
         assertNotEquals(initPosY, this.testEntity.getPositionY());
