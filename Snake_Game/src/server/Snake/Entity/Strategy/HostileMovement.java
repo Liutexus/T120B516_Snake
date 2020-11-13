@@ -20,9 +20,9 @@ public class HostileMovement implements IMovingEntityBehaviour {
         if(randx == directs[0]*-1) randx = (int)directs[0];
 
         int randy = 0;
-        if(randx == 0){ // If x = 0, determine a random y velocity
-            randy = ThreadLocalRandom.current().nextInt(-1, 2);
-        }
+        if(randx == 0) // If x = 0, determine a random y velocity
+            while(randy == 0)
+                randy = ThreadLocalRandom.current().nextInt(-1, 2);
         entity.setVelocity(randx, randy);
 
         // Move the entity
@@ -50,7 +50,7 @@ public class HostileMovement implements IMovingEntityBehaviour {
         }
         // Get velocity which brings the entity closer to a player
         float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
-        entity.setVelocity(predictVelocity[0], predictVelocity[1]);
+        entity.setVelocity(-predictVelocity[0], -predictVelocity[1]);
 
         // Move the entity
         entity.setPositionX(posX + entity.getVelocityX());
