@@ -22,7 +22,7 @@ class NeutralMovementTest {
 
     @BeforeEach
     void setUp() {
-        this.testMovingStrategy = new HostileMovement();
+        this.testMovingStrategy = new NeutralMovement();
         testEntity = new Hawk(new Entity(15, 15));
         testPlayers = new HashMap<String, Player>(){
             {
