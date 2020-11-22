@@ -2,6 +2,7 @@
 package server.Snake;
 
 import server.Snake.Entity.AbstractMovingEntity;
+import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Collectible.CollectibleEntityFactory;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EEffect;
@@ -66,11 +67,12 @@ public class GameLogic implements Runnable {
                 // Checking player collision with entities (collectibles, traps, etc)
                 terrainEntities.forEach((name, entity) -> { // Going through all entities
                     if(entity.getPositionX() == tPosX && entity.getPositionY() == tPosY){
-                        entity.getEffects().forEach((effect, duration) -> { // Transferring all terrain entities effects to player
-                            player1.getSnake().setEffect(effect, duration);
-                        });
+                        if(entity instanceof AbstractMovingEntity){
+                            ((AbstractMovingEntity)entity).onCollide(player1);
+                        } else if(entity instanceof AbstractStaticEntity){
+                            ((AbstractStaticEntity)entity).onCollide(player1);
+                        }
                         terrainEntities.remove(name);
-                        player1.getSnake().deltaTailLength(1); // increase snake tail +1
                     }
                 });
             } catch (Exception e){
@@ -87,6 +89,10 @@ public class GameLogic implements Runnable {
 
         if(!terrainEntities.containsKey("Hawk")) {
             terrainEntities.put("Hawk", addMovingObstacle());
+        }
+
+        if(!terrainEntities.containsKey("Mouse")) {
+            terrainEntities.put("Mouse", addMovingCollectible());
         }
     }
 
@@ -123,6 +129,12 @@ public class GameLogic implements Runnable {
     private Entity addMovingObstacle(){
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
         Entity entity = this.ObstacleFactory.createMoving(randPos[0], randPos[1], this.players);
+        return entity;
+    }
+
+    private Entity addMovingCollectible() {
+        int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
+        Entity entity = this.CollectibleFactory.createMoving(randPos[0], randPos[1], this.players);
         return entity;
     }
 

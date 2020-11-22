@@ -17,4 +17,11 @@ public abstract class StaticEntityDecorator extends AbstractStaticEntity impleme
     public Map<EEffect, Integer> getEffects(){
         return decoratedEntity.getEffects();
     }
+
+    @Override
+    public void onCollide(Object collider){
+        this.getEffects().forEach((k, v) -> {
+            ((Player)collider).getSnake().setEffect(k, v);
+        });
+    }
 }
