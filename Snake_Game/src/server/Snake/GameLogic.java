@@ -1,6 +1,7 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
 package server.Snake;
 
+import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.Collectible.CollectibleEntityFactory;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EEffect;
@@ -31,10 +32,16 @@ public class GameLogic implements Runnable {
         this.terrain = terrain;
     }
 
-    private void movePlayers() {
+    private void move() {
         for (Player player : players.values()) {
             player.getSnake().move();
         }
+
+        terrainEntities.forEach((key, entity) -> {
+            if(entity instanceof AbstractMovingEntity){
+                ((AbstractMovingEntity) entity).move();
+            }
+        });
     }
 
     private void checkCollisions() {
@@ -77,7 +84,10 @@ public class GameLogic implements Runnable {
         if(!terrainEntities.containsKey("Food")){
             terrainEntities.put("Food", addStaticCollectible());
         }
-        //if(!terrainEntities.containsKey("Hawk")) terrainEntities.put("Hawk", addMovingObstacle());
+
+        if(!terrainEntities.containsKey("Hawk")) {
+            terrainEntities.put("Hawk", addMovingObstacle());
+        }
     }
 
     public void addPlayer(Player player) {
@@ -104,21 +114,21 @@ public class GameLogic implements Runnable {
             checkCollisions();
             checkTerrainEntities();
 
-            movePlayers();
+            move();
+
             try {Thread.sleep(100);} catch (Exception e) { };
         }
     }
 
     private Entity addMovingObstacle(){
-        return this.ObstacleFactory.createMoving((int) ((Math.random() * (49 - 1)) + 1), (int) ((Math.random() * (49 - 1)) + 1), players);
+        int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
+        Entity entity = this.ObstacleFactory.createMoving(randPos[0], randPos[1], this.players);
+        return entity;
     }
 
     private Entity addStaticCollectible() {
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = CollectibleFactory.createStatic(randPos[0], randPos[1]);
-//        Random rand = new Random();
-//        int random = rand.nextInt(4)+1;
-//        ee.setShapetype(random);
+        Entity entity = this.CollectibleFactory.createStatic(randPos[0], randPos[1]);
         return entity;
     }
 }

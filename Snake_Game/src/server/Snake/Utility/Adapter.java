@@ -1,6 +1,8 @@
 package server.Snake.Utility;
 
 import server.Snake.Entity.Entity;
+import server.Snake.Entity.Generic.GenericMovingEntity;
+import server.Snake.Entity.Generic.GenericStaticEntity;
 import server.Snake.Entity.Snake;
 import server.Snake.Entity.Player;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -133,6 +135,72 @@ public final class Adapter {
 //                            ent.setShape(new Triangle(new BlueColor()));
                             break;
                     }
+                    break;
+                case "velocity":
+                case "previousPositionsX":
+                case "previousPositionsY":
+                    break;
+                default:
+                    System.out.println("Attribute: '" + field + "' is not recognised in " + Entity.class);
+                    break;
+            }
+        });
+        return tempEntity;
+    }
+
+    public static GenericStaticEntity mapToStaticEntity(Map<String, Object> map){
+        GenericStaticEntity tempEntity = new GenericStaticEntity(0,0);
+        map.forEach((field, obj) -> {
+            switch (field){
+                case "position":
+                    tempEntity.setPosition(
+                            (parseToFloat(((ArrayList) obj).get(0))),
+                            (parseToFloat(((ArrayList) obj).get(1)))
+                    );
+                    break;
+                case "size":
+                    tempEntity.setSizeX(parseToFloat(((ArrayList) obj).get(0)));
+                    tempEntity.setSizeY(parseToFloat(((ArrayList) obj).get(1)));
+                    break;
+                case "colorRGB":
+                    tempEntity.setColor(new Color((int)obj));
+                    break;
+                default:
+                    System.out.println("Attribute: '" + field + "' is not recognised in " + Entity.class);
+                    break;
+            }
+        });
+        return tempEntity;
+    }
+
+    public static GenericMovingEntity mapToMovingEntity(Map<String, Object> map){
+        GenericMovingEntity tempEntity = new GenericMovingEntity(0,0);
+        map.forEach((field, value) -> {
+            ArrayList<Object> temp;
+            switch (field){
+                case "position":
+                    tempEntity.setPosition(
+                            (parseToFloat(((ArrayList) value).get(0))),
+                            (parseToFloat(((ArrayList) value).get(1)))
+                    );
+                    break;
+                case "size":
+                    tempEntity.setSizeX(parseToFloat(((ArrayList) value).get(0)));
+                    tempEntity.setSizeY(parseToFloat(((ArrayList) value).get(1)));
+                    break;
+                case "colorRGB":
+                    tempEntity.setColor(new Color((int)value));
+                    break;
+                case "velocity":
+                    temp = (ArrayList<Object>) value;
+                    tempEntity.setVelocityX(parseToFloat(temp.get(0)));
+                    tempEntity.setVelocityY(parseToFloat(temp.get(1)));
+                    break;
+                case "previousPositionsX":
+                    tempEntity.setPreviousPositionsX((ArrayList<Float>)value);
+                    break;
+                case "previousPositionsY":
+                    tempEntity.setPreviousPositionsY((ArrayList<Float>)value);
                     break;
                 default:
                     System.out.println("Attribute: '" + field + "' is not recognised in " + Entity.class);
