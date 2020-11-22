@@ -1,10 +1,8 @@
 package server.Snake;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.Snake.Builder.HandlerBuilder;
-import server.Snake.Entity.Player;
+import server.Snake.Entity.Builder.HandlerBuilder;
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EMatchStatus;
 import server.Snake.Utility.Utils;

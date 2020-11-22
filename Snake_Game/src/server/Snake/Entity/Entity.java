@@ -1,6 +1,8 @@
 package server.Snake.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import server.Snake.Entity.Memento.Caretaker;
+import server.Snake.Entity.Memento.Memento;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 import server.Snake.Utility.Adapter;
@@ -16,9 +18,11 @@ public class Entity implements IEntity {
     protected float sizeX; // How big is the player by X axis
     protected float sizeY; // How big is the player by Y axis
 
-    private Color color = Color.BLACK; // What color is the entity?
+    protected Color color = Color.BLACK; // What color is the entity?
 
     protected Map<EEffect, Integer> effects = new ConcurrentHashMap<>();
+
+    protected Caretaker caretaker;
 
     public Entity(float positionX, float positionY) {
         this.positionX = positionX;
@@ -110,6 +114,21 @@ public class Entity implements IEntity {
     @JsonIgnore
     public Map<EEffect, Integer> getEffects(){
         return this.effects;
+    }
+
+    @Override
+    public Memento createMemento() {
+        return new Memento(this);
+    }
+
+    @Override
+    public void setMemento(Memento memento) {
+        this.positionX = (((Entity) memento.getState()).getPositionX());
+        this.positionY = (((Entity) memento.getState()).getPositionY());
+        this.sizeX = (((Entity) memento.getState()).getSizeX());
+        this.sizeY = (((Entity) memento.getState()).getSizeY());
+        this.color = (((Entity) memento.getState()).getColor());
+        this.effects = (((Entity) memento.getState()).getEffects());
     }
 
     @Override

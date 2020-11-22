@@ -1,10 +1,9 @@
-package server.Snake.Builder;
+package server.Snake.Entity.Builder;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Player;
 import server.Snake.Enumerator.EClientStatus;

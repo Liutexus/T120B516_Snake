@@ -1,7 +1,7 @@
 package server.Snake;
 
 import server.Snake.Entity.Player;
-import server.Snake.Builder.HandlerBuilder;
+import server.Snake.Entity.Builder.HandlerBuilder;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EMatchStatus;

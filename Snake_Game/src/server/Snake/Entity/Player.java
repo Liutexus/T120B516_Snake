@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Utility.Adapter;
 
 public class Player implements Cloneable {
