@@ -38,10 +38,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractMovingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractMovingEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Moving/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Moving/Mouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Moving/Hawk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/Moving/Hawk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/StaticEntityDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/StaticEntityDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -297,17 +300,6 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1604612150742" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/server/Snake/Entity/StaticEntityDecorator.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605273173028" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

@@ -67,7 +67,7 @@ public class GameLogic implements Runnable {
                 // Checking player collision with entities (collectibles, traps, etc)
                 terrainEntities.forEach((name, entity) -> { // Going through all entities
                     if(entity.getPositionX() == tPosX && entity.getPositionY() == tPosY){
-                        if(entity instanceof AbstractMovingEntity){
+                        if(entity instanceof AbstractMovingEntity){ // To distinguish the type of entity
                             ((AbstractMovingEntity)entity).onCollide(player1);
                         } else if(entity instanceof AbstractStaticEntity){
                             ((AbstractStaticEntity)entity).onCollide(player1);

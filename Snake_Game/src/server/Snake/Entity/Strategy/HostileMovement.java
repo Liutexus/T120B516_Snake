@@ -49,7 +49,7 @@ public class HostileMovement implements IMovingEntityBehaviour {
             }
         }
 
-        if(closestDistance > 15){
+        if(closestDistance > 15){ // If player is not close
             this.move(entity);
             return;
         }

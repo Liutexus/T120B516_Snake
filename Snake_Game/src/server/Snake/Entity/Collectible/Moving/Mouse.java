@@ -13,6 +13,8 @@ import java.util.Map;
 public class Mouse extends AbstractMovingEntity implements IEntity {
     private IMovingEntityBehaviour movingStrategy;
     private Map<String, Player> players;
+    private int stepCooldown = 2;
+    private int currentStep = 0;
 
     public Mouse(Entity entity) {
         super(entity);
@@ -29,7 +31,11 @@ public class Mouse extends AbstractMovingEntity implements IEntity {
 
     @Override
     public boolean move() {
-        this.movingStrategy.move(this, players);
+        this.currentStep++;
+        if(this.currentStep >= stepCooldown){
+            this.movingStrategy.move(this, players);
+            this.currentStep = 0;
+        }
         return true;
     }
 

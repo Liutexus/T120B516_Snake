@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Utility.Adapter;
 
 public class Player implements Cloneable {
-
     private String id;
     private Snake snake;
     private int score;
