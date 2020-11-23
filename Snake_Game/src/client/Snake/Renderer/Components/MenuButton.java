@@ -1,9 +1,12 @@
 package client.Snake.Renderer.Components;
 
+import client.Snake.Renderer.Interface.IMediator;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MenuButton extends JButton {
+    IMediator mediator;
     private Shape buttonShape = createShape();
 
     public MenuButton() {
@@ -13,6 +16,15 @@ public class MenuButton extends JButton {
     public MenuButton(String text) {
         super(text);
         super.setContentAreaFilled(false);
+
+        addActionListener(actionEvent -> {
+            mediator.notify(this);
+        });
+    }
+
+    public MenuButton(String text, IMediator mediator) {
+        this(text);
+        this.mediator = mediator;
     }
 
     public void paintBorder( Graphics g ) {

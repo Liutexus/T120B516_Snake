@@ -1,15 +1,14 @@
 package client.Snake.Renderer;
 
-import client.Snake.Renderer.Command.NetworkCommand;
+import client.Snake.Renderer.Enumerator.ERendererState;
+import client.Snake.Renderer.Interface.IMediator;
 import server.Snake.Utility.Utils;
 
 import javax.swing.JFrame;
 import java.awt.*;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class SwingRender extends JFrame implements Runnable {
+public class SwingRender extends JFrame implements Runnable, IMediator {
     private static Socket clientSocket;
     private static boolean serverConnected = false;
 
@@ -17,11 +16,7 @@ public class SwingRender extends JFrame implements Runnable {
 
     private Dimension prefScreenSize = new Dimension(1000, 1000);
     private SnakePanel gamePanel;
-    private MenuPanel menuPanel; // Placeholder
-
-    enum ERendererState {
-        UNDETERMINED, MENU, SETTINGS, INGAME, POSTGAME, CLOSED, TESTING
-    }
+    private MenuPanel menuPanel;
 
     public SwingRender() {
         // Creating this client's window
@@ -38,7 +33,7 @@ public class SwingRender extends JFrame implements Runnable {
         }
 
         // 'Join game view button' here
-        initiateMenuButton();
+        initiateMenuView();
 
         // TODO: Host game view here
 
@@ -46,6 +41,10 @@ public class SwingRender extends JFrame implements Runnable {
 
     public void setCurrentState(ERendererState state){
         this.currentState = state;
+    }
+
+    public Socket getClientSocket(){
+        return this.clientSocket;
     }
 
     public ERendererState getCurrentState(){
@@ -93,25 +92,14 @@ public class SwingRender extends JFrame implements Runnable {
         }
     }
 
-    private void initiateMenuButton(){
+    private void initiateMenuView(){
         this.menuPanel = MenuPanel.getInstance();
+        this.menuPanel.setFrame(this);
         this.menuPanel.setPreferredSize(prefScreenSize);
-        this.menuPanel.menuButtonMap.get("joinGame").addActionListener(actionEvent -> {
-            try {
-                if(this.clientSocket != null){
-                    NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.clientSocket.getOutputStream()));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            this.setCurrentState(ERendererState.INGAME);
-            this.remove(this.menuPanel);
-            this.invalidate();
-            this.validate();
-            synchronized (this){
-                this.notify();
-            }
-        });
-        this.menuPanel.add(menuPanel.menuButtonMap.get("joinGame"));
+    }
+
+    @Override
+    public void notify(Object sender) {
+
     }
 }
