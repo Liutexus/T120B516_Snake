@@ -29,17 +29,15 @@ public class CollectibleEntityFactory implements IEntityFactory {
 
     @Override
     public AbstractStaticEntity createStatic(float positionX, float positionY) {
-        int randomCase = ThreadLocalRandom.current().nextInt(0, 5);
+        int randomCase = ThreadLocalRandom.current().nextInt(0, 4);
         switch (randomCase) {
             case 0:
                 return new Leaf(new Entity(positionX, positionY));
             case 1:
-                return new SizeUp(new Entity(positionX, positionY));
-            case 2:
                 return new SpeedUp(new Entity(positionX, positionY));
-            case 3:
+            case 2:
                 return new Leaf(new SpeedUp(new Entity(positionX, positionY)));
-            case 4:
+            case 3:
                 return new Reverse(new Leaf(new Entity(positionX, positionY)));
             default:
                 return null;

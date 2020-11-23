@@ -8,11 +8,13 @@ public enum EEffect {
     REGENERATION,
     INVISIBILITY,
     POINT_INCREASE,
+    TAIL_INCREASE,
 
     // Negative effects,
     SLOW,
     STUN,
     POINT_DECREASE,
+    TAIL_DECREASE,
 
     // Neutral
     ROLLBACK,

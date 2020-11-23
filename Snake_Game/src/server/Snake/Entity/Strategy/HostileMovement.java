@@ -49,7 +49,7 @@ public class HostileMovement implements IMovingEntityBehaviour {
             }
         }
 
-        if(closestDistance > 15){ // If player is not close
+        if(closestDistance > 15 || chased == null){ // If player is not close
             this.move(entity);
             return;
         }
@@ -57,6 +57,7 @@ public class HostileMovement implements IMovingEntityBehaviour {
         // Get velocity which brings the entity closer to a player
         float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
         entity.setVelocity(-predictVelocity[0], -predictVelocity[1]);
+
 
         // Move the entity
         entity.setPositionX(posX + entity.getVelocityX());

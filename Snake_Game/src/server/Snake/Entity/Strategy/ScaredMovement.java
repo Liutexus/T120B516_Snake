@@ -55,8 +55,12 @@ public class ScaredMovement implements IMovingEntityBehaviour {
         }
 
         // Get velocity which brings the entity closer to a player
-        float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
-        entity.setVelocity(predictVelocity[0], predictVelocity[1]); // Invert the velocity to go away from the player
+        try{
+            float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
+            entity.setVelocity(predictVelocity[0], predictVelocity[1]); // Invert the velocity to go away from the player
+        } catch (Exception e){
+
+        }
 
         // Move the entity
         entity.setPositionX(posX + entity.getVelocityX());

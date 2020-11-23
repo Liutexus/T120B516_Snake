@@ -10,13 +10,18 @@ public class Caretaker {
     }
 
     public void addSnapshot(Memento memento){
-        if(states.size() > 50)
+        if(states.size() > 100)
             states.removeLast();
         states.addFirst(memento);
     }
 
     public Memento get(){
-        return states.pop();
+        try{
+            return states.pop();
+        } catch (Exception e){
+
+        }
+        return null;
     }
 
 }

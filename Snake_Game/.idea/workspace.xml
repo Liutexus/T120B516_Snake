@@ -38,9 +38,16 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/CollectibleEntityFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/CollectibleEntityFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/Leaf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/Leaf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SizeUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SizeUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SpeedUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/Static/SpeedUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Memento/Caretaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Memento/Caretaker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/HostileMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Strategy/ScaredMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Enumerator/EEffect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Enumerator/EEffect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -123,7 +130,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.Client">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.Snake.Client" />
       <module name="Snake_Game" />

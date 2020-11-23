@@ -18,6 +18,7 @@ public class SizeUp extends StaticEntityDecorator implements IEntity {
     @Override
     public Map<EEffect, Integer> getEffects(){
         super.getEffects().put(EEffect.SIZE_UP, 1);
+        super.getEffects().put(EEffect.TAIL_INCREASE, 1);
         return super.getEffects();
     }
 

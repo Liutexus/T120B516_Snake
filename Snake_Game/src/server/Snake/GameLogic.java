@@ -60,7 +60,7 @@ public class GameLogic implements Runnable {
                 int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
                 int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
                 if(terrain[tPosY][tPosX] == 6 && !player1.getSnake().getEffects().containsKey(EEffect.STUN)) { // '6' is an index for "Wall"
-                    player1.getSnake().setEffect(EEffect.STUN, 10); // Apply a 'Stun' effect to the player for 10 moves
+                    player1.getSnake().setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 10 moves
                     player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
                 }
 

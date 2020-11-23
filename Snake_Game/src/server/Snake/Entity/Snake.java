@@ -28,6 +28,8 @@ public class Snake extends AbstractMovingEntity implements Cloneable {
     public void deltaTailLength(int delta){
         if(this.tailLength + delta >= 0){
             this.tailLength += delta;
+        } else {
+            this.tailLength = 0;
         }
     }
 
@@ -68,17 +70,16 @@ public class Snake extends AbstractMovingEntity implements Cloneable {
 
     private void reactToEffect() {
         // TODO: Add checks for every effect and respond accordingly
-        if(this.effects.containsKey(EEffect.STUN)){
-//            this.effects.replace(EEffect.STUN, this.effects.get(EEffect.STUN) - 1);
-        }
-
-        if(this.effects.containsKey(EEffect.ROLLBACK)){
-            // TODO: Try to implement Memento pattern here
-        }
 
         if(this.effects.containsKey(EEffect.POINT_INCREASE)){
             // TODO: Add points to player
         }
+
+        if(this.effects.containsKey(EEffect.TAIL_INCREASE))
+            this.deltaTailLength(1);
+
+        if(this.effects.containsKey(EEffect.TAIL_DECREASE))
+            this.deltaTailLength(-1);
 
         if(this.effects.containsKey(EEffect.SIZE_UP)){
             this.setSizeX(this.getSizeX() + this.effects.get(EEffect.SIZE_UP));
@@ -87,6 +88,16 @@ public class Snake extends AbstractMovingEntity implements Cloneable {
 
         if(this.effects.containsKey(EEffect.ROLLBACK)){
             this.setMemento(this.caretaker.get());
+        } else {
+            caretaker.addSnapshot(this.clone().createMemento()); // Add a state of current snake
+        }
+
+        if(this.effects.containsKey(EEffect.HASTE)){
+            this.AddPreviousPositionX(positionX);
+            this.AddPreviousPositionY(positionY);
+
+            positionX += velocityX;
+            positionY += velocityY;
         }
 
         this.effects.forEach((effect, duration) -> {
@@ -115,16 +126,12 @@ public class Snake extends AbstractMovingEntity implements Cloneable {
 
             positionX += velocityX;
             positionY += velocityY;
-
         }
 
         reactToEffect();
 
         checkCollisionWithTail();
 
-        if(!this.effects.containsKey(EEffect.ROLLBACK))
-            caretaker.addSnapshot(this.clone().createMemento()); // Add a state of current snake
-        System.out.println(this.effects);
         return true;
     }
 
@@ -132,7 +139,27 @@ public class Snake extends AbstractMovingEntity implements Cloneable {
     public void onCollide(Object collider) {
         try {
             if(collider.getClass() == Snake.class){
-                // TODO: If both snakes are going one at another, stop/stun/etc. them
+                // If both snakes are going one at another, stop/stun/etc. them
+                System.out.println(this.positionX + " : " + this.positionY);
+                if(
+                    (this.positionX + this.velocityX == ((Snake)collider).getPositionX() &&
+                    this.positionY + this.velocityY == ((Snake)collider).getPositionY()) ||
+                    (this.positionX == ((Snake)collider).getPositionX() + ((Snake)collider).getVelocityX() &&
+                    this.positionY == ((Snake)collider).getPositionY() + ((Snake)collider).getVelocityY()))
+                {
+                    if(
+                        ((this.velocityX == -((Snake)collider).getVelocityX()) || // Are players going one to another
+                        (this.velocityY == -((Snake)collider).getVelocityY())) &&
+                        (!this.effects.containsKey(EEffect.STUN) && !((Snake)collider).getEffects().containsKey(EEffect.STUN)) // Don't apply debuffs if they are already debuffed
+                    )
+                    {
+                        this.setEffect(EEffect.STUN, 10);
+                        this.deltaTailLength(-1);
+                        ((Snake) collider).setEffect(EEffect.STUN, 10);
+                    }
+                }
+
+                // Checking collisions with the tail
                 for (int i = 0; i < ((Snake)collider).tailLength; i++){
                     if(((Snake)collider).previousPositionsX.get(i) == this.positionX &&
                             ((Snake)collider).previousPositionsY.get(i) == this.positionY) {
