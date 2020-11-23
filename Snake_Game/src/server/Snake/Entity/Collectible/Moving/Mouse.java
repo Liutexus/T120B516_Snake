@@ -7,26 +7,35 @@ import server.Snake.Entity.Strategy.ScaredMovement;
 import server.Snake.Interface.IEntity;
 import server.Snake.Interface.IMovingEntityBehaviour;
 
+import java.awt.*;
 import java.util.Map;
 
 public class Mouse extends AbstractMovingEntity implements IEntity {
     private IMovingEntityBehaviour movingStrategy;
     private Map<String, Player> players;
+    private int stepCooldown = 2;
+    private int currentStep = 0;
 
     public Mouse(Entity entity) {
         super(entity);
+        this.setColor(new Color(173, 90, 0));
+        this.movingStrategy = new ScaredMovement();
     }
 
     public Mouse(Entity entity, Map players){
         super(entity);
+        this.setColor(new Color(173, 90, 0));
         this.movingStrategy = new ScaredMovement();
         this.players = players;
     }
 
     @Override
-    // TODO: Possibly modify movement behaviour to avoid snakes.
     public boolean move() {
-        this.movingStrategy.move(this, players);
+        this.currentStep++;
+        if(this.currentStep >= stepCooldown){
+            this.movingStrategy.move(this, players);
+            this.currentStep = 0;
+        }
         return true;
     }
 

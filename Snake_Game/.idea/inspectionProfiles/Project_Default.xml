@@ -6,12 +6,17 @@
     <inspection_tool class="InconsistentLineSeparators" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ProblematicWhitespace" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SSBasedInspection" enabled="true" level="WARNING" enabled_by_default="true">
-      <searchConfiguration name="Enforce var names start in lowercase." text="$type$ $var$;" recursive="true" caseInsensitive="true" type="JAVA" pattern_context="default">
+      <searchConfiguration name="Enforce var names start in lowercase." uuid="c81fdafd-6a0c-3cbc-b35e-08a346bcc51d" description="Suggests the user starts variables with lowercase." suppressId="EnforceVariableLowerCase" problemDescriptor="Variable names should start with lowercase characters." text="$type$ $var$;" recursive="true" caseInsensitive="true" type="JAVA" pattern_context="default">
         <constraint name="__context__" within="" contains="" />
         <constraint name="var" regexp="[A-Z][a-zA-Z0-9]*" target="true" within="" contains="" />
         <constraint name="type" within="" contains="" />
       </searchConfiguration>
-      <searchConfiguration name="Enforce underscored space uppercase in enumerator fields." text="enum $Enum$ {&#10;    $EnumField$ ,&#10;    &#10;}" recursive="false" caseInsensitive="true" type="JAVA" pattern_context="default">
+      <searchConfiguration name="Enforce var names start in lowercase." uuid="c81fdafd-6a0c-3cbc-b35e-08a346bcc51d" description="Suggests the user starts variables with lowercase." suppressId="EnforceVariableLowerCase" problemDescriptor="Variable names should start with lowercase characters." text="$type$ $var$;" recursive="true" caseInsensitive="true" type="JAVA" pattern_context="default">
+        <constraint name="__context__" within="" contains="" />
+        <constraint name="var" regexp="[A-Z][a-zA-Z0-9]*" target="true" within="" contains="" />
+        <constraint name="type" within="" contains="" />
+      </searchConfiguration>
+      <searchConfiguration name="Enforce underscored space uppercase in enumerator fields." uuid="db4b32bb-b2a1-36a8-a896-0d91c20dad28" description="Suggests the user uses all capital letters with underscore spacing in enumerator fields." suppressId="EnumeratorFieldAllSpacesUnderscores" problemDescriptor="Enumerator fields should be in all capital letters, with optional underscores." text="enum $Enum$ {&#10;    $EnumField$ ,&#10;    &#10;}" recursive="false" caseInsensitive="true" type="JAVA" pattern_context="default">
         <constraint name="__context__" within="" contains="" />
         <constraint name="Enum" within="" contains="" />
         <constraint name="EnumField" regexp="[A-Z]+(_[A-Z]+)*" maxCount="2147483647" target="true" negateName="true" wholeWordsOnly="true" within="" contains="" />

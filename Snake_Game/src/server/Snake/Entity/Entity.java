@@ -13,8 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Entity implements IEntity {
-    protected float positionX;   // Current player horizontal position
-    protected float positionY;   // Current player vertical position
+    protected float positionX; // Current player horizontal position
+    protected float positionY; // Current player vertical position
     protected float sizeX; // How big is the player by X axis
     protected float sizeY; // How big is the player by Y axis
 

@@ -1,27 +1,22 @@
 package client.Snake.Renderer;
 
-import client.Snake.Renderer.Command.NetworkCommand;
+import client.Snake.Renderer.Enumerator.ERendererState;
 import server.Snake.Utility.Utils;
 
 import javax.swing.JFrame;
 import java.awt.*;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class SwingRender extends JFrame implements Runnable {
     private static Socket clientSocket;
-    private static boolean serverConnected = false;
-
-    private static ERendererState currentState = ERendererState.MENU;
 
     private Dimension prefScreenSize = new Dimension(1000, 1000);
-    private SnakePanel gamePanel;
-    private MenuPanel menuPanel; // Placeholder
 
-    enum ERendererState {
-        UNDETERMINED, MENU, SETTINGS, INGAME, POSTGAME, CLOSED, TESTING
-    }
+    private static ERendererState currentState = ERendererState.MENU;
+    private SnakePanel gamePanel;
+    private MenuPanel menuPanel;
+    private SettingsPanel settingsPanel;
+    private HostGamePanel hostGamePanel;
 
     public SwingRender() {
         // Creating this client's window
@@ -29,27 +24,28 @@ public class SwingRender extends JFrame implements Runnable {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try { // Connecting to the server
-            this.clientSocket = new Socket(
+            clientSocket = new Socket(
                     Utils.parseConfig("network", "address"),
                     Integer.parseInt(Utils.parseConfig("network", "port")));
-            this.serverConnected = true;
         } catch (Exception e) {
             System.out.println("No server to connect to.");
         }
 
         // 'Join game view button' here
-        initiateMenuButton();
-
-        // TODO: Host game view here
+        initiateViews();
 
     }
 
     public void setCurrentState(ERendererState state){
-        this.currentState = state;
+        currentState = state;
+    }
+
+    public Socket getClientSocket(){
+        return clientSocket;
     }
 
     public ERendererState getCurrentState(){
-        return this.currentState;
+        return currentState;
     }
 
     public void close(){
@@ -63,14 +59,16 @@ public class SwingRender extends JFrame implements Runnable {
     public void run() {
         while(this.currentState != ERendererState.CLOSED) {
             // Switch between views
+
             switch(currentState) {
                 case TESTING:
                 case MENU:
-                    this.add(menuPanel);
+                    this.add(menuPanel.getInstance());
                     this.pack();
                     this.setVisible(true);
+                    menuPanel.repaint();
                     break;
-                case INGAME:
+                case IN_GAME:
                     gamePanel = SnakePanel.getInstance(clientSocket);
                     gamePanel.setPreferredSize(prefScreenSize);
                     this.add(gamePanel);
@@ -81,8 +79,19 @@ public class SwingRender extends JFrame implements Runnable {
                     }
                     break;
                 case SETTINGS:
+                    this.add(settingsPanel.getInstance());
+                    this.pack();
+                    this.setVisible(true);
+                    settingsPanel.repaint();
                     break;
-                case POSTGAME:
+                case HOST_GAME:
+                    this.add(hostGamePanel.getInstance());
+                    this.pack();
+                    this.setVisible(true);
+                    hostGamePanel.repaint();
+                    break;
+                case POST_GAME:
+                    System.out.println("PostGame View Opened");
                     break;
                 default:
                     break;
@@ -93,25 +102,19 @@ public class SwingRender extends JFrame implements Runnable {
         }
     }
 
-    private void initiateMenuButton(){
+    private void initiateViews(){
         this.menuPanel = MenuPanel.getInstance();
+        this.menuPanel.setFrame(this);
         this.menuPanel.setPreferredSize(prefScreenSize);
-        this.menuPanel.menuButtonMap.get("joinGame").addActionListener(actionEvent -> {
-            try {
-                if(this.clientSocket != null){
-                    NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.clientSocket.getOutputStream()));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            this.setCurrentState(ERendererState.INGAME);
-            this.remove(this.menuPanel);
-            this.invalidate();
-            this.validate();
-            synchronized (this){
-                this.notify();
-            }
-        });
-        this.menuPanel.add(menuPanel.menuButtonMap.get("joinGame"));
+
+        this.settingsPanel = SettingsPanel.getInstance();
+        this.settingsPanel.setFrame(this);
+        this.settingsPanel.setPreferredSize(prefScreenSize);
+
+        this.hostGamePanel = HostGamePanel.getInstance();
+        this.hostGamePanel.setFrame(this);
+        this.hostGamePanel.setPreferredSize(prefScreenSize);
+
     }
+
 }
