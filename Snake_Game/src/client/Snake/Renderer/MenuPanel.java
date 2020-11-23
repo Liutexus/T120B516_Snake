@@ -49,40 +49,31 @@ public class MenuPanel extends JPanel implements Runnable, IMediator {
     public void notify(Object sender) {
         // TODO: Add handling of more buttons
 
-
-        if (this.joinGameButton.equals(sender)) {
+        if (joinGameButton.equals(sender)) {
             try {
-                if (this.render.getClientSocket() != null) {
-                    NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.render.getClientSocket().getOutputStream()));
+                if (render.getClientSocket() != null) { // Is the client connected to the server
+                    // Ask the server for login info if the connection has been established
+                    NetworkCommand.requestMatchJoin("", new OutputStreamWriter(render.getClientSocket().getOutputStream()));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            this.render.setCurrentState(ERendererState.IN_GAME);
-            this.render.remove(this);
-            this.invalidate();
-            this.validate();
-            synchronized (this.render) {
-                this.render.notify();
-            }
-        } else if (this.settingsButton.equals(sender)) {
-            this.render.setCurrentState(ERendererState.SETTINGS);
-            this.render.remove(this);
-            this.invalidate();
-            this.validate();
-            synchronized (this.render) {
-                this.render.notify();
-            }
-        } else if (this.hostGameButton.equals(sender)) {
-            this.render.setCurrentState(ERendererState.HOST_GAME);
-            this.render.remove(this);
-            this.invalidate();
-            this.validate();
-            synchronized (this.render) {
-                this.render.notify();
-            }
+            changeRenderState(ERendererState.IN_GAME);
+        } else if (settingsButton.equals(sender)) {
+            changeRenderState(ERendererState.SETTINGS);
+        } else if (hostGameButton.equals(sender)) {
+            changeRenderState(ERendererState.HOST_GAME);
         }
+    }
 
-
+    private void changeRenderState(ERendererState state){
+        render.remove(this);
+        this.invalidate();
+        this.validate();
+        synchronized (render) {
+            render.setCurrentState(state);
+            render.repaint();
+            render.notify();
+        }
     }
 }

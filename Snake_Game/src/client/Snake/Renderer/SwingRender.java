@@ -9,11 +9,10 @@ import java.net.Socket;
 
 public class SwingRender extends JFrame implements Runnable {
     private static Socket clientSocket;
-    private static boolean serverConnected = false;
-
-    private static ERendererState currentState = ERendererState.MENU;
 
     private Dimension prefScreenSize = new Dimension(1000, 1000);
+
+    private static ERendererState currentState = ERendererState.MENU;
     private SnakePanel gamePanel;
     private MenuPanel menuPanel;
     private SettingsPanel settingsPanel;
@@ -28,7 +27,6 @@ public class SwingRender extends JFrame implements Runnable {
             clientSocket = new Socket(
                     Utils.parseConfig("network", "address"),
                     Integer.parseInt(Utils.parseConfig("network", "port")));
-            serverConnected = true;
         } catch (Exception e) {
             System.out.println("No server to connect to.");
         }
@@ -61,12 +59,14 @@ public class SwingRender extends JFrame implements Runnable {
     public void run() {
         while(this.currentState != ERendererState.CLOSED) {
             // Switch between views
+
             switch(currentState) {
                 case TESTING:
                 case MENU:
                     this.add(menuPanel.getInstance());
                     this.pack();
                     this.setVisible(true);
+                    menuPanel.repaint();
                     break;
                 case IN_GAME:
                     gamePanel = SnakePanel.getInstance(clientSocket);
@@ -82,11 +82,13 @@ public class SwingRender extends JFrame implements Runnable {
                     this.add(settingsPanel.getInstance());
                     this.pack();
                     this.setVisible(true);
+                    settingsPanel.repaint();
                     break;
                 case HOST_GAME:
                     this.add(hostGamePanel.getInstance());
                     this.pack();
                     this.setVisible(true);
+                    hostGamePanel.repaint();
                     break;
                 case POST_GAME:
                     System.out.println("PostGame View Opened");

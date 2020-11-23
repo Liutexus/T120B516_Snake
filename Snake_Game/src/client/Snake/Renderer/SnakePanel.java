@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import client.Snake.Renderer.Command.NetworkCommand;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Player;
 import client.Snake.Renderer.Command.PlayerMoveCommand;
@@ -32,7 +33,6 @@ class SnakePanel extends JPanel implements Runnable {
     private int cellWidth;
     private int cellHeight;
 
-    private Player currentPlayer;
     private String id;
     private Socket clientSocket;
 
@@ -192,6 +192,8 @@ class SnakePanel extends JPanel implements Runnable {
                 out = new OutputStreamWriter(this.clientSocket.getOutputStream());
                 in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
                 System.out.println("Connection established with the server.");
+
+                NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.clientSocket.getOutputStream()));
             } catch (Exception e) {
                 System.out.println("Cannot establish connection to server.");
                 synchronized (this){
@@ -262,7 +264,6 @@ class SnakePanel extends JPanel implements Runnable {
                 case CLIENT_PLAYER:
                     packetMap = packet.parseBody();
                     Adapter.mapToPlayer(packetPlayer, packetMap); // Parsing the received player packet
-                    currentPlayer = packetPlayer;
                     break;
                 case PLAYER:
                     packetMap = packet.parseBody();
