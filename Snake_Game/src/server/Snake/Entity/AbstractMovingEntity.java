@@ -1,6 +1,7 @@
 package server.Snake.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import server.Snake.Entity.Memento.Memento;
 
 import java.util.ArrayList;
 
@@ -71,6 +72,26 @@ public abstract class AbstractMovingEntity extends Entity {
     public void setVelocity(float velocityX, float velocityY){
         this.velocityX = velocityX;
         this.velocityY = velocityY;
+    }
+
+    @Override
+    public Memento createMemento() {
+        return new Memento(this);
+    }
+
+    @Override
+    public void setMemento(Memento memento) {
+        this.positionX = (((AbstractMovingEntity) memento.getState()).getPositionX());
+        this.positionY = (((AbstractMovingEntity) memento.getState()).getPositionY());
+        this.sizeX = (((AbstractMovingEntity) memento.getState()).getSizeX());
+        this.sizeY = (((AbstractMovingEntity) memento.getState()).getSizeY());
+        this.color = (((AbstractMovingEntity) memento.getState()).getColor());
+        this.effects = (((AbstractMovingEntity) memento.getState()).getEffects());
+
+        this.previousPositionsX = (((AbstractMovingEntity) memento.getState()).getPreviousPositionsX());
+        this.previousPositionsY = (((AbstractMovingEntity) memento.getState()).getPreviousPositionsY());
+        this.velocityX = (((AbstractMovingEntity) memento.getState()).getVelocityX());
+        this.velocityY = (((AbstractMovingEntity) memento.getState()).getVelocityY());
     }
 
     public abstract boolean move();

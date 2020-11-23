@@ -1,5 +1,6 @@
 package server.Snake.Interface;
 
+import server.Snake.Entity.Memento.Memento;
 import server.Snake.Enumerator.EEffect;
 
 import java.util.Map;
@@ -21,4 +22,6 @@ public interface IEntity {
     void deltaSize(float sizeX, float sizeY);
     void setEffect(EEffect effect, int duration);
     Map getEffects();
+    Memento createMemento();
+    void setMemento(Memento memento);
 }

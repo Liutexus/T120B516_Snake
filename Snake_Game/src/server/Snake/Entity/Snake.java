@@ -1,16 +1,20 @@
 package server.Snake.Entity;
 
+import server.Snake.Entity.Memento.Caretaker;
+import server.Snake.Entity.Memento.Memento;
 import server.Snake.Enumerator.EEffect;
 
 import java.util.ArrayList;
 
-public class Snake extends AbstractMovingEntity {
+public class Snake extends AbstractMovingEntity implements Cloneable {
     private int tailLength;
     private String terrain; // What terrain is the player standing on?
 
     public Snake(float positionX, float positionY) {
         super(positionX, positionY);
         this.tailLength = 10;
+
+        this.caretaker = new Caretaker();
     }
 
     public int getTailLength () {
@@ -63,6 +67,7 @@ public class Snake extends AbstractMovingEntity {
     }
 
     private void reactToEffect() {
+        // TODO: Add checks for every effect and respond accordingly
         if(this.effects.containsKey(EEffect.STUN)){
 //            this.effects.replace(EEffect.STUN, this.effects.get(EEffect.STUN) - 1);
         }
@@ -71,15 +76,18 @@ public class Snake extends AbstractMovingEntity {
             // TODO: Try to implement Memento pattern here
         }
 
+        if(this.effects.containsKey(EEffect.POINT_INCREASE)){
+            // TODO: Add points to player
+        }
+
         if(this.effects.containsKey(EEffect.SIZE_UP)){
             this.setSizeX(this.getSizeX() + this.effects.get(EEffect.SIZE_UP));
             this.setSizeY(this.getSizeY() + this.effects.get(EEffect.SIZE_UP));
         }
 
-        if(this.effects.containsKey(EEffect.POINT_INCREASE)){
-            // TODO: Add points to player
+        if(this.effects.containsKey(EEffect.ROLLBACK)){
+            this.setMemento(this.caretaker.get());
         }
-        // TODO: Add checks for every effect and respond accordingly
 
         this.effects.forEach((effect, duration) -> {
             this.effects.replace(effect, this.effects.get(effect) - 1);
@@ -88,8 +96,20 @@ public class Snake extends AbstractMovingEntity {
     }
 
     @Override
+    public Memento createMemento(){
+        return new Memento(this);
+    }
+
+    @Override
+    public void setMemento(Memento memento){
+        super.setMemento(memento);
+        this.tailLength = (((Snake) memento.getState()).getTailLength());
+        this.terrain = (((Snake) memento.getState()).terrain);
+    }
+
+    @Override
     public boolean move() {
-        if(!this.effects.containsKey(EEffect.STUN)){
+        if(!this.effects.containsKey(EEffect.STUN) && !this.effects.containsKey(EEffect.ROLLBACK)){
             this.AddPreviousPositionX(positionX);
             this.AddPreviousPositionY(positionY);
 
@@ -102,6 +122,9 @@ public class Snake extends AbstractMovingEntity {
 
         checkCollisionWithTail();
 
+        if(!this.effects.containsKey(EEffect.ROLLBACK))
+            caretaker.addSnapshot(this.clone().createMemento()); // Add a state of current snake
+        System.out.println(this.effects);
         return true;
     }
 
@@ -126,5 +149,15 @@ public class Snake extends AbstractMovingEntity {
 //            System.out.println("Error at checking collisons for snake at (x: " + this.positionX + ", y: " + this.positionY + ").");
 //            e.printStackTrace();
         }
+    }
+
+    public Snake clone(){
+        try{
+            return (Snake) super.clone();
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Couldn't clone '" + this.getClass() + "' class.");
+        }
+        return null;
     }
 }

@@ -72,6 +72,7 @@ class PlayerTest {
 
     @Test
     void setColor() {
+        Map myMap = new HashMap();
         Player testPlayer = new Player("");
         assertEquals(Color.BLACK, testPlayer.getSnake().getColor());
         testPlayer.getSnake().setColor(Color.GREEN);

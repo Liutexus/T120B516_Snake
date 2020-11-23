@@ -17,7 +17,7 @@ public class Reverse extends StaticEntityDecorator implements IEntity {
 
     @Override
     public Map<EEffect, Integer> getEffects(){
-        super.getEffects().put(EEffect.ROLLBACK, 10);
+        super.getEffects().put(EEffect.ROLLBACK, 30);
         return super.getEffects();
     }
 
