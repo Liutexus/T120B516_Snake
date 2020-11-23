@@ -38,12 +38,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/HostileMovementTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/HostileMovementTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/NeutralMovementTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/NeutralMovementTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/ScaredMovementTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Strategy/ScaredMovementTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/HostileMovementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/HostileMovementTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/NeutralMovementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/NeutralMovementTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/ScaredMovementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Entity/Strategy/ScaredMovementTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,10 +55,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Interface" />
-        <option value="Class" />
-        <option value="Enum" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -102,6 +99,7 @@
       <recent name="server.Snake" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="client.Snake.Renderer" />
       <recent name="server.Snake.Entity" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
@@ -125,7 +123,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All Tests">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.Snake.Client" />
       <module name="Snake_Game" />
