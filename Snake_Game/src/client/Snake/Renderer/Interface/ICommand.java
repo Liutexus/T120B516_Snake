@@ -1,4 +1,4 @@
-package client.Snake.Renderer.Command;
+package client.Snake.Renderer.Interface;
 
 import java.io.OutputStreamWriter;
 

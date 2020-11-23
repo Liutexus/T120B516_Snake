@@ -14,12 +14,14 @@ import java.util.concurrent.Executors;
 
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
+import client.Snake.Renderer.Command.NetworkCommand;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Player;
 import client.Snake.Renderer.Command.PlayerMoveCommand;
 import server.Snake.Packet.Packet;
 import server.Snake.Utility.Adapter;
 import server.Snake.Utility.BitmapConverter;
+import server.Snake.Utility.Utils;
 
 class SnakePanel extends JPanel implements Runnable {
     private static SnakePanel panelInstance = null;
@@ -33,7 +35,6 @@ class SnakePanel extends JPanel implements Runnable {
     private int cellWidth;
     private int cellHeight;
 
-    private Player currentPlayer;
     private String id;
     private Socket clientSocket;
 
@@ -192,10 +193,14 @@ class SnakePanel extends JPanel implements Runnable {
     public void run() {
         while(this.clientSocket == null){ // Just in case it somehow lost connection
             try {
-                this.clientSocket = new Socket("localhost", 80);
+                this.clientSocket = new Socket(
+                        Utils.parseConfig("network", "address"),
+                        Integer.parseInt(Utils.parseConfig("network", "port")));
                 out = new OutputStreamWriter(this.clientSocket.getOutputStream());
                 in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
                 System.out.println("Connection established with the server.");
+
+                NetworkCommand.requestMatchJoin("", new OutputStreamWriter(this.clientSocket.getOutputStream()));
             } catch (Exception e) {
                 System.out.println("Cannot establish connection to server.");
                 synchronized (this){
@@ -266,7 +271,6 @@ class SnakePanel extends JPanel implements Runnable {
                 case CLIENT_PLAYER:
                     packetMap = packet.parseBody();
                     Adapter.mapToPlayer(packetPlayer, packetMap); // Parsing the received player packet
-                    currentPlayer = packetPlayer;
                     break;
                 case PLAYER:
                     packetMap = packet.parseBody();

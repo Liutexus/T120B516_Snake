@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import client.Snake.Renderer.Enumerator.ERendererState;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,6 +46,6 @@ class SwingRenderTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(SwingRender.ERendererState.CLOSED, testRender.getCurrentState());
+        assertEquals(ERendererState.CLOSED, testRender.getCurrentState());
     }
 }
