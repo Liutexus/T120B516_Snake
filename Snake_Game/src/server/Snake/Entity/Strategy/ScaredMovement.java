@@ -48,6 +48,12 @@ public class ScaredMovement implements IMovingEntityBehaviour {
                 chased = player;
             }
         }
+
+        if(closestDistance > 15){ // If player is not close
+            this.move(entity);
+            return;
+        }
+
         // Get velocity which brings the entity closer to a player
         float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
         entity.setVelocity(predictVelocity[0], predictVelocity[1]); // Invert the velocity to go away from the player

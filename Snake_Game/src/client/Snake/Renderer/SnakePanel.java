@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import server.Snake.Entity.AbstractMovingEntity;
+import server.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Renderer.Command.NetworkCommand;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Player;
@@ -37,7 +39,8 @@ class SnakePanel extends JPanel implements Runnable {
     private Socket clientSocket;
 
     private Map<String, Player> snakes = new ConcurrentHashMap<>();
-    private Map<String, Entity> mapObjects;
+    private Map<String, AbstractStaticEntity> staticTerrainEntities;
+    private Map<String, AbstractMovingEntity> movingTerrainEntities;
     private Map<Integer, ArrayList> terrain;
 
     private SnakePanel(Socket clientSocket) {
@@ -45,7 +48,8 @@ class SnakePanel extends JPanel implements Runnable {
         setDoubleBuffered(true);
         requestFocusInWindow();
 
-        this.mapObjects = new ConcurrentHashMap<>();
+        this.staticTerrainEntities = new ConcurrentHashMap<>();
+        this.movingTerrainEntities = new ConcurrentHashMap<>();
         this.terrain = new ConcurrentHashMap<>();
 
         this.clientSocket = clientSocket;
@@ -166,7 +170,10 @@ class SnakePanel extends JPanel implements Runnable {
         }
 
         // Draw all objects placed on the map
-        mapObjects.forEach((type, entity) -> {
+        staticTerrainEntities.forEach((type, entity) -> {
+            drawRect(g, entity.getPosition(), entity.getSize(), entity.getColor() );
+        });
+        movingTerrainEntities.forEach((type, entity) -> {
             drawRect(g, entity.getPosition(), entity.getSize(), entity.getColor() );
         });
     }
@@ -256,9 +263,9 @@ class SnakePanel extends JPanel implements Runnable {
             Packet packet = new Packet(packetJson);
             Map packetMap; // To store parsed packet map
             Player packetPlayer = new Player(null);
-            switch (packet.header){
+            switch (packet.header) {
                 case ID:
-                    id = (String)packet.parseBody().get(packet.header.toString());
+                    id = (String) packet.parseBody().get(packet.header.toString());
                     System.out.println("Client ID: " + id);
                     break;
                 case CLIENT_PLAYER:
@@ -268,20 +275,25 @@ class SnakePanel extends JPanel implements Runnable {
                 case PLAYER:
                     packetMap = packet.parseBody();
                     Adapter.mapToPlayer(packetPlayer, packetMap); // Parsing the received player packet
-                    if(packetPlayer.getId() != null)
-                        if(!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);
+                    if (packetPlayer.getId() != null)
+                        if (!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);
                         else snakes.replace(packetPlayer.getId(), packetPlayer);
                     break;
                 case TERRAIN:
                     packetMap = packet.parseBody();
                     packetMap.forEach((key, array) -> { // Because of laziness
-                        if(!terrain.containsKey(key)) // Do we already have this line of terrain?
-                            terrain.put(Integer.parseInt((String)key), (ArrayList) array); // Putting a new line of terrain
+                        if (!terrain.containsKey(key)) // Do we already have this line of terrain?
+                            terrain.put(Integer.parseInt((String) key), (ArrayList) array); // Putting a new line of terrain
                     });
                     break;
                 case ENTITY:
                     packetMap = packet.parseBody();
-                    mapObjects.put("Food", Adapter.mapToEntity(packetMap));
+                    if (packetMap.containsKey("velocity")) {
+                        movingTerrainEntities.put(String.valueOf((int)packetMap.get("colorRGB")), Adapter.mapToMovingEntity(packetMap));
+                    }
+                    else {
+                        staticTerrainEntities.put("Entity", Adapter.mapToStaticEntity(packetMap));
+                    }
                     break;
                 default:
                     System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
