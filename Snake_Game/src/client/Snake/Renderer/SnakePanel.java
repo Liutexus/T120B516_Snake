@@ -18,6 +18,7 @@ import client.Snake.Renderer.Command.PlayerMoveCommand;
 import server.Snake.Packet.Packet;
 import server.Snake.Utility.Adapter;
 import server.Snake.Utility.BitmapConverter;
+import server.Snake.Utility.Utils;
 
 class SnakePanel extends JPanel implements Runnable {
     private static SnakePanel panelInstance = null;
@@ -185,7 +186,9 @@ class SnakePanel extends JPanel implements Runnable {
     public void run() {
         while(this.clientSocket == null){ // Just in case it somehow lost connection
             try {
-                this.clientSocket = new Socket("localhost", 80);
+                this.clientSocket = new Socket(
+                        Utils.parseConfig("network", "address"),
+                        Integer.parseInt(Utils.parseConfig("network", "port")));
                 out = new OutputStreamWriter(this.clientSocket.getOutputStream());
                 in = new InputStreamReader(this.clientSocket.getInputStream(), StandardCharsets.UTF_8);
                 System.out.println("Connection established with the server.");

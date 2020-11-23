@@ -37,17 +37,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Enumerator/ERendererState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Interface/IMediator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/HostGamePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SettingsPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/client/Snake/Renderer/SwingRenderTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/client/Snake/Renderer/SwingRenderTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/ICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Interface/ICommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/NetworkCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/NetworkCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Components/MenuButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Components/MenuButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Enumerator/ERendererState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Enumerator/ERendererState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/client/Snake/Renderer/SwingRenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/client/Snake/Renderer/SwingRenderTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,10 +58,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>

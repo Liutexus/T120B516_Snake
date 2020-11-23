@@ -1,14 +1,13 @@
 package client.Snake.Renderer;
 
 import client.Snake.Renderer.Enumerator.ERendererState;
-import client.Snake.Renderer.Interface.IMediator;
 import server.Snake.Utility.Utils;
 
 import javax.swing.JFrame;
 import java.awt.*;
 import java.net.Socket;
 
-public class SwingRender extends JFrame implements Runnable, IMediator {
+public class SwingRender extends JFrame implements Runnable {
     private static Socket clientSocket;
     private static boolean serverConnected = false;
 
@@ -17,6 +16,8 @@ public class SwingRender extends JFrame implements Runnable, IMediator {
     private Dimension prefScreenSize = new Dimension(1000, 1000);
     private SnakePanel gamePanel;
     private MenuPanel menuPanel;
+    private SettingsPanel settingsPanel;
+    private HostGamePanel hostGamePanel;
 
     public SwingRender() {
         // Creating this client's window
@@ -24,31 +25,29 @@ public class SwingRender extends JFrame implements Runnable, IMediator {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try { // Connecting to the server
-            this.clientSocket = new Socket(
+            clientSocket = new Socket(
                     Utils.parseConfig("network", "address"),
                     Integer.parseInt(Utils.parseConfig("network", "port")));
-            this.serverConnected = true;
+            serverConnected = true;
         } catch (Exception e) {
             System.out.println("No server to connect to.");
         }
 
         // 'Join game view button' here
-        initiateMenuView();
-
-        // TODO: Host game view here
+        initiateViews();
 
     }
 
     public void setCurrentState(ERendererState state){
-        this.currentState = state;
+        currentState = state;
     }
 
     public Socket getClientSocket(){
-        return this.clientSocket;
+        return clientSocket;
     }
 
     public ERendererState getCurrentState(){
-        return this.currentState;
+        return currentState;
     }
 
     public void close(){
@@ -65,11 +64,11 @@ public class SwingRender extends JFrame implements Runnable, IMediator {
             switch(currentState) {
                 case TESTING:
                 case MENU:
-                    this.add(menuPanel);
+                    this.add(menuPanel.getInstance());
                     this.pack();
                     this.setVisible(true);
                     break;
-                case INGAME:
+                case IN_GAME:
                     gamePanel = SnakePanel.getInstance(clientSocket);
                     gamePanel.setPreferredSize(prefScreenSize);
                     this.add(gamePanel);
@@ -80,8 +79,17 @@ public class SwingRender extends JFrame implements Runnable, IMediator {
                     }
                     break;
                 case SETTINGS:
+                    this.add(settingsPanel.getInstance());
+                    this.pack();
+                    this.setVisible(true);
                     break;
-                case POSTGAME:
+                case HOST_GAME:
+                    this.add(hostGamePanel.getInstance());
+                    this.pack();
+                    this.setVisible(true);
+                    break;
+                case POST_GAME:
+                    System.out.println("PostGame View Opened");
                     break;
                 default:
                     break;
@@ -92,14 +100,19 @@ public class SwingRender extends JFrame implements Runnable, IMediator {
         }
     }
 
-    private void initiateMenuView(){
+    private void initiateViews(){
         this.menuPanel = MenuPanel.getInstance();
         this.menuPanel.setFrame(this);
         this.menuPanel.setPreferredSize(prefScreenSize);
+
+        this.settingsPanel = SettingsPanel.getInstance();
+        this.settingsPanel.setFrame(this);
+        this.settingsPanel.setPreferredSize(prefScreenSize);
+
+        this.hostGamePanel = HostGamePanel.getInstance();
+        this.hostGamePanel.setFrame(this);
+        this.hostGamePanel.setPreferredSize(prefScreenSize);
+
     }
 
-    @Override
-    public void notify(Object sender) {
-
-    }
 }

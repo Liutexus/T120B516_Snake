@@ -4,8 +4,9 @@ public enum ERendererState {
     UNDETERMINED,
     MENU,
     SETTINGS,
-    INGAME,
-    POSTGAME,
+    HOST_GAME,
+    IN_GAME,
+    POST_GAME,
     CLOSED,
     TESTING,
 }
