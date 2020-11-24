@@ -1,5 +1,6 @@
 package server.Snake.Entity;
 
+import client.Snake.Renderer.Interface.IDrawable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Entity.Memento.Memento;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Entity implements IEntity {
+public class Entity implements IEntity, IDrawable {
     protected float positionX; // Current player horizontal position
     protected float positionY; // Current player vertical position
     protected float sizeX; // How big is the player by X axis
@@ -136,4 +137,11 @@ public class Entity implements IEntity {
         return Adapter.entityToString(this);
     }
 
+    @Override
+    public void drawRect(Graphics g, int windowWidth, int windowHeight, int cellWidth, int cellHeight) {
+        int cellPositionX = ((int)(getPositionX()) * windowWidth)/50;
+        int cellPositionY = ((int)(getPositionY()) * windowHeight)/50;
+        g.setColor(getColor());
+        g.fillRect(cellPositionX, cellPositionY, cellWidth*(int)(getSizeX()), cellHeight*(int)(getSizeY()));
+    }
 }

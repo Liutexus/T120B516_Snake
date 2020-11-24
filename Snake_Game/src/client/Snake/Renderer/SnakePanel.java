@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import client.Snake.Renderer.Drawables.AllDrawables;
+import client.Snake.Renderer.Drawables.Terrain;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Renderer.Command.NetworkCommand;
@@ -35,9 +37,11 @@ class SnakePanel extends JPanel implements Runnable {
     private int cellWidth;
     private int cellHeight;
 
+    private int windowWidth;
+    private int windowHeight;
     private String id;
     private Socket clientSocket;
-
+    private AllDrawables allDrawables = new AllDrawables();
     private Map<String, Player> snakes = new ConcurrentHashMap<>();
     private Map<String, AbstractStaticEntity> staticTerrainEntities;
     private Map<String, AbstractMovingEntity> movingTerrainEntities;
@@ -124,69 +128,36 @@ class SnakePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         // To create a nice grid
         windowSize = getSize();
+        windowWidth = windowSize.width;
+        windowHeight = windowSize.height;
+
         cellWidth = (windowSize.width/horizontalCellCount);
         cellHeight = (windowSize.height/verticalCellCount);
 
         // Drawing the terrain
         terrain.forEach((y, arrayX) -> {
             for(int i = 0; i < arrayX.size(); i++){
-                drawRect(g, new float[]{i, y}, new float[]{1, 1}, BitmapConverter.getColorByIndex((int)arrayX.get(i)));
+                Terrain terain = new Terrain(i ,y, BitmapConverter.getColorByIndex((int)arrayX.get(i)));
+                allDrawables.addDrawable(terain);
             }
         });
 
         // Draw all players
         for (Player player : snakes.values()) {
-            drawRect(g, player.getSnake().getPosition(), player.getSnake().getSize(), player.getSnake().getColor()); // Drawing the snake's head
-
-            // Drawing the tail
-            ArrayList prevPosX = player.getSnake().getPreviousPositionsX();
-            ArrayList prevPosY = player.getSnake().getPreviousPositionsY();
-
-            int tailLength = player.getSnake().getTailLength();
-            for(int i = 0; i < tailLength; i++){
-                try {
-                    int colorStepR = player.getSnake().getColor().getRed() / (tailLength + 1);
-                    int colorStepG = player.getSnake().getColor().getGreen() / (tailLength + 1);
-                    int colorStepB = player.getSnake().getColor().getBlue() / (tailLength + 1);
-                    Color tailColor = new Color(
-                            colorStepR * (tailLength - i),
-                            colorStepG * (tailLength - i),
-                            colorStepB * (tailLength - i)
-                    );
-                    drawRect(
-                            g,
-                            new float[]{(Float.parseFloat(prevPosX.get(i).toString())),
-                            Float.parseFloat(prevPosY.get(i).toString())},
-                            player.getSnake().getSize(),
-                            tailColor
-                            );
-                } catch (Exception e) {
-//                    e.printStackTrace();
-                    // Just to reduce headache from exceptions at the start of the game
-                    // when there's not enough previous positions to draw tail from.
-                    break;
-                }
-            }
+            allDrawables.addDrawable(player.getSnake());
         }
 
         // Draw all objects placed on the map
         staticTerrainEntities.forEach((type, entity) -> {
-            drawRect(g, entity.getPosition(), entity.getSize(), entity.getColor() );
+            allDrawables.addDrawable(entity);
         });
+
         movingTerrainEntities.forEach((type, entity) -> {
-            drawRect(g, entity.getPosition(), entity.getSize(), entity.getColor() );
+            allDrawables.addDrawable(entity);
         });
-    }
 
-    private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
-        int cellPositionX = ((int)(pos[0]) * windowSize.width)/horizontalCellCount;
-        int cellPositionY = ((int)(pos[1]) * windowSize.height)/verticalCellCount;
-
-        g.setColor(color);
-        g.fillRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
-
-//        g.setColor(Color.BLACK);
-//        g.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
+        allDrawables.drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
+        allDrawables.removeDrawables();
     }
 
     @Override
