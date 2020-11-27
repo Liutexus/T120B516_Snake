@@ -1,19 +1,24 @@
 package server.Snake.Entity;
 
-import client.Snake.Renderer.Interface.IDrawable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitable;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrapper;
 import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Entity.Memento.Memento;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 import server.Snake.Utility.Adapter;
+import server.Snake.Utility.Visitor.IVisitable;
+import server.Snake.Utility.Visitor.Visitor;
 
 import java.awt.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Entity implements IEntity, IDrawable {
+public class Entity implements IEntity, IVisitable {
     protected float positionX; // Current player horizontal position
     protected float positionY; // Current player vertical position
     protected float sizeX; // How big is the player by X axis
@@ -30,6 +35,11 @@ public class Entity implements IEntity, IDrawable {
         this.positionY = positionY;
         this.sizeX = 1;
         this.sizeY = 1;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        //visitor.mapToEntity();
     }
 
     @JsonIgnore
@@ -137,11 +147,4 @@ public class Entity implements IEntity, IDrawable {
         return Adapter.entityToString(this);
     }
 
-    @Override
-    public void drawRect(Graphics g, int windowWidth, int windowHeight, int cellWidth, int cellHeight) {
-        int cellPositionX = ((int)(getPositionX()) * windowWidth)/50;
-        int cellPositionY = ((int)(getPositionY()) * windowHeight)/50;
-        g.setColor(getColor());
-        g.fillRect(cellPositionX, cellPositionY, cellWidth*(int)(getSizeX()), cellHeight*(int)(getSizeY()));
-    }
 }
