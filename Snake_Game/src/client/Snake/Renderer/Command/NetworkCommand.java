@@ -9,7 +9,7 @@ import server.Snake.Packet.Packet;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
-public class NetworkCommand {
+public class NetworkCommand extends TemplateCommand{
     private static ObjectWriter objectMapper = new ObjectMapper().writer();
     private static HashMap<Object, Object> packetMap = new HashMap<>();
     private static Packet packet = new Packet(EPacketHeader.CLIENT_RESPONSE);
@@ -35,8 +35,13 @@ public class NetworkCommand {
         action.execute(id, out);
     }
 
-    public static void undo(String id, OutputStreamWriter out){
+    @Override
+    public void undo(String id, OutputStreamWriter out){
         action.undo(id, out);
+    }
+    @Override
+    public String getString(){
+        return "current command: " + action.toString();
     }
 
     private static class RequestLogin implements ICommand{

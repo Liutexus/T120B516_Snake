@@ -12,8 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.Snake.Renderer.Drawables.AllDrawables;
-import client.Snake.Renderer.Drawables.Terrain;
+import client.Snake.Renderer.Command.TemplateCommand;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Renderer.Command.NetworkCommand;
@@ -24,6 +23,7 @@ import server.Snake.Packet.Packet;
 import server.Snake.Utility.Adapter;
 import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.Utils;
+import server.Snake.Utility.Visitor.Visitor;
 
 class SnakePanel extends JPanel implements Runnable {
     private static SnakePanel panelInstance = null;
@@ -37,11 +37,9 @@ class SnakePanel extends JPanel implements Runnable {
     private int cellWidth;
     private int cellHeight;
 
-    private int windowWidth;
-    private int windowHeight;
     private String id;
     private Socket clientSocket;
-    private AllDrawables allDrawables = new AllDrawables();
+
     private Map<String, Player> snakes = new ConcurrentHashMap<>();
     private Map<String, AbstractStaticEntity> staticTerrainEntities;
     private Map<String, AbstractMovingEntity> movingTerrainEntities;
@@ -116,6 +114,9 @@ class SnakePanel extends JPanel implements Runnable {
             case KeyEvent.VK_SPACE:
                 PlayerMoveCommand.moveStop(this.id, out);
                 break;
+            case KeyEvent.VK_BACK_SPACE:
+                TemplateCommand u = new PlayerMoveCommand();
+                u.command(this.id, out);
             default:
 
                 System.out.println("Not defined key press '" + key.getKeyChar() + "'");
@@ -128,36 +129,69 @@ class SnakePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         // To create a nice grid
         windowSize = getSize();
-        windowWidth = windowSize.width;
-        windowHeight = windowSize.height;
-
         cellWidth = (windowSize.width/horizontalCellCount);
         cellHeight = (windowSize.height/verticalCellCount);
 
         // Drawing the terrain
         terrain.forEach((y, arrayX) -> {
             for(int i = 0; i < arrayX.size(); i++){
-                Terrain terain = new Terrain(i ,y, BitmapConverter.getColorByIndex((int)arrayX.get(i)));
-                allDrawables.addDrawable(terain);
+                drawRect(g, new float[]{i, y}, new float[]{1, 1}, BitmapConverter.getColorByIndex((int)arrayX.get(i)));
             }
         });
 
         // Draw all players
         for (Player player : snakes.values()) {
-            allDrawables.addDrawable(player.getSnake());
+            drawRect(g, player.getSnake().getPosition(), player.getSnake().getSize(), player.getSnake().getColor()); // Drawing the snake's head
+
+            // Drawing the tail
+            ArrayList prevPosX = player.getSnake().getPreviousPositionsX();
+            ArrayList prevPosY = player.getSnake().getPreviousPositionsY();
+
+            int tailLength = player.getSnake().getTailLength();
+            for(int i = 0; i < tailLength; i++){
+                try {
+                    int colorStepR = player.getSnake().getColor().getRed() / (tailLength + 1);
+                    int colorStepG = player.getSnake().getColor().getGreen() / (tailLength + 1);
+                    int colorStepB = player.getSnake().getColor().getBlue() / (tailLength + 1);
+                    Color tailColor = new Color(
+                            colorStepR * (tailLength - i),
+                            colorStepG * (tailLength - i),
+                            colorStepB * (tailLength - i)
+                    );
+                    drawRect(
+                            g,
+                            new float[]{(Float.parseFloat(prevPosX.get(i).toString())),
+                            Float.parseFloat(prevPosY.get(i).toString())},
+                            player.getSnake().getSize(),
+                            tailColor
+                            );
+                } catch (Exception e) {
+//                    e.printStackTrace();
+                    // Just to reduce headache from exceptions at the start of the game
+                    // when there's not enough previous positions to draw tail from.
+                    break;
+                }
+            }
         }
 
         // Draw all objects placed on the map
         staticTerrainEntities.forEach((type, entity) -> {
-            allDrawables.addDrawable(entity);
+            drawRect(g, entity.getPosition(), entity.getSize(), entity.getColor() );
         });
-
         movingTerrainEntities.forEach((type, entity) -> {
-            allDrawables.addDrawable(entity);
+            drawRect(g, entity.getPosition(), entity.getSize(), entity.getColor() );
         });
+    }
 
-        allDrawables.drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
-        allDrawables.removeDrawables();
+    private void drawRect(Graphics g, float[] pos, float[] size, Color color) {
+        int cellPositionX = ((int)(pos[0]) * windowSize.width)/horizontalCellCount;
+        int cellPositionY = ((int)(pos[1]) * windowSize.height)/verticalCellCount;
+
+        g.setColor(color);
+        g.fillRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
+
+//        g.setColor(Color.BLACK);
+//        g.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(size[0]), cellHeight*(int)(size[1]));
     }
 
     @Override
@@ -260,10 +294,10 @@ class SnakePanel extends JPanel implements Runnable {
                 case ENTITY:
                     packetMap = packet.parseBody();
                     if (packetMap.containsKey("velocity")) {
-                        movingTerrainEntities.put(String.valueOf((int)packetMap.get("colorRGB")), Adapter.mapToMovingEntity(packetMap));
+                        movingTerrainEntities.put(String.valueOf((int)packetMap.get("colorRGB")), Visitor.mapToMovingEntity(packetMap));
                     }
                     else {
-                        staticTerrainEntities.put("Entity", Adapter.mapToStaticEntity(packetMap));
+                        staticTerrainEntities.put("Entity", Visitor.mapToStaticEntity(packetMap));
                     }
                     break;
                 default:
