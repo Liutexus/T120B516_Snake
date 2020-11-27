@@ -74,7 +74,7 @@ public class PlayerMoveCommand extends TemplateCommand{
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveDown();
+            action = new MoveLeft();
             action.execute(id, out);
         }
     }
@@ -99,7 +99,7 @@ public class PlayerMoveCommand extends TemplateCommand{
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveUp();
+            action = new MoveRight();
             action.execute(id, out);
         }
 
@@ -124,7 +124,7 @@ public class PlayerMoveCommand extends TemplateCommand{
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveLeft();
+            action = new MoveUp();
             action.execute(id, out);
         }
 
@@ -149,7 +149,7 @@ public class PlayerMoveCommand extends TemplateCommand{
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveRight();
+            action = new MoveDown();
             action.execute(id, out);
         }
 
