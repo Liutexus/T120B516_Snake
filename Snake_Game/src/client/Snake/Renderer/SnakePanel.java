@@ -19,11 +19,14 @@ import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import client.Snake.Renderer.Command.NetworkCommand;
 import server.Snake.Entity.Entity;
+import server.Snake.Entity.Generic.GenericMovingEntity;
+import server.Snake.Entity.Generic.GenericStaticEntity;
 import server.Snake.Entity.Player;
 import client.Snake.Renderer.Command.PlayerMoveCommand;
 import server.Snake.Packet.Packet;
 import server.Snake.Utility.Adapter;
 import server.Snake.Utility.BitmapConverter;
+import server.Snake.Utility.MapToObjectVisitor;
 import server.Snake.Utility.Utils;
 
 class SnakePanel extends JPanel implements Runnable {
@@ -235,8 +238,10 @@ class SnakePanel extends JPanel implements Runnable {
         }
 
         private void parsePacket(String packetJson) {
+            MapToObjectVisitor visitor = new MapToObjectVisitor();
             Packet packet = new Packet(packetJson);
             Map packetMap; // To store parsed packet map
+
             Player packetPlayer = new Player(null);
             switch (packet.header) {
                 case ID:
@@ -245,11 +250,13 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case CLIENT_PLAYER:
                     packetMap = packet.parseBody();
-                    Adapter.mapToPlayer(packetPlayer, packetMap); // Parsing the received player packet
+                    visitor.setMap((HashMap) packetMap);
+                    packetPlayer.accept(visitor); // Parsing the received player packet
                     break;
                 case PLAYER:
                     packetMap = packet.parseBody();
-                    Adapter.mapToPlayer(packetPlayer, packetMap); // Parsing the received player packet
+                    visitor.setMap((HashMap) packetMap);
+                    packetPlayer.accept(visitor); // Parsing the received player packet
                     if (packetPlayer.getId() != null)
                         if (!snakes.containsKey(packetPlayer)) snakes.put(packetPlayer.getId(), packetPlayer);
                         else snakes.replace(packetPlayer.getId(), packetPlayer);
@@ -263,11 +270,18 @@ class SnakePanel extends JPanel implements Runnable {
                     break;
                 case ENTITY:
                     packetMap = packet.parseBody();
+                    visitor.setMap((HashMap) packetMap);
+                    Entity packetEntity;
+
                     if (packetMap.containsKey("velocity")) {
-                        movingTerrainEntities.put(String.valueOf((int)packetMap.get("colorRGB")), Adapter.mapToMovingEntity(packetMap));
+                        packetEntity = new GenericMovingEntity(0, 0);
+                        packetEntity.accept(visitor);
+                        movingTerrainEntities.put(String.valueOf((int)packetMap.get("colorRGB")), (AbstractMovingEntity) packetEntity);
                     }
                     else {
-                        staticTerrainEntities.put("Entity", Adapter.mapToStaticEntity(packetMap));
+                        packetEntity = new GenericStaticEntity(0, 0);
+                        packetEntity.accept(visitor);
+                        staticTerrainEntities.put("Entity", (GenericStaticEntity) packetEntity);
                     }
                     break;
                 default:
