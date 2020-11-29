@@ -9,7 +9,6 @@ public abstract class TemplateCommand {
 
     //template method
     public final void command(String id, OutputStreamWriter out){
-
         undo(id, out);
         getString();
     }

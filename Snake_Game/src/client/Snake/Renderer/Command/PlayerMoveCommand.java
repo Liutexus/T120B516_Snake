@@ -52,8 +52,6 @@ public class PlayerMoveCommand extends TemplateCommand{
 
     }
 
-
-
     private static class MoveUp implements ICommand{
         @Override
         public void execute(String id, OutputStreamWriter out) {
