@@ -192,7 +192,7 @@ class PlayerTest {
 
         };
         Player testPlayer = new Player("");
-        testPlayer.mapToObject(testPlayerMap);
+//        testPlayer.mapToObject(testPlayerMap);
 
         assertAll(
                 () -> assertEquals("t e s t", testPlayer.getId()),
