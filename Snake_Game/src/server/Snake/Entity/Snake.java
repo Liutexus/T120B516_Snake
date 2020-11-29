@@ -51,26 +51,6 @@ public class Snake extends AbstractMovingEntity implements Cloneable, IDrawable 
         previousPositionsY = tempY;
     }
 
-    public boolean checkCollisionWithTail() {
-        try {
-            for (int i = 0; i < this.tailLength; i++) {
-                // Did the snake bite itself?
-                if(this.previousPositionsX.get(i) == positionX &&
-                        this.previousPositionsY.get(i) == positionY &&
-                        (this.velocityX != 0 ||
-                                this.velocityY != 0)) {
-                    int initTailSize = this.tailLength;
-                    this.deltaTailLength(-(initTailSize - i));
-                    // TODO: Point/health reduction
-                    return true;
-                }
-            }
-        } catch (Exception e) {
-            // Just to reduce some headache
-        }
-        return false;
-    }
-
     private void reactToEffect() {
         // TODO: Add checks for every effect and respond accordingly
 
@@ -132,52 +112,16 @@ public class Snake extends AbstractMovingEntity implements Cloneable, IDrawable 
         }
 
         reactToEffect();
-
-        checkCollisionWithTail();
-
         return true;
     }
 
     @Override
     public void onCollide(Object collider) {
-        try {
-            if(collider.getClass() == Snake.class){
-                // If both snakes are going one at another, stop/stun/etc. them
-                System.out.println(this.positionX + " : " + this.positionY);
-                if(
-                    (this.positionX + this.velocityX == ((Snake)collider).getPositionX() &&
-                    this.positionY + this.velocityY == ((Snake)collider).getPositionY()) ||
-                    (this.positionX == ((Snake)collider).getPositionX() + ((Snake)collider).getVelocityX() &&
-                    this.positionY == ((Snake)collider).getPositionY() + ((Snake)collider).getVelocityY()))
-                {
-                    if(
-                        ((this.velocityX == -((Snake)collider).getVelocityX()) || // Are players going one to another
-                        (this.velocityY == -((Snake)collider).getVelocityY())) &&
-                        (!this.effects.containsKey(EEffect.STUN) && !((Snake)collider).getEffects().containsKey(EEffect.STUN)) // Don't apply debuffs if they are already debuffed
-                    )
-                    {
-                        this.setEffect(EEffect.STUN, 10);
-                        this.deltaTailLength(-1);
-                        ((Snake) collider).setEffect(EEffect.STUN, 10);
-                    }
-                }
-
-                // Checking collisions with the tail
-                for (int i = 0; i < ((Snake)collider).tailLength; i++){
-                    if(((Snake)collider).previousPositionsX.get(i) == this.positionX &&
-                            ((Snake)collider).previousPositionsY.get(i) == this.positionY) {
-                        int initTailSize = ((Snake)collider).tailLength;
-                        ((Snake)collider).deltaTailLength(-(initTailSize - i));
-                        this.deltaTailLength(initTailSize - i);
-                        // TODO: Point/health distribution
-                        break;
-                    }
-                }
+        if(collider.getClass() == Snake.class){
+            if(!this.effects.containsKey(EEffect.STUN)){ // Don't apply stun if already stunned
+                this.setEffect(EEffect.STUN, 10);
+                this.deltaTailLength(-1);
             }
-        } catch (Exception e) {
-            // TODO fix: This throws an exception at beginning of the match.
-//            System.out.println("Error at checking collisons for snake at (x: " + this.positionX + ", y: " + this.positionY + ").");
-//            e.printStackTrace();
         }
     }
 

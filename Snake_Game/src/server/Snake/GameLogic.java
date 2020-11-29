@@ -4,6 +4,7 @@ package server.Snake;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Collectible.CollectibleEntityFactory;
+import server.Snake.Entity.Effect.CollisionHandler;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntityFactory;
@@ -21,8 +22,8 @@ public class GameLogic implements Runnable {
 
     private int[][] terrain;
 
-    private IEntityFactory CollectibleFactory = new CollectibleEntityFactory();
-    private IEntityFactory ObstacleFactory = new ObstacleEntityFactory();
+    private IEntityFactory collectibleFactory = new CollectibleEntityFactory();
+    private IEntityFactory obstacleFactory = new ObstacleEntityFactory();
 
     public GameLogic(){}
 
@@ -34,51 +35,61 @@ public class GameLogic implements Runnable {
     }
 
     private void move() {
-        for (Player player : players.values()) {
+        for (Player player : players.values())
             player.getSnake().move();
-        }
 
         terrainEntities.forEach((key, entity) -> {
-            if(entity instanceof AbstractMovingEntity){
+            if(entity instanceof AbstractMovingEntity)
                 ((AbstractMovingEntity) entity).move();
-            }
         });
     }
 
     private void checkCollisions() {
-        // Checking collisions with other players
+        // Checking collisions for players
         players.forEach((id1, player1) -> {
             players.forEach((id2, player2) -> {
-                if(player1 != player2)
+                // Did both players snake's heads collided?
+                if(player1 != player2 && CollisionHandler.checkCollisionOnEntities(player1.getSnake(), player2.getSnake()))
                     player1.getSnake().onCollide(player2.getSnake());
+
+                int tailLength = player2.getSnake().getTailLength();
+                int tailCollisionIndex = CollisionHandler.checkCollisionOnTails(player1.getSnake(), player2.getSnake());
+                if(tailCollisionIndex > 0){ // Did player1 bite player2's tail?
+                    if(player1 != player2)
+                        player1.getSnake().deltaTailLength(tailLength - tailCollisionIndex);
+                    player2.getSnake().deltaTailLength(-(tailLength - tailCollisionIndex));
+                }
             });
 
-            // Checking collisions with terrain entities
-            try {
-                // Checking player collision with map
-                // Getting a position 'one ahead', to check if the player going to collide in the next move
-                int tPosX = (int)player1.getSnake().getPositionX()+(int)player1.getSnake().getVelocityX();
-                int tPosY = (int)player1.getSnake().getPositionY()+(int)player1.getSnake().getVelocityY();
-                if(terrain[tPosY][tPosX] == 6 && !player1.getSnake().getEffects().containsKey(EEffect.STUN)) { // '6' is an index for "Wall"
-                    player1.getSnake().setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 10 moves
-                    player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
-                }
-
-                // Checking player collision with entities (collectibles, traps, etc)
-                terrainEntities.forEach((name, entity) -> { // Going through all entities
-                    if(entity.getPositionX() == tPosX && entity.getPositionY() == tPosY){
-                        if(entity instanceof AbstractMovingEntity){ // To distinguish the type of entity
-                            ((AbstractMovingEntity)entity).onCollide(player1);
-                        } else if(entity instanceof AbstractStaticEntity){
-                            ((AbstractStaticEntity)entity).onCollide(player1);
-                        }
-                        terrainEntities.remove(name);
-                    }
-                });
-            } catch (Exception e){
-                if(e instanceof ArrayIndexOutOfBoundsException) return; // Player is out of map
-                e.printStackTrace();
+            // Checking player collision with map
+            // Getting a position 'one ahead', to check if the player going to collide in the next move
+            if(CollisionHandler.checkCollisionWithTerrain(player1.getSnake(), terrain)) { // '6' is an index for "Wall"
+                player1.getSnake().setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 5 moves
+                player1.getSnake().deltaTailLength(-1); // Decrease player's tail length by 1 on impact
             }
+
+            // Checking player collision with entities (collectibles, traps, etc)
+            terrainEntities.forEach((name, entity) -> { // Going through all entities
+                if(CollisionHandler.checkCollisionOnEntities(player1.getSnake(), entity)){
+                    if(entity instanceof AbstractMovingEntity){ // To distinguish the type of entity
+                        ((AbstractMovingEntity)entity).onCollide(player1);
+                    } else if(entity instanceof AbstractStaticEntity){
+                        ((AbstractStaticEntity)entity).onCollide(player1);
+                    }
+                    terrainEntities.remove(name);
+                }
+            });
+        });
+
+        // Checking collisions for entities
+        terrainEntities.forEach((id, entity) -> {
+            if(entity instanceof AbstractMovingEntity){
+                if(CollisionHandler.checkCollisionWithTerrain((AbstractMovingEntity) entity, terrain)) { // '6' is an index for "Wall"
+                    entity.setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 5 moves
+//                    System.out.println("ENTITY IN WALL");
+                }
+            }
+
         });
     }
 
@@ -128,19 +139,19 @@ public class GameLogic implements Runnable {
 
     private Entity addMovingObstacle(){
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.ObstacleFactory.createMoving(randPos[0], randPos[1], this.players);
+        Entity entity = this.obstacleFactory.createMoving(randPos[0], randPos[1], this.players);
         return entity;
     }
 
     private Entity addMovingCollectible() {
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.CollectibleFactory.createMoving(randPos[0], randPos[1], this.players);
+        Entity entity = this.collectibleFactory.createMoving(randPos[0], randPos[1], this.players);
         return entity;
     }
 
     private Entity addStaticCollectible() {
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.CollectibleFactory.createStatic(randPos[0], randPos[1]);
+        Entity entity = this.collectibleFactory.createStatic(randPos[0], randPos[1]);
         return entity;
     }
 }
