@@ -5,9 +5,11 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Entity.Memento.Caretaker;
+import server.Snake.Interface.IVisitable;
+import server.Snake.Interface.IVisitor;
 import server.Snake.Utility.Adapter;
 
-public class Player implements Cloneable {
+public class Player implements Cloneable, IVisitable {
     private String id;
     private Snake snake;
     private int score;
@@ -77,12 +79,13 @@ public class Player implements Cloneable {
         return null;
     }
 
-    public void mapToObject(Map<String, Object> map){
-        Adapter.mapToPlayer(this, map);
-    }
-
     @Override
     public String toString() {
         return Adapter.playerToJson(this);
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
     }
 }

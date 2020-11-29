@@ -114,4 +114,21 @@ public final class Utils {
         return new int[]{pos[0], pos[1]};
     }
 
+    public static float parseToFloat(Object obj){
+        if(obj.getClass() == String.class){
+            return Float.parseFloat((String) obj);
+        } else
+        if(obj.getClass() == Double.class){
+            return ((Double)obj).floatValue();
+        } else
+        if(obj.getClass() == Float.class){
+            return (Float) obj;
+        } else
+        if(obj.getClass() == Integer.class){
+            return ((Integer) obj).floatValue();
+        }
+
+        return 0;
+    }
+
 }

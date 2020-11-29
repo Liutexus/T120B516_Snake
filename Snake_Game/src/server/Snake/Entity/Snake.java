@@ -4,6 +4,7 @@ import client.Snake.Renderer.Interface.IDrawable;
 import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Entity.Memento.Memento;
 import server.Snake.Enumerator.EEffect;
+import server.Snake.Interface.IVisitor;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -225,5 +226,10 @@ public class Snake extends AbstractMovingEntity implements Cloneable, IDrawable 
                 }
             }
 
+    }
+
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
     }
 }

@@ -15,28 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Adapter {
-    public static void mapToPlayer(Player player, Map<String, Object> map){
-        map.forEach((field, obj) -> {
-            switch (field){
-                case "id":
-                    player.setId((String)obj);
-                    break;
-                case "snake":
-                    HashMap snakeMap = (HashMap) obj;
-                    player.setSnake(mapToSnake(player.getSnake(), snakeMap));
-                    break;
-                case "score":
-                    player.setScore((int)obj);
-                    break;
-                case "isGameOver":
-                    player.setGameOver((boolean) obj);
-                    break;
-                default:
-                    System.out.println("Attribute: '" + field + "' is not recognised in " + Player.class);
-                    break;
-            }
-        });
-    }
+
 
     public static String playerToJson(Player player){
         ObjectWriter ow = new ObjectMapper().writer();
@@ -51,45 +30,6 @@ public final class Adapter {
         return json;
     }
 
-    public static Snake mapToSnake(Snake snake, HashMap<String, Object> map) {
-        map.forEach((field, value) -> {
-            ArrayList<Object> temp;
-            switch (field){
-                case "previousPositionsX":
-                    snake.setPreviousPositionsX((ArrayList<Float>)value);
-                    break;
-                case "previousPositionsY":
-                    snake.setPreviousPositionsY((ArrayList<Float>)value);
-                    break;
-                case "tailLength":
-                    snake.setTailLength((int)value);
-                    break;
-                case "velocity":
-                    temp = (ArrayList<Object>) value;
-                    snake.setVelocityX(parseToFloat(temp.get(0)));
-                    snake.setVelocityY(parseToFloat(temp.get(1)));
-                    break;
-                case "size":
-                    temp = (ArrayList<Object>) value;
-                    snake.setSizeX(parseToFloat(temp.get(0)));
-                    snake.setSizeY(parseToFloat(temp.get(1)));
-                    break;
-                case "position":
-                    temp = (ArrayList<Object>) value;
-                    snake.setPositionX(parseToFloat(temp.get(0)));
-                    snake.setPositionY(parseToFloat(temp.get(1)));
-                    break;
-                case "colorRGB":
-                    snake.setColor(new Color((int)value));
-                    break;
-                default:
-                    System.out.println("Attribute: '" + field + "' is not recognised in " + Snake.class);
-                    break;
-            }
-        });
-        return snake;
-    }
-
     public static String entityToString(Entity ent) {
         ObjectWriter ow = new ObjectMapper().writer();
         String json = "";
@@ -100,7 +40,6 @@ public final class Adapter {
         }
         return json;
     }
-
 
     public static float parseToFloat(Object obj){
         if(obj.getClass() == String.class){

@@ -1,24 +1,22 @@
 package server.Snake.Entity;
 
+import client.Snake.Renderer.Interface.IDrawable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitable;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrapper;
 import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Entity.Memento.Memento;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
+import server.Snake.Interface.IVisitor;
 import server.Snake.Utility.Adapter;
-import server.Snake.Utility.Visitor.IVisitable;
-import server.Snake.Utility.Visitor.Visitor;
+import server.Snake.Interface.IVisitable;
+import server.Snake.Utility.MapToObjectVisitor;
 
 import java.awt.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Entity implements IEntity, IVisitable {
+public class Entity implements IEntity, IDrawable, IVisitable {
     protected float positionX; // Current player horizontal position
     protected float positionY; // Current player vertical position
     protected float sizeX; // How big is the player by X axis
@@ -35,11 +33,6 @@ public class Entity implements IEntity, IVisitable {
         this.positionY = positionY;
         this.sizeX = 1;
         this.sizeY = 1;
-    }
-
-    @Override
-    public void accept(Visitor visitor) {
-        //visitor.mapToEntity();
     }
 
     @JsonIgnore
@@ -143,8 +136,19 @@ public class Entity implements IEntity, IVisitable {
     }
 
     @Override
+    public void drawRect(Graphics g, int windowWidth, int windowHeight, int cellWidth, int cellHeight) {
+        int cellPositionX = ((int)(getPositionX()) * windowWidth)/50;
+        int cellPositionY = ((int)(getPositionY()) * windowHeight)/50;
+        g.setColor(getColor());
+        g.fillRect(cellPositionX, cellPositionY, cellWidth*(int)(getSizeX()), cellHeight*(int)(getSizeY()));
+    }
+
+    @Override
     public String toString() {
         return Adapter.entityToString(this);
     }
 
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
 }

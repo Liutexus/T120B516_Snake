@@ -48,7 +48,6 @@ public class MenuPanel extends JPanel implements Runnable, IMediator {
     @Override
     public void notify(Object sender) {
         // TODO: Add handling of more buttons
-
         if (joinGameButton.equals(sender)) {
             try {
                 if (render.getClientSocket() != null) { // Is the client connected to the server
