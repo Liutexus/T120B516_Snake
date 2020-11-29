@@ -3,13 +3,14 @@ package client.Snake.Renderer.Command;
 import client.Snake.Renderer.Interface.ICommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EPacketHeader;
 import server.Snake.Packet.Packet;
 
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
-public class PlayerMoveCommand {
+public class PlayerMoveCommand extends TemplateCommand{
     private static ObjectWriter objectMapper = new ObjectMapper().writer();
     private static HashMap<Object, Object> packetMap = new HashMap<>();
     private static Packet packet = new Packet(EPacketHeader.CLIENT_RESPONSE);
@@ -40,8 +41,15 @@ public class PlayerMoveCommand {
         action.execute(id, out);
     }
 
-    public static void undo(String id, OutputStreamWriter out){
+    @Override
+    public void undo(String id, OutputStreamWriter out){
         action.undo(id, out);
+        //System.out.println(action.toString());
+    }
+    @Override
+    public String getString(){
+        return "current command: " + action.toString();
+
     }
 
     private static class MoveUp implements ICommand{
@@ -59,11 +67,12 @@ public class PlayerMoveCommand {
                 System.out.println("Error sending an input to the server.");
 //                e.printStackTrace();
             }
+
         }
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveDown();
+            action = new MoveLeft();
             action.execute(id, out);
         }
     }
@@ -83,13 +92,15 @@ public class PlayerMoveCommand {
                 System.out.println("Error sending an input to the server.");
 //                e.printStackTrace();
             }
+
         }
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveUp();
+            action = new MoveRight();
             action.execute(id, out);
         }
+
     }
 
     private static class MoveRight implements ICommand{
@@ -111,9 +122,10 @@ public class PlayerMoveCommand {
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveLeft();
+            action = new MoveUp();
             action.execute(id, out);
         }
+
     }
 
     private static class MoveLeft implements ICommand{
@@ -135,9 +147,10 @@ public class PlayerMoveCommand {
 
         @Override
         public void undo(String id, OutputStreamWriter out) {
-            action = new MoveRight();
+            action = new MoveDown();
             action.execute(id, out);
         }
+
     }
 
     private static class MoveStop implements ICommand{
@@ -162,6 +175,7 @@ public class PlayerMoveCommand {
             action = new MoveUp();
             action.execute(id, out);
         }
+
     }
 
 }

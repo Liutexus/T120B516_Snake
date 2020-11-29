@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import client.Snake.Renderer.Command.TemplateCommand;
 import client.Snake.Renderer.Drawables.AllDrawables;
 import client.Snake.Renderer.Drawables.Terrain;
 import server.Snake.Entity.AbstractMovingEntity;
@@ -119,8 +120,11 @@ class SnakePanel extends JPanel implements Runnable {
             case KeyEvent.VK_SPACE:
                 PlayerMoveCommand.moveStop(this.id, out);
                 break;
+            case KeyEvent.VK_Z:
+                TemplateCommand u = new PlayerMoveCommand();
+                u.command(this.id, out);
+                break;
             default:
-
                 System.out.println("Not defined key press '" + key.getKeyChar() + "'");
 //                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
         }

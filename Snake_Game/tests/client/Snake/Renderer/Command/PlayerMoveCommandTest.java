@@ -61,7 +61,7 @@ class PlayerMoveCommandTest {
             }
         }
         PlayerMoveCommand.moveUp("test", this.out);
-        PlayerMoveCommand.undo("test", this.out);
+//        PlayerMoveCommand.undo("test", this.out);
     }
 
     @Test
@@ -102,7 +102,7 @@ class PlayerMoveCommandTest {
             }
         }
         PlayerMoveCommand.moveDown("test", this.out);
-        PlayerMoveCommand.undo("test", this.out);
+//        PlayerMoveCommand.undo("test", this.out);
     }
 
     @Test
@@ -143,7 +143,7 @@ class PlayerMoveCommandTest {
             }
         }
         PlayerMoveCommand.moveRight("test", this.out);
-        PlayerMoveCommand.undo("test", this.out);
+//        PlayerMoveCommand.undo("test", this.out);
     }
 
     @Test
@@ -184,7 +184,7 @@ class PlayerMoveCommandTest {
             }
         }
         PlayerMoveCommand.moveLeft("test", this.out);
-        PlayerMoveCommand.undo("test", this.out);
+//        PlayerMoveCommand.undo("test", this.out);
     }
 
     @Test
@@ -225,6 +225,6 @@ class PlayerMoveCommandTest {
             }
         }
         PlayerMoveCommand.moveStop("test", this.out);
-        PlayerMoveCommand.undo("test", this.out);
+//        PlayerMoveCommand.undo("test", this.out);
     }
 }

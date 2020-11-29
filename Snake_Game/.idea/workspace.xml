@@ -38,18 +38,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/client/Snake/Renderer/Command/NetworkCommandTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/client/Snake/Renderer/Command/NetworkCommandTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/TemplateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/TemplateCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Adapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Adapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Visitor/IVisitable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IVisitable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Visitor/IVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Visitor/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/MapToObjectVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/client/Snake/Entity/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/client/Snake/Entity/PlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Utility/AdapterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Utility/AdapterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/client/Snake/Renderer/Command/NetworkCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/client/Snake/Renderer/Command/NetworkCommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/client/Snake/Renderer/Command/PlayerMoveCommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/client/Snake/Renderer/Command/PlayerMoveCommandTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
