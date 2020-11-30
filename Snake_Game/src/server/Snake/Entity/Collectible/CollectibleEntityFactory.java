@@ -28,6 +28,11 @@ public class CollectibleEntityFactory implements IEntityFactory {
     }
 
     @Override
+    public AbstractMovingEntity createMoving(float positionX, float positionY, Map players, int[][] terrain) {
+        return new Mouse(new Entity(positionX, positionY), players, terrain);
+    }
+
+    @Override
     public AbstractStaticEntity createStatic(float positionX, float positionY) {
         int randomCase = ThreadLocalRandom.current().nextInt(0, 4);
         switch (randomCase) {

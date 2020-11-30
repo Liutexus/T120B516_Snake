@@ -14,7 +14,11 @@ public class CollisionHandler {
             if(terrain[tPosY][tPosX] == 6 && !entity.getEffects().containsKey(EEffect.STUN))  // '6' is an index for "Wall"
                 return true;
         } catch (Exception e){
-            if(e instanceof ArrayIndexOutOfBoundsException) return false; // Player is out of map
+            if(e instanceof ArrayIndexOutOfBoundsException){ // Entity is out of map
+                if(!entity.getEffects().containsKey(EEffect.STUN))
+                    return true;
+                return false;
+            }
             e.printStackTrace();
         }
         return false;

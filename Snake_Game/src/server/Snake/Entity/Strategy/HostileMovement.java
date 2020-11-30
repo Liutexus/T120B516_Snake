@@ -1,17 +1,20 @@
 package server.Snake.Entity.Strategy;
 
+import server.Snake.Entity.Effect.CollisionHandler;
+import server.Snake.Entity.Entity;
 import server.Snake.Entity.Player;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Interface.IMovingEntityBehaviour;
 import server.Snake.Utility.Utils;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HostileMovement implements IMovingEntityBehaviour {
 
     @Override
-    public void move(AbstractMovingEntity entity) {
+    public void move(AbstractMovingEntity entity , int[][] terrain) {
         float posX = entity.getPositionX();
         float posY = entity.getPositionY();
         float[] directs = entity.getVelocity();
@@ -25,9 +28,20 @@ public class HostileMovement implements IMovingEntityBehaviour {
                 randy = ThreadLocalRandom.current().nextInt(-1, 2);
         entity.setVelocity(randx, randy);
 
-        // Move the entity
-        entity.setPositionX(posX + entity.getVelocityX());
-        entity.setPositionY(posY + entity.getVelocityY());
+        if(Arrays.deepEquals(terrain, new int[][]{})){
+            // Move the entity
+            entity.setPositionX(posX + entity.getVelocityX());
+            entity.setPositionY(posY + entity.getVelocityY());
+        } else {
+            Entity tempClone = entity.clone();
+            tempClone.setPositionX(posX + entity.getVelocityX());
+            tempClone.setPositionY(posY + entity.getVelocityY());
+            if(!CollisionHandler.checkCollisionWithTerrain((AbstractMovingEntity) tempClone, terrain)){ // Check if the entity collides with terrain in next move
+                // Move the entity
+                entity.setPositionX(posX + entity.getVelocityX());
+                entity.setPositionY(posY + entity.getVelocityY());
+            }
+        }
     }
 
     @Override
@@ -50,7 +64,7 @@ public class HostileMovement implements IMovingEntityBehaviour {
         }
 
         if(closestDistance > 15 || chased == null){ // If player is not close
-            this.move(entity);
+            this.move(entity, new int[][]{});
             return;
         }
 
@@ -82,14 +96,23 @@ public class HostileMovement implements IMovingEntityBehaviour {
                 chased = player;
             }
         }
+
+        if(closestDistance > 15 || chased == null){ // If player is not close
+            this.move(entity, terrain);
+            return;
+        }
+
         // Get velocity which brings the entity closer to a player
         float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
-        entity.setVelocity(predictVelocity[0], predictVelocity[1]);
+        entity.setVelocity(-predictVelocity[0], -predictVelocity[1]);
 
-        // TODO: Check terrain as well
-
-        // Move the entity
-        entity.setPositionX(posX + entity.getVelocityX());
-        entity.setPositionY(posY + entity.getVelocityY());
+        Entity tempClone = entity.clone();
+        tempClone.setPositionX(posX + entity.getVelocityX());
+        tempClone.setPositionY(posY + entity.getVelocityY());
+        if(!CollisionHandler.checkCollisionWithTerrain((AbstractMovingEntity) tempClone, terrain)){ // Check if the entity collides with terrain in next move
+            // Move the entity
+            entity.setPositionX(posX + entity.getVelocityX());
+            entity.setPositionY(posY + entity.getVelocityY());
+        }
     }
 }

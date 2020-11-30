@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Entity implements IEntity, IDrawable, IVisitable {
+public class Entity implements IEntity, IDrawable, IVisitable, Cloneable {
     protected float positionX; // Current player horizontal position
     protected float positionY; // Current player vertical position
     protected float sizeX; // How big is the player by X axis
@@ -120,6 +120,11 @@ public class Entity implements IEntity, IDrawable, IVisitable {
         return this.effects;
     }
 
+    @JsonIgnore
+    public Caretaker getCaretaker(){
+        return this.caretaker;
+    }
+
     @Override
     public Memento createMemento() {
         return new Memento(this);
@@ -146,6 +151,16 @@ public class Entity implements IEntity, IDrawable, IVisitable {
     @Override
     public String toString() {
         return Adapter.entityToString(this);
+    }
+
+    public Entity clone(){
+        try{
+            return (Entity) super.clone();
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Couldn't clone '" + this.getClass() + "' class.");
+        }
+        return null;
     }
 
     public void accept(IVisitor visitor) {

@@ -86,7 +86,6 @@ public class GameLogic implements Runnable {
             if(entity instanceof AbstractMovingEntity){
                 if(CollisionHandler.checkCollisionWithTerrain((AbstractMovingEntity) entity, terrain)) { // '6' is an index for "Wall"
                     entity.setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 5 moves
-//                    System.out.println("ENTITY IN WALL");
                 }
             }
 
@@ -139,13 +138,13 @@ public class GameLogic implements Runnable {
 
     private Entity addMovingObstacle(){
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.obstacleFactory.createMoving(randPos[0], randPos[1], this.players);
+        Entity entity = this.obstacleFactory.createMoving(randPos[0], randPos[1], this.players, terrain);
         return entity;
     }
 
     private Entity addMovingCollectible() {
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.collectibleFactory.createMoving(randPos[0], randPos[1], this.players);
+        Entity entity = this.collectibleFactory.createMoving(randPos[0], randPos[1], this.players, terrain);
         return entity;
     }
 

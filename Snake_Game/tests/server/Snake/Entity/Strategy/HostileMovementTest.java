@@ -46,7 +46,7 @@ class HostileMovementTest {
 
         while(initPosX == this.testEntity.getPositionX() || initPosY == this.testEntity.getPositionY())
             for(int i = 0; i < 10; i++)
-                this.testMovingStrategy.move(this.testEntity);
+                this.testMovingStrategy.move(this.testEntity, new int[][]{});
 
         assertNotEquals(initPosX, this.testEntity.getPositionX());
         assertNotEquals(initPosY, this.testEntity.getPositionY());

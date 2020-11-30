@@ -1,6 +1,7 @@
 package server.Snake.Entity;
 
 import client.Snake.Renderer.Interface.IDrawable;
+import server.Snake.Entity.Effect.EffectHandler;
 import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Entity.Memento.Memento;
 import server.Snake.Enumerator.EEffect;
@@ -51,44 +52,6 @@ public class Snake extends AbstractMovingEntity implements Cloneable, IDrawable 
         previousPositionsY = tempY;
     }
 
-    private void reactToEffect() {
-        // TODO: Add checks for every effect and respond accordingly
-
-        if(this.effects.containsKey(EEffect.POINT_INCREASE)){
-            // TODO: Add points to player
-        }
-
-        if(this.effects.containsKey(EEffect.TAIL_INCREASE))
-            this.deltaTailLength(1);
-
-        if(this.effects.containsKey(EEffect.TAIL_DECREASE))
-            this.deltaTailLength(-1);
-
-        if(this.effects.containsKey(EEffect.SIZE_UP)){
-            this.setSizeX(this.getSizeX() + this.effects.get(EEffect.SIZE_UP));
-            this.setSizeY(this.getSizeY() + this.effects.get(EEffect.SIZE_UP));
-        }
-
-        if(this.effects.containsKey(EEffect.ROLLBACK)){
-            this.setMemento(this.caretaker.get());
-        } else {
-            caretaker.addSnapshot(this.clone().createMemento()); // Add a state of current snake
-        }
-
-        if(this.effects.containsKey(EEffect.HASTE)){
-            this.AddPreviousPositionX(positionX);
-            this.AddPreviousPositionY(positionY);
-
-            positionX += velocityX;
-            positionY += velocityY;
-        }
-
-        this.effects.forEach((effect, duration) -> {
-            this.effects.replace(effect, this.effects.get(effect) - 1);
-            if(duration <= 0) effects.remove(effect);
-        });
-    }
-
     @Override
     public Memento createMemento(){
         return new Memento(this);
@@ -109,9 +72,11 @@ public class Snake extends AbstractMovingEntity implements Cloneable, IDrawable 
 
             positionX += velocityX;
             positionY += velocityY;
+
+            this.caretaker.addSnapshot(this.clone().createMemento());
         }
 
-        reactToEffect();
+        EffectHandler.reactToEffect(this);
         return true;
     }
 

@@ -1,17 +1,21 @@
 package server.Snake.Entity.Strategy;
 
+import server.Snake.Entity.Effect.CollisionHandler;
+import server.Snake.Entity.Entity;
 import server.Snake.Entity.Player;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Interface.IMovingEntityBehaviour;
 import server.Snake.Utility.Utils;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ScaredMovement implements IMovingEntityBehaviour {
 
     @Override
-    public void move(AbstractMovingEntity entity) {
+    public void move(AbstractMovingEntity entity, int[][] terrain) {
         float posX = entity.getPositionX();
         float posY = entity.getPositionY();
         float[] directs = entity.getVelocity();
@@ -25,9 +29,20 @@ public class ScaredMovement implements IMovingEntityBehaviour {
         }
         entity.setVelocity(randx, randy);
 
-        // Move the entity
-        entity.setPositionX(posX + entity.getVelocityX());
-        entity.setPositionY(posY + entity.getVelocityY());
+        if(Arrays.deepEquals(terrain, new int[][]{})){
+            // Move the entity
+            entity.setPositionX(posX + entity.getVelocityX());
+            entity.setPositionY(posY + entity.getVelocityY());
+        } else {
+            Entity tempClone = entity.clone();
+            tempClone.setPositionX(posX + entity.getVelocityX());
+            tempClone.setPositionY(posY + entity.getVelocityY());
+            if(!CollisionHandler.checkCollisionWithTerrain((AbstractMovingEntity) tempClone, terrain)){ // Check if the entity collides with terrain in next move
+                // Move the entity
+                entity.setPositionX(posX + entity.getVelocityX());
+                entity.setPositionY(posY + entity.getVelocityY());
+            }
+        }
     }
 
     @Override
@@ -50,7 +65,7 @@ public class ScaredMovement implements IMovingEntityBehaviour {
         }
 
         if(closestDistance > 15){ // If player is not close
-            this.move(entity);
+            this.move(entity, new int[][]{});
             return;
         }
 
@@ -58,9 +73,7 @@ public class ScaredMovement implements IMovingEntityBehaviour {
         try{
             float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
             entity.setVelocity(predictVelocity[0], predictVelocity[1]); // Invert the velocity to go away from the player
-        } catch (Exception e){
-
-        }
+        } catch (Exception e){}
 
         // Move the entity
         entity.setPositionX(posX + entity.getVelocityX());
@@ -85,14 +98,26 @@ public class ScaredMovement implements IMovingEntityBehaviour {
                 chased = player;
             }
         }
+
+        if(closestDistance > 15){ // If player is not close
+            this.move(entity, terrain);
+            return;
+        }
+
         // Get velocity which brings the entity closer to a player
-        float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
-        entity.setVelocity(-predictVelocity[0], -predictVelocity[1]); // Invert the velocity to go away from the player
+        try{
+            float[] predictVelocity = Utils.vectorToPoint(posX, posY, chased.getSnake().getPositionX(), chased.getSnake().getPositionY());
+            entity.setVelocity(predictVelocity[0], predictVelocity[1]); // Invert the velocity to go away from the player
+        } catch (Exception e){}
 
-        // TODO: Check terrain as well
+        Entity tempClone = entity.clone();
+        tempClone.setPositionX(posX + entity.getVelocityX());
+        tempClone.setPositionY(posY + entity.getVelocityY());
+        if(!CollisionHandler.checkCollisionWithTerrain((AbstractMovingEntity) tempClone, terrain)){ // Check if the entity collides with terrain in next move
+            // Move the entity
+            entity.setPositionX(posX + entity.getVelocityX());
+            entity.setPositionY(posY + entity.getVelocityY());
+        }
 
-        // Move the entity
-        entity.setPositionX(posX + entity.getVelocityX());
-        entity.setPositionY(posY + entity.getVelocityY());
     }
 }

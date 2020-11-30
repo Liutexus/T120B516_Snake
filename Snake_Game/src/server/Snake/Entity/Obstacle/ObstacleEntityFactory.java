@@ -26,6 +26,11 @@ public class ObstacleEntityFactory implements IEntityFactory {
     }
 
     @Override
+    public AbstractMovingEntity createMoving(float positionX, float positionY, Map players, int[][] terrain) {
+        return new Hawk(new Entity(positionX, positionY), players, terrain);
+    }
+
+    @Override
     public AbstractStaticEntity createStatic(float positionX, float positionY) {
         int randomCase = ThreadLocalRandom.current().nextInt(0, 2);
         switch (randomCase) {
