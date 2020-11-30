@@ -272,16 +272,15 @@ class SnakePanel extends JPanel implements Runnable {
                     packetMap = packet.parseBody();
                     visitor.setMap((HashMap) packetMap);
                     Entity packetEntity;
-
                     if (packetMap.containsKey("velocity")) {
                         packetEntity = new GenericMovingEntity(0, 0);
                         packetEntity.accept(visitor);
-                        movingTerrainEntities.put(String.valueOf((int)packetMap.get("colorRGB")), (AbstractMovingEntity) packetEntity);
+                        movingTerrainEntities.put((String)packetMap.get("id"), (AbstractMovingEntity) packetEntity);
                     }
                     else {
                         packetEntity = new GenericStaticEntity(0, 0);
                         packetEntity.accept(visitor);
-                        staticTerrainEntities.put("Entity", (GenericStaticEntity) packetEntity);
+                        staticTerrainEntities.put((String)packetMap.get("id"), (GenericStaticEntity) packetEntity);
                     }
                     break;
                 default:

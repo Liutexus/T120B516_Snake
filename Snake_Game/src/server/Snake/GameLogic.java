@@ -25,6 +25,11 @@ public class GameLogic implements Runnable {
     private IEntityFactory collectibleFactory = new CollectibleEntityFactory();
     private IEntityFactory obstacleFactory = new ObstacleEntityFactory();
 
+    private int staticCollectibleCount = 3;
+    private int movingCollectibleCount = 2;
+    private int staticObstacleCount = 2;
+    private int movingObstacleCount = 2;
+
     public GameLogic(){}
 
     public GameLogic(Map handlers, Map players, Map terrainEntities, int[][] terrain){
@@ -69,14 +74,14 @@ public class GameLogic implements Runnable {
             }
 
             // Checking player collision with entities (collectibles, traps, etc)
-            terrainEntities.forEach((name, entity) -> { // Going through all entities
+            terrainEntities.forEach((id, entity) -> { // Going through all entities
                 if(CollisionHandler.checkCollisionOnEntities(player1.getSnake(), entity)){
                     if(entity instanceof AbstractMovingEntity){ // To distinguish the type of entity
                         ((AbstractMovingEntity)entity).onCollide(player1);
                     } else if(entity instanceof AbstractStaticEntity){
                         ((AbstractStaticEntity)entity).onCollide(player1);
                     }
-                    terrainEntities.remove(name);
+                    terrainEntities.remove(id);
                 }
             });
         });
@@ -88,22 +93,34 @@ public class GameLogic implements Runnable {
                     entity.setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 5 moves
                 }
             }
-
         });
     }
 
     private void checkTerrainEntities() {
-        if(!terrainEntities.containsKey("Food")){
-            terrainEntities.put("Food", addStaticCollectible());
+        for(int i = 0; i < staticCollectibleCount; i++){
+            if(!terrainEntities.containsKey("Food" + i)){
+                terrainEntities.put("Food" + i, addStaticCollectible("Food" + i));
+            }
         }
 
-        if(!terrainEntities.containsKey("Hawk")) {
-            terrainEntities.put("Hawk", addMovingObstacle());
+        for(int i = 0; i < movingCollectibleCount; i++) {
+            if(!terrainEntities.containsKey("Mouse" + i)) {
+                terrainEntities.put("Mouse" + i, addMovingCollectible("Mouse" + i));
+            }
         }
 
-        if(!terrainEntities.containsKey("Mouse")) {
-            terrainEntities.put("Mouse", addMovingCollectible());
+//        for(int i = 0; i < staticObstacleCount; i++){
+//            if(!terrainEntities.containsKey("Trap" + i)){
+//                terrainEntities.put("Trap" + i, addStaticObstacle("Trap" + i));
+//            }
+//        }
+
+        for(int i = 0; i < movingObstacleCount; i++) {
+            if(!terrainEntities.containsKey("Hawk" + i)) {
+                terrainEntities.put("Hawk" + i, addMovingObstacle("Hawk" + i));
+            }
         }
+
     }
 
     public void addPlayer(Player player) {
@@ -136,21 +153,27 @@ public class GameLogic implements Runnable {
         }
     }
 
-    private Entity addMovingObstacle(){
+    private Entity addStaticObstacle(String id) {
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.obstacleFactory.createMoving(randPos[0], randPos[1], this.players, terrain);
+        Entity entity = this.collectibleFactory.createStatic(id, randPos[0], randPos[1]);
         return entity;
     }
 
-    private Entity addMovingCollectible() {
+    private Entity addMovingObstacle(String id){
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.collectibleFactory.createMoving(randPos[0], randPos[1], this.players, terrain);
+        Entity entity = this.obstacleFactory.createMoving(id, randPos[0], randPos[1], this.players, terrain);
         return entity;
     }
 
-    private Entity addStaticCollectible() {
+    private Entity addStaticCollectible(String id) {
         int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
-        Entity entity = this.collectibleFactory.createStatic(randPos[0], randPos[1]);
+        Entity entity = this.collectibleFactory.createStatic(id, randPos[0], randPos[1]);
+        return entity;
+    }
+
+    private Entity addMovingCollectible(String id) {
+        int[] randPos = Utils.findFreeCell(this.terrain, this.players, 5, 45);
+        Entity entity = this.collectibleFactory.createMoving(id, randPos[0], randPos[1], this.players, terrain);
         return entity;
     }
 }

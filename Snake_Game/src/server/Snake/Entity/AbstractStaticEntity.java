@@ -6,7 +6,7 @@ import server.Snake.Interface.IEntity;
 public abstract class AbstractStaticEntity extends Entity {
 
     public AbstractStaticEntity(IEntity entity) {
-        super(entity.getPositionX(), entity.getPositionY());
+        super(entity.getId(), entity.getPositionX(), entity.getPositionY());
         entity.getEffects().forEach((effect, duration) -> {
             super.setEffect((EEffect) effect, (Integer) duration);
         });

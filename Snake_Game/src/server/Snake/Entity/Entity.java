@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Entity implements IEntity, IDrawable, IVisitable, Cloneable {
+    protected String id;
     protected float positionX; // Current player horizontal position
     protected float positionY; // Current player vertical position
     protected float sizeX; // How big is the player by X axis
@@ -28,11 +29,43 @@ public class Entity implements IEntity, IDrawable, IVisitable, Cloneable {
 
     protected Caretaker caretaker;
 
+    public Entity(){
+        this.id = "";
+        this.positionX = 0;
+        this.positionY = 0;
+        this.sizeX = 1;
+        this.sizeY = 1;
+    }
+
+    public Entity(String id){
+        this.id = id;
+        this.positionX = 0;
+        this.positionY = 0;
+        this.sizeX = 1;
+        this.sizeY = 1;
+    }
+
     public Entity(float positionX, float positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
         this.sizeX = 1;
         this.sizeY = 1;
+    }
+
+    public Entity(String id, float positionX, float positionY){
+        this.id = id;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.sizeX = 1;
+        this.sizeY = 1;
+    }
+
+    public String getId(){
+        return this.id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 
     @JsonIgnore

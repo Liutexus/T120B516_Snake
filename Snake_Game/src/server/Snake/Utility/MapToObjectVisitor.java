@@ -91,6 +91,9 @@ public class MapToObjectVisitor implements IVisitor {
     public Entity visit(Entity entity){
         map.forEach((field, obj) -> {
             switch (field){
+                case "id":
+                    entity.setId((String)obj);
+                    break;
                 case "position":
                     entity.setPosition(
                             (Utils.parseToFloat(((ArrayList) obj).get(0))),

@@ -1,6 +1,7 @@
 package server.Snake.Entity;
 
 import client.Snake.Renderer.Interface.IDrawable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Entity.Effect.EffectHandler;
 import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Entity.Memento.Memento;
@@ -19,6 +20,12 @@ public class Snake extends AbstractMovingEntity implements Cloneable, IDrawable 
         this.tailLength = 10;
 
         this.caretaker = new Caretaker();
+    }
+
+    @Override
+    @JsonIgnore
+    public String getId(){
+        return this.id;
     }
 
     public int getTailLength () {

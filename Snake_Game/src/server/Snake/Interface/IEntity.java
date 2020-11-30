@@ -6,6 +6,8 @@ import server.Snake.Enumerator.EEffect;
 import java.util.Map;
 
 public interface IEntity {
+    String getId();
+    void setId(String id);
     float getPositionX();
     void setPositionX(float positionX);
     float getPositionY();
