@@ -5,9 +5,11 @@ import server.Snake.Entity.Builder.HandlerBuilder;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EMatchStatus;
+import server.Snake.Interface.IHandler;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
 import server.Snake.Enumerator.EPacketHeader;
+import server.Snake.Network.Packet.Packet;
 import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.Utils;
 
@@ -18,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MatchInstance implements Runnable, ISubject {
+public class MatchInstance implements Runnable, ISubject, IHandler {
     private String id;
     private static int concurrentThreads = 1;
 
@@ -33,10 +35,11 @@ public class MatchInstance implements Runnable, ISubject {
 
     private EMatchStatus status = EMatchStatus.UNDETERMINED;
 
+    private IHandler nextHandler;
+
     public MatchInstance(String id) {
         this.id = id;
         this.terrain = BitmapConverter.BMPToIntArray("resources/arena_test_01.png", 50, 50);
-        this.gameLogic = new GameLogic(this.handlers, this.players, this.terrainEntities, this.terrain);
         this.setMatchStatus(EMatchStatus.WAITING);
     }
 
@@ -105,6 +108,7 @@ public class MatchInstance implements Runnable, ISubject {
     @Override
     public void run() {
         ExecutorService pool = Executors.newFixedThreadPool(concurrentThreads);
+        this.gameLogic = new GameLogic(this.handlers, this.players, this, this.terrainEntities, this.terrain);
         pool.execute(gameLogic);
         while(true){
             if(currentPlayerCount != maxPlayerCount && this.status != EMatchStatus.ONGOING) {
@@ -168,6 +172,20 @@ public class MatchInstance implements Runnable, ISubject {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public void setNext(IHandler handler) {
+        this.nextHandler = handler;
+    }
+
+    @Override
+    public void handle(Object request) {
+        switch (((Packet)request).header){
+            default:
+                System.out.println("Error. Not recognised packet header '" + ((Packet)request).header.toString() + "'. ");
+                break;
         }
     }
 }

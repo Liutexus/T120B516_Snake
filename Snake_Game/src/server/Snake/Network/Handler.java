@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Handler implements Runnable {
+public class Handler implements Runnable, IHandler {
     private Socket serverSocket;
     private MatchInstance match;
     private GameLogic gameLogic;
@@ -42,6 +42,8 @@ public class Handler implements Runnable {
     private Player clientPlayer;
     public Map<String, Player> players = new ConcurrentHashMap<>();
     public Map<String, Entity> terrainEntities = new ConcurrentHashMap<>();
+
+    private IHandler nextHandler;
 
     public Handler(){}
 
@@ -192,4 +194,31 @@ public class Handler implements Runnable {
         System.out.println("Disconnected: " + serverSocket);
     }
 
+    @Override
+    public void setNext(IHandler handler) {
+        this.nextHandler = handler;
+    }
+
+    @Override
+    public void handle(Object request) {
+        switch (((Packet)request).header){
+            case CLIENT_DISCONNECT:
+                // Placeholder
+                break;
+            case CLIENT_RECONNECT:
+                // Placeholder
+                break;
+            case CLIENT_REQUEST_MATCH_JOIN:
+                MatchInstance matchInstance = Server.returnAvailableMatch();
+                matchInstance.registerObserver(this.getBuilder());
+                break;
+            case CLIENT_REQUEST_MATCH_LEAVE:
+                // Placeholder
+                break;
+            default:
+                this.setNext(this.gameLogic);
+                this.nextHandler.handle(request);
+                break;
+        }
+    }
 }

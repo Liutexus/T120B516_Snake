@@ -1,6 +1,7 @@
 package server.Snake.Network;
 
 import server.Snake.Enumerator.EClientStatus;
+import server.Snake.Interface.IHandler;
 import server.Snake.MatchInstance;
 import server.Snake.Network.Packet.Packet;
 import server.Snake.Server;
@@ -9,13 +10,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.SocketException;
 
-public class HandlerListener implements Runnable{
+public class HandlerListener implements Runnable, IHandler {
     Handler handler;
     InputStreamReader in;
+    IHandler nextHandler;
 
     public HandlerListener(Handler handler, InputStreamReader in) {
         this.handler = handler;
         this.in = in;
+        this.setNext(new LoginHandler(this.handler));
     }
 
     @Override
@@ -39,19 +42,23 @@ public class HandlerListener implements Runnable{
     private void parsePacket(String packetJson){
         Packet packet = new Packet(packetJson);
         switch (packet.header){
-            case EMPTY:
-                break;
             case CLIENT_RESPONSE:
                 this.handler.getGameLogic().updatePlayerField(packet.parseBody());
                 break;
-            case CLIENT_REQUEST_MATCH_JOIN:
-                MatchInstance matchInstance = Server.returnAvailableMatch();
-                matchInstance.registerObserver(this.handler.getBuilder());
-                break;
             default:
-                System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
+                this.handle(packet);
+//                System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                 break;
         }
     }
 
+    @Override
+    public void setNext(IHandler handler) {
+        this.nextHandler = handler;
+    }
+
+    @Override
+    public void handle(Object request) {
+        this.nextHandler.handle(request);
+    }
 }

@@ -20,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GameLogic implements Runnable, IHandler {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
+    private MatchInstance matchInstance;
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
     private Map<String, Entity> terrainEntities = new ConcurrentHashMap<>(); // All entities on the map
 
@@ -33,11 +34,14 @@ public class GameLogic implements Runnable, IHandler {
     private int staticObstacleCount = 2;
     private int movingObstacleCount = 2;
 
+    private IHandler nextHandler;
+
     public GameLogic(){}
 
-    public GameLogic(Map handlers, Map players, Map terrainEntities, int[][] terrain){
+    public GameLogic(Map handlers, Map players, MatchInstance matchInstance, Map terrainEntities, int[][] terrain){
         this.handlers = handlers;
         this.players = players;
+        this.matchInstance = matchInstance;
         this.terrainEntities = terrainEntities;
         this.terrain = terrain;
     }
@@ -158,7 +162,7 @@ public class GameLogic implements Runnable, IHandler {
 
     @Override
     public void setNext(IHandler handler) {
-        return;
+        this.nextHandler = handler;
     }
 
     @Override
@@ -168,7 +172,8 @@ public class GameLogic implements Runnable, IHandler {
                 this.updatePlayerField(((Packet)request).parseBody());
                 break;
             default:
-                System.out.println("Error. Not recognised packet header '" + ((Packet)request).header.toString() + "'. ");
+                this.setNext(this.matchInstance);
+                this.nextHandler.handle(request);
                 break;
         }
     }
