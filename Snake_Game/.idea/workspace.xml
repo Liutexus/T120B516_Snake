@@ -37,13 +37,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Network/LoginHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/GameData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientUpdater.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Enumerator/EPacketHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Enumerator/EPacketHeader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Network/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Network/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Network/HandlerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Network/HandlerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
