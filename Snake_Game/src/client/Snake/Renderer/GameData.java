@@ -4,9 +4,7 @@ import client.Snake.Renderer.Drawables.AllDrawables;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Player;
-import server.Snake.GameLogic;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

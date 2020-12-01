@@ -2,11 +2,9 @@ package client.Snake;
 import client.Snake.Renderer.SwingRender;
 
 public class Client {
-
-    private static SwingRender render;
+    private static SwingRender render = SwingRender.getInstance();
 
     void Start() {
-        render = new SwingRender();
         render.run();
     }
 

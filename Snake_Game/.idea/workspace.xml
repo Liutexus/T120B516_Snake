@@ -37,12 +37,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/GameData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientUpdater.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/AllDrawables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/AllDrawables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/GameData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Interface/IDrawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Interface/IDrawable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/MenuPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SwingRender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Enumerator/EPacketHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Enumerator/EPacketHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/client/Snake/Renderer/SwingRenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/client/Snake/Renderer/SwingRenderTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

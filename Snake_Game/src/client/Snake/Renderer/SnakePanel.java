@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import client.Snake.Renderer.Command.TemplateCommand;
 import client.Snake.Renderer.Drawables.AllDrawables;
 import client.Snake.Renderer.Drawables.Terrain;
+import client.Snake.Renderer.Enumerator.ERendererState;
 import client.Snake.Renderer.Network.ClientListener;
 import client.Snake.Renderer.Network.ClientUpdater;
 import server.Snake.Entity.AbstractMovingEntity;
@@ -33,20 +34,13 @@ import server.Snake.Utility.Utils;
 public class SnakePanel extends JPanel implements Runnable {
     private static SnakePanel panelInstance = null;
 
+    private Socket clientSocket;
     private OutputStreamWriter out;
     private InputStreamReader in;
 
-    private Dimension windowSize;
-    private int horizontalCellCount = 50;
-    private int verticalCellCount = 50;
-    private int cellWidth;
-    private int cellHeight;
-    private int windowWidth;
-    private int windowHeight;
+    private GameData gameData; // Data containing all info about current game on screen
 
-    private Socket clientSocket;
-
-    private GameData gameData;
+    private int gameTime = 0;
 
     private SnakePanel() {
         setFocusable(true);
@@ -131,6 +125,10 @@ public class SnakePanel extends JPanel implements Runnable {
         return this.gameData;
     }
 
+    public int getGameTime(){
+        return this.gameTime;
+    }
+
     private void keyResponse(KeyEvent key) {
         switch (key.getKeyCode()){
             case KeyEvent.VK_UP:
@@ -161,23 +159,24 @@ public class SnakePanel extends JPanel implements Runnable {
 //                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
         }
     }
-    // Rendering functions
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         // To create a nice grid
-        windowSize = getSize();
-        windowWidth = windowSize.width;
-        windowHeight = windowSize.height;
+        Dimension windowSize = getSize();
+        int windowWidth = windowSize.width;
+        int windowHeight = windowSize.height;
 
-        cellWidth = (windowSize.width/horizontalCellCount);
-        cellHeight = (windowSize.height/verticalCellCount);
+        int horizontalCellCount = 50;
+        int verticalCellCount = 50;
+        int cellWidth = (windowSize.width / horizontalCellCount);
+        int cellHeight = (windowSize.height / verticalCellCount);
 
         // Drawing the terrain
         this.gameData.getTerrain().forEach((y, arrayX) -> {
             for(int i = 0; i < arrayX.size(); i++){
-                Terrain terain = new Terrain(i ,y, BitmapConverter.getColorByIndex((int)arrayX.get(i)));
-                this.gameData.getAllDrawables().addDrawable(terain);
+                Terrain terrain = new Terrain(i, y, BitmapConverter.getColorByIndex((int)arrayX.get(i)));
+                this.gameData.getAllDrawables().addDrawable(terrain);
             }
         });
 
@@ -225,5 +224,11 @@ public class SnakePanel extends JPanel implements Runnable {
         ClientListener listener = new ClientListener(in, updater);
         executor.execute(updater);
         executor.execute(listener);
+
+        while(SwingRender.getInstance().getCurrentState() == ERendererState.IN_GAME){
+            this.gameTime++;
+            try{Thread.sleep(100);} catch (Exception e){
+            }
+        }
     }
 }

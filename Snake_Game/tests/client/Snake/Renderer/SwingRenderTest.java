@@ -19,7 +19,7 @@ class SwingRenderTest {
 
     @Test
     void run() {
-        SwingRender testRender = new SwingRender();
+        SwingRender testRender = SwingRender.getInstance();
 
         pool.execute(() -> {
             testRender.run();

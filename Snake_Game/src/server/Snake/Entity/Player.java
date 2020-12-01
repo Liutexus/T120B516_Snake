@@ -88,4 +88,5 @@ public class Player implements Cloneable, IVisitable {
     public void accept(IVisitor visitor) {
         visitor.visit(this);
     }
+
 }

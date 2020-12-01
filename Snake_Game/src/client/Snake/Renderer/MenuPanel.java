@@ -48,7 +48,7 @@ public class MenuPanel extends JPanel implements Runnable, IMediator {
     @Override
     public void notify(Object sender) {
         // TODO: Add handling of more buttons
-        if (joinGameButton.equals(sender)) {
+        if (joinGameButton.equals(sender)) { // Clicking 'Join Game' button
             try {
                 if (render.getClientSocket() != null) { // Is the client connected to the server
                     // Ask the server for login info if the connection has been established
@@ -58,9 +58,9 @@ public class MenuPanel extends JPanel implements Runnable, IMediator {
                 e.printStackTrace();
             }
             changeRenderState(ERendererState.IN_GAME);
-        } else if (settingsButton.equals(sender)) {
+        } else if (settingsButton.equals(sender)) { // Clicking 'Settings' button
             changeRenderState(ERendererState.SETTINGS);
-        } else if (hostGameButton.equals(sender)) {
+        } else if (hostGameButton.equals(sender)) { // Clicking 'Host Game' button
             changeRenderState(ERendererState.HOST_GAME);
         }
     }

@@ -11,6 +11,7 @@ public enum EPacketHeader {
     ID,
     PLAYER,
     MATCH,
+    MATCH_STATUS,
     ENTITY,
     TERRAIN,
     ALL_PLAYERS,

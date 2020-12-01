@@ -27,9 +27,7 @@ public class AllDrawables implements IDrawable {
 
     @Override
     public void drawRect(Graphics g, int windowWidth, int windowHeight, int cellWidth, int cellHeight) {
-        for(IDrawable item:drawableList)
-        {
+        for(IDrawable item : drawableList)
             item.drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
-        }
     }
 }

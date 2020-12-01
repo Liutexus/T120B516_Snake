@@ -8,6 +8,8 @@ import java.awt.*;
 import java.net.Socket;
 
 public class SwingRender extends JFrame implements Runnable {
+    private static SwingRender instance;
+
     private static Socket clientSocket;
 
     private Dimension prefScreenSize = new Dimension(1000, 1000);
@@ -18,7 +20,7 @@ public class SwingRender extends JFrame implements Runnable {
     private SettingsPanel settingsPanel;
     private HostGamePanel hostGamePanel;
 
-    public SwingRender() {
+    private SwingRender() {
         // Creating this client's window
         super(Utils.parseConfig("client", "name"));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +35,16 @@ public class SwingRender extends JFrame implements Runnable {
 
         // 'Join game view button' here
         initiateViews();
+    }
 
+    public static SwingRender getInstance(){
+        if(instance == null)
+            instance = new SwingRender();
+        return instance;
+    }
+
+    public ERendererState getCurrentState(){
+        return currentState;
     }
 
     public void setCurrentState(ERendererState state){
@@ -42,10 +53,6 @@ public class SwingRender extends JFrame implements Runnable {
 
     public Socket getClientSocket(){
         return clientSocket;
-    }
-
-    public ERendererState getCurrentState(){
-        return currentState;
     }
 
     public void close(){
@@ -57,13 +64,12 @@ public class SwingRender extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        while(this.currentState != ERendererState.CLOSED) {
+        while(currentState != ERendererState.CLOSED) {
             // Switch between views
-
             switch(currentState) {
                 case TESTING:
                 case MENU:
-                    this.add(menuPanel.getInstance());
+                    this.add(MenuPanel.getInstance());
                     this.pack();
                     this.setVisible(true);
                     menuPanel.repaint();
@@ -79,13 +85,13 @@ public class SwingRender extends JFrame implements Runnable {
                     }
                     break;
                 case SETTINGS:
-                    this.add(settingsPanel.getInstance());
+                    this.add(SettingsPanel.getInstance());
                     this.pack();
                     this.setVisible(true);
                     settingsPanel.repaint();
                     break;
                 case HOST_GAME:
-                    this.add(hostGamePanel.getInstance());
+                    this.add(HostGamePanel.getInstance());
                     this.pack();
                     this.setVisible(true);
                     hostGamePanel.repaint();
