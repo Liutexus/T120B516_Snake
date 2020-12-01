@@ -4,6 +4,7 @@ import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.Effect.EffectHandler;
 import server.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
+import server.Snake.Entity.Snake;
 import server.Snake.Entity.Strategy.HostileMovement;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
@@ -57,9 +58,9 @@ public class Hawk extends AbstractMovingEntity implements IEntity {
 
     @Override
     public void onCollide(Object collider) {
-        if(collider.getClass() == Player.class){
-            ((Player)collider).deltaScore(-75);
-            ((Player)collider).getSnake().deltaTailLength(-1);
+        if(collider instanceof Entity){
+            if(collider.getClass() == Snake.class)
+                ((Snake)collider).deltaTailLength(-1);
         }
     }
 }

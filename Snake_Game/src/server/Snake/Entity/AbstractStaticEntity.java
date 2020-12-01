@@ -20,9 +20,11 @@ public abstract class AbstractStaticEntity extends Entity {
     }
 
     public void onCollide(Object collider) {
-        super.effects.forEach((k, v) -> {
-            ((Player)collider).getSnake().setEffect(k, v);
-        });
+        if(collider instanceof Entity){
+            super.effects.forEach((k, v) -> {
+                ((Entity)collider).setEffect(k, v);
+            });
+        }
     };
 
     @Override
@@ -43,7 +45,8 @@ public abstract class AbstractStaticEntity extends Entity {
         g2.setColor(new Color(colR + 255/(colR+1)/level, colG + 255/(colG+1)/level, colB + 255/(colB+1)/level));
 
         g2.setStroke(new BasicStroke((int)(level/2)));
-        
+
         g2.drawRect(cellPositionX, cellPositionY, cellWidth*(int)(getSizeX()), cellHeight*(int)(getSizeY()));
     }
+
 }

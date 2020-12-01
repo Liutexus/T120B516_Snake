@@ -1,15 +1,12 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
 package server.Snake;
 
-import server.Snake.Entity.AbstractMovingEntity;
-import server.Snake.Entity.AbstractStaticEntity;
+import server.Snake.Entity.*;
 import server.Snake.Entity.Collectible.CollectibleEntityFactory;
 import server.Snake.Entity.Effect.CollisionHandler;
-import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntityFactory;
 import server.Snake.Entity.Obstacle.ObstacleEntityFactory;
-import server.Snake.Entity.Player;
 import server.Snake.Interface.IHandler;
 import server.Snake.Network.Handler;
 import server.Snake.Network.Packet.Packet;
@@ -47,8 +44,13 @@ public class GameLogic implements Runnable, IHandler {
     }
 
     private void move() {
-        for (Player player : players.values())
+        for (Player player : players.values()){
+            if(player.getSnake().getEffects().containsKey(EEffect.HASTE) && !player.getSnake().getEffects().containsKey(EEffect.STUN) && !player.getSnake().getEffects().containsKey(EEffect.ROLLBACK)){
+                player.getSnake().move();
+                checkEntityCollisions(player.getSnake());
+            }
             player.getSnake().move();
+        }
 
         terrainEntities.forEach((key, entity) -> {
             if(entity instanceof AbstractMovingEntity)
@@ -59,6 +61,7 @@ public class GameLogic implements Runnable, IHandler {
     private void checkCollisions() {
         // Checking collisions for players
         players.forEach((id1, player1) -> {
+            // Checking collisions for players
             players.forEach((id2, player2) -> {
                 // Did both players snake's heads collided?
                 if(player1 != player2 && CollisionHandler.checkCollisionOnEntities(player1.getSnake(), player2.getSnake()))
@@ -84,9 +87,9 @@ public class GameLogic implements Runnable, IHandler {
             terrainEntities.forEach((id, entity) -> { // Going through all entities
                 if(CollisionHandler.checkCollisionOnEntities(player1.getSnake(), entity)){
                     if(entity instanceof AbstractMovingEntity){ // To distinguish the type of entity
-                        ((AbstractMovingEntity)entity).onCollide(player1);
+                        ((AbstractMovingEntity)entity).onCollide(player1.getSnake());
                     } else if(entity instanceof AbstractStaticEntity){
-                        ((AbstractStaticEntity)entity).onCollide(player1);
+                        ((AbstractStaticEntity)entity).onCollide(player1.getSnake());
                     }
                     terrainEntities.remove(id);
                 }
@@ -99,6 +102,44 @@ public class GameLogic implements Runnable, IHandler {
                 if(CollisionHandler.checkCollisionWithTerrain((AbstractMovingEntity) entity, terrain)) { // '6' is an index for "Wall"
                     entity.setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 5 moves
                 }
+            }
+        });
+    }
+
+    private void checkEntityCollisions(AbstractMovingEntity movingEntity){
+        // Checking collisions for players
+        players.forEach((id2, player2) -> {
+            // Did both players snake's heads collided?
+            if(movingEntity != player2.getSnake() && CollisionHandler.checkCollisionOnEntities(movingEntity, player2.getSnake()))
+                movingEntity.onCollide(player2.getSnake());
+            if(movingEntity instanceof Snake){
+                int tailLength = player2.getSnake().getTailLength();
+                int tailCollisionIndex = CollisionHandler.checkCollisionOnTails((Snake)movingEntity, player2.getSnake());
+                if(tailCollisionIndex > 0){ // Did movingEntity bite player2's tail?
+                    if(movingEntity != player2.getSnake())
+                        ((Snake)movingEntity).deltaTailLength(tailLength - tailCollisionIndex);
+                    player2.getSnake().deltaTailLength(-(tailLength - tailCollisionIndex));
+                }
+            }
+        });
+
+        // Checking player collision with map
+        // Getting a position 'one ahead', to check if the player going to collide in the next move
+        if(CollisionHandler.checkCollisionWithTerrain(movingEntity, terrain)) { // '6' is an index for "Wall"
+            movingEntity.setEffect(EEffect.STUN, 5); // Apply a 'Stun' effect to the player for 5 moves
+            if(movingEntity instanceof Snake)
+                ((Snake)movingEntity).deltaTailLength(-1); // Decrease player's tail length by 1 on impact
+        }
+
+        // Checking player collision with entities (collectibles, traps, etc)
+        terrainEntities.forEach((id, entity) -> { // Going through all entities
+            if(CollisionHandler.checkCollisionOnEntities(movingEntity, entity)){
+                if(entity instanceof AbstractMovingEntity){ // To distinguish the type of entity
+                    ((AbstractMovingEntity)entity).onCollide(movingEntity);
+                } else if(entity instanceof AbstractStaticEntity){
+                    ((AbstractStaticEntity)entity).onCollide(movingEntity);
+                }
+                terrainEntities.remove(id);
             }
         });
     }
@@ -201,4 +242,5 @@ public class GameLogic implements Runnable, IHandler {
         Entity entity = this.collectibleFactory.createMoving(id, randPos[0], randPos[1], this.players, terrain);
         return entity;
     }
+
 }

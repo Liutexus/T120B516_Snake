@@ -20,8 +20,8 @@ public abstract class StaticEntityDecorator extends AbstractStaticEntity impleme
 
     @Override
     public void onCollide(Object collider){
-        this.getEffects().forEach((k, v) -> {
-            ((Player)collider).getSnake().setEffect(k, v);
-        });
+        if(collider instanceof Entity){
+            this.getEffects().forEach(((Entity) collider)::setEffect);
+        }
     }
 }
