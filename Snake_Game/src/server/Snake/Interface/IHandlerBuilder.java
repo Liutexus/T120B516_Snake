@@ -2,7 +2,7 @@ package server.Snake.Interface;
 
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.GameLogic;
-import server.Snake.Handler;
+import server.Snake.Network.Handler;
 import server.Snake.MatchInstance;
 
 import java.net.Socket;

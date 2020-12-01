@@ -1,4 +1,4 @@
-package server.Snake.Packet;
+package server.Snake.Network.Packet;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -23,8 +23,7 @@ import server.Snake.Entity.Generic.GenericMovingEntity;
 import server.Snake.Entity.Generic.GenericStaticEntity;
 import server.Snake.Entity.Player;
 import client.Snake.Renderer.Command.PlayerMoveCommand;
-import server.Snake.Packet.Packet;
-import server.Snake.Utility.Adapter;
+import server.Snake.Network.Packet.Packet;
 import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.MapToObjectVisitor;
 import server.Snake.Utility.Utils;
@@ -217,6 +216,7 @@ class SnakePanel extends JPanel implements Runnable {
                 } catch (Exception e) {
                     System.out.println("Couldn't receive players from the server.");
 //                    e.printStackTrace();
+                    try {Thread.sleep(100);} catch (Exception ex) { };
                     continue;
                 }
             }

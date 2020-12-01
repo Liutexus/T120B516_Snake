@@ -37,18 +37,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/Network/HandlerListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/Network/HandlerSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/Network/Packet/LoginHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Snake/Network/Packet/PacketHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Builder/HandlerBuilderTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Entity/Builder/HandlerBuilderTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/HandlerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/HandlerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/MatchInstanceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/MatchInstanceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Packet/PacketTest$1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Packet/PacketTest$1$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Packet/PacketTest$1$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Packet/PacketTest$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/Snake_Game/server/Snake/Packet/PacketTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/NetworkCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/NetworkCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/PlayerMoveCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractMovingEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractMovingEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/AbstractStaticEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/CollectibleEntityFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Collectible/CollectibleEntityFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/ObstacleEntityFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Obstacle/ObstacleEntityFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Snake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Entity/Builder/HandlerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Entity/Builder/HandlerBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/GameLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IEntityFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IEntityFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/MapToObjectVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/MapToObjectVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Network/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interface/IHandlerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IHandlerBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Packet/Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Network/Packet/Packet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/server/Snake/HandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/HandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/server/Snake/Packet/PacketTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/server/Snake/Network/Packet/PacketTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,8 +77,8 @@
       <list>
         <option value="HTML File" />
         <option value="JUnit5 Test Class" />
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -306,6 +319,17 @@
     </state>
     <state x="802" y="238" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.-73.1680.1010@0.0.1920.1040" timestamp="1604612150742" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/server/Snake/Network/Packet/LoginHandler.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Snake_Game$All_Tests.ic" NAME="All Tests Coverage Results" MODIFIED="1605273173028" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Snake_Game$HandlerTest_setServerSocket__1_.ic" NAME="HandlerTest.setServerSocket (1) Coverage Results" MODIFIED="1605093670756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
@@ -332,11 +356,11 @@
     <SUITE FILE_PATH="coverage/Snake_Game$SwingRenderTest_run.ic" NAME="SwingRenderTest.run Coverage Results" MODIFIED="1605210709509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>client.Snake.Renderer.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Snake_Game$Client.ic" NAME="Client Coverage Results" MODIFIED="1604775562363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>client.Snake.Entities.*</FILTER>
-    </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$ScaredMovementTest_move.ic" NAME="ScaredMovementTest.move Coverage Results" MODIFIED="1605255591150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Entity.Strategy.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Snake_Game$Client.ic" NAME="Client Coverage Results" MODIFIED="1606823563118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>client.Snake.Entities.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Snake_Game$NeutralMovementTest_testMove.ic" NAME="NeutralMovementTest.testMove Coverage Results" MODIFIED="1605272733833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>server.Snake.Entity.Strategy.*</FILTER>

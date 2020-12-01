@@ -3,9 +3,8 @@ package client.Snake.Renderer.Command;
 import client.Snake.Renderer.Interface.ICommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EPacketHeader;
-import server.Snake.Packet.Packet;
+import server.Snake.Network.Packet.Packet;
 
 import java.io.OutputStreamWriter;
 import java.util.HashMap;

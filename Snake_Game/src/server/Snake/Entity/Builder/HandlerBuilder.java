@@ -2,7 +2,7 @@ package server.Snake.Entity.Builder;
 
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.GameLogic;
-import server.Snake.Handler;
+import server.Snake.Network.Handler;
 import server.Snake.Interface.IHandlerBuilder;
 import server.Snake.Interface.IObserver;
 import server.Snake.MatchInstance;

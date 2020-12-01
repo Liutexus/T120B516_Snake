@@ -10,12 +10,15 @@ import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntityFactory;
 import server.Snake.Entity.Obstacle.ObstacleEntityFactory;
 import server.Snake.Entity.Player;
+import server.Snake.Interface.IHandler;
+import server.Snake.Network.Handler;
+import server.Snake.Network.Packet.Packet;
 import server.Snake.Utility.Utils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class GameLogic implements Runnable {
+public class GameLogic implements Runnable, IHandler {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
     private Map<String, Entity> terrainEntities = new ConcurrentHashMap<>(); // All entities on the map
@@ -150,6 +153,23 @@ public class GameLogic implements Runnable {
             move();
 
             try {Thread.sleep(100);} catch (Exception e) { };
+        }
+    }
+
+    @Override
+    public void setNext(IHandler handler) {
+        return;
+    }
+
+    @Override
+    public void handle(Object request) {
+        switch (((Packet)request).header){
+            case CLIENT_RESPONSE:
+                this.updatePlayerField(((Packet)request).parseBody());
+                break;
+            default:
+                System.out.println("Error. Not recognised packet header '" + ((Packet)request).header.toString() + "'. ");
+                break;
         }
     }
 

@@ -36,7 +36,7 @@ public class Server {
             }
         } catch (Exception e) {
             System.out.println("Error running the server. Aborting...");
-//            e.printStackTrace();
+            e.printStackTrace();
             return;
         }
     }

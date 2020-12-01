@@ -10,6 +10,7 @@ import server.Snake.Entity.Entity;
 import server.Snake.Entity.Obstacle.Moving.Hawk;
 import server.Snake.Entity.Player;
 import server.Snake.Enumerator.EPacketHeader;
+import server.Snake.Network.Handler;
 import server.Snake.Utility.Utils;
 
 import java.io.BufferedReader;
