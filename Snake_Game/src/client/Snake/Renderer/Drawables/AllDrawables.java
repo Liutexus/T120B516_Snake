@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllDrawables implements IDrawable {
-
     private List<IDrawable> drawableList = new ArrayList<IDrawable>();
 
     public void addDrawable(IDrawable item)

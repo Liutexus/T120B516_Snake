@@ -11,9 +11,9 @@ import java.io.InputStreamReader;
 import java.net.SocketException;
 
 public class HandlerListener implements Runnable, IHandler {
-    Handler handler;
-    InputStreamReader in;
-    IHandler nextHandler;
+    private Handler handler;
+    private InputStreamReader in;
+    private IHandler nextHandler;
 
     public HandlerListener(Handler handler, InputStreamReader in) {
         this.handler = handler;

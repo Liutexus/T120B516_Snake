@@ -60,7 +60,7 @@ public class ClientUpdater implements Runnable{
                 packetMap = packet.parseBody();
                 packetMap.forEach((key, array) -> { // Because of laziness
                     if (!this.gameData.getTerrain().containsKey(key)) // Do we already have this line of terrain?
-                        this.gameData.getTerrain().put(Integer.parseInt((String) key), (ArrayList) array); // Putting a new line of terrain
+                        this.gameData.putTerrain(Integer.parseInt((String) key), (ArrayList) array); // Putting a new line of terrain
                 });
                 break;
             case ENTITY:
