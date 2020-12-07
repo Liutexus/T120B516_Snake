@@ -16,6 +16,7 @@ import client.Snake.Renderer.Command.TemplateCommand;
 import client.Snake.Renderer.Drawables.AllDrawables;
 import client.Snake.Renderer.Drawables.Terrain;
 import client.Snake.Renderer.Enumerator.ERendererState;
+import client.Snake.Renderer.Interface.IDrawable;
 import client.Snake.Renderer.Interface.IIterator;
 import client.Snake.Renderer.Network.ClientListener;
 import client.Snake.Renderer.Network.ClientUpdater;
@@ -201,7 +202,12 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
             this.gameData.getAllDrawables().addDrawable(entity);
         });
 
-        this.gameData.getAllDrawables().drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
+        Iterator drawables = gameData.getAllDrawables().createIterator();
+        while(drawables.hasNext()){
+            IDrawable drawable = (IDrawable) drawables.next();
+            drawable.drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
+        }
+//        this.gameData.getAllDrawables().drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
         this.gameData.getAllDrawables().removeDrawables();
     }
 
