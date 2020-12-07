@@ -37,14 +37,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
-      <change afterPath="$PROJECT_DIR$/resources/Tiles/wall_tile.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/Tile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/TileFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Console/GameConsole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Console/Terminal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Interpreter/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/AllDrawables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/AllDrawables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Drawables/Terrain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientUpdater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Network/HandlerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Network/HandlerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/SnakePanel.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

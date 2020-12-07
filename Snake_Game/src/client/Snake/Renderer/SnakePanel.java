@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import client.Snake.Renderer.Command.TemplateCommand;
+import client.Snake.Renderer.Console.GameConsole;
 import client.Snake.Renderer.Drawables.AllDrawables;
 import client.Snake.Renderer.Drawables.Terrain;
 import client.Snake.Renderer.Enumerator.ERendererState;
@@ -26,6 +27,7 @@ import server.Snake.Entity.Generic.GenericMovingEntity;
 import server.Snake.Entity.Generic.GenericStaticEntity;
 import server.Snake.Entity.Player;
 import client.Snake.Renderer.Command.PlayerMoveCommand;
+import server.Snake.GameLogic;
 import server.Snake.Network.Packet.Packet;
 import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.MapToObjectVisitor;
@@ -49,6 +51,8 @@ public class SnakePanel extends JPanel implements Runnable {
 
         this.gameData = new GameData();
 
+        GameConsole.setupConsole(this);
+
         addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -57,8 +61,8 @@ public class SnakePanel extends JPanel implements Runnable {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                // Be useless for now
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                if(e.getKeyChar() == '`')
+                    e.consume();
             }
 
             @Override
@@ -75,6 +79,8 @@ public class SnakePanel extends JPanel implements Runnable {
         requestFocusInWindow();
 
         this.gameData = new GameData();
+
+        GameConsole.setupConsole(this);
 
         this.clientSocket = clientSocket;
         // Assign socket's input and output streams
@@ -97,8 +103,8 @@ public class SnakePanel extends JPanel implements Runnable {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                // Be useless for now
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                if(e.getKeyChar() == '`')
+                    e.consume();
             }
 
             @Override
@@ -153,6 +159,9 @@ public class SnakePanel extends JPanel implements Runnable {
             case KeyEvent.VK_Z:
                 TemplateCommand u = new PlayerMoveCommand();
                 u.command(this.gameData.getId(), out);
+                break;
+            case 192: // To control console's visibility. Set key - " ` ";
+                GameConsole.toggleVisibility();
                 break;
             default:
                 System.out.println("Not defined key press '" + key.getKeyChar() + "'");
