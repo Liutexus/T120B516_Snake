@@ -78,6 +78,13 @@ public class ClientUpdater implements Runnable{
                     this.gameData.putStaticTerrainEntity((String)packetMap.get("id"), (GenericStaticEntity) packetEntity);
                 }
                 break;
+
+            case COMMAND:
+                // TODO: Handle a received packet
+                String message = (String) packet.parseBody().get(packet.header.toString());
+                System.out.println(message);
+
+                break;
             default:
                 System.out.println("Error. Not recognised packet header '" + packet.header.toString() + "'. ");
                 break;

@@ -25,14 +25,14 @@ public class MatchInstance implements Runnable, ISubject, IHandler {
     private static int concurrentThreads = 1;
 
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
+
     private Map<Integer, HandlerBuilder> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
     private Map<Integer, Entity> terrainEntities = new ConcurrentHashMap<>(); // All collectibles on the map
-
     private GameLogic gameLogic;
+
     private int[][] terrain;
     private int maxPlayerCount = Integer.parseInt(Utils.parseConfig("server", "maxPlayersPerMatch"));
     private int currentPlayerCount = 0;
-
     private EMatchStatus status = EMatchStatus.UNDETERMINED;
 
     private IHandler nextHandler;
@@ -53,6 +53,18 @@ public class MatchInstance implements Runnable, ISubject, IHandler {
 
     public int getMaxPlayerCount() {
         return this.maxPlayerCount;
+    }
+
+    public Map<String, Player> getPlayers() {
+        return players;
+    }
+
+    public Map<Integer, Entity> getTerrainEntities() {
+        return terrainEntities;
+    }
+
+    public int[][] getTerrain() {
+        return terrain;
     }
 
     public Map getHandlers(){

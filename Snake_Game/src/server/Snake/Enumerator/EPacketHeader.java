@@ -7,6 +7,7 @@ public enum EPacketHeader {
     STRING,
     FLOAT,
     ARRAY,
+    COMMAND,
 
     ID,
     PLAYER,
