@@ -1,5 +1,9 @@
 package client.Snake.Renderer.Console;
 
+import client.Snake.Renderer.Command.CustomPacketCommand;
+import client.Snake.Renderer.SwingRender;
+import server.Snake.Enumerator.EPacketHeader;
+
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
@@ -7,7 +11,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
 public class Terminal extends JPanel {
@@ -116,7 +122,13 @@ public class Terminal extends JPanel {
                 if(input.getText().trim().length() == 0) return;
                 output.append(input.getText() + "\n");
 
-                // TODO: Send input.getText() -> to interpreter
+                // Send input.getText() -> Server's to interpreter
+                try {
+                    OutputStreamWriter out = new OutputStreamWriter(SwingRender.getInstance().getClientSocket().getOutputStream());
+                    CustomPacketCommand.customPacket(EPacketHeader.COMMAND, input.getText(), out);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 input.setText("");
                 break;

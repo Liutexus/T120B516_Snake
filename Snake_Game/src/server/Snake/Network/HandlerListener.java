@@ -1,10 +1,10 @@
 package server.Snake.Network;
 
+import server.Snake.Interpreter.Interpreter;
 import server.Snake.Enumerator.EClientStatus;
+import server.Snake.Enumerator.EPacketHeader;
 import server.Snake.Interface.IHandler;
-import server.Snake.MatchInstance;
 import server.Snake.Network.Packet.Packet;
-import server.Snake.Server;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -44,6 +44,10 @@ public class HandlerListener implements Runnable, IHandler {
         switch (packet.header){
             case CLIENT_RESPONSE:
                 this.handler.getGameLogic().updatePlayerField(packet.parseBody());
+                break;
+            case COMMAND:
+                Interpreter.execute(packet.getBody(), handler);
+                handler.sendPacket(EPacketHeader.COMMAND, "sup, got the shit");
                 break;
             default:
                 this.handle(packet);
