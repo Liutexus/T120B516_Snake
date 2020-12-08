@@ -1,15 +1,17 @@
 package client.Snake.Renderer;
 
 import client.Snake.Renderer.Drawables.AllDrawables;
+import client.Snake.Renderer.Interface.IIterator;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class GameData {
+public class GameData implements IIterator {
     private String id;
     private AllDrawables allDrawables = new AllDrawables();
     private Map<String, Player> snakes = new ConcurrentHashMap<>();
@@ -69,5 +71,10 @@ public class GameData {
 
     public void putTerrain(Integer key, ArrayList array){
         this.terrain.put(key, array);
+    }
+
+    @Override
+    public Iterator createIterator() {
+        return snakes.values().iterator();
     }
 }

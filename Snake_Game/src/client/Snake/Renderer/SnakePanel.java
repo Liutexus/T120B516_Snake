@@ -16,6 +16,8 @@ import client.Snake.Renderer.Command.TemplateCommand;
 import client.Snake.Renderer.Drawables.AllDrawables;
 import client.Snake.Renderer.Drawables.Terrain;
 import client.Snake.Renderer.Enumerator.ERendererState;
+import client.Snake.Renderer.Interface.IDrawable;
+import client.Snake.Renderer.Interface.IIterator;
 import client.Snake.Renderer.Network.ClientListener;
 import client.Snake.Renderer.Network.ClientUpdater;
 import server.Snake.Entity.AbstractMovingEntity;
@@ -31,7 +33,7 @@ import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.MapToObjectVisitor;
 import server.Snake.Utility.Utils;
 
-public class SnakePanel extends JPanel implements Runnable {
+public class SnakePanel extends JPanel implements Runnable, IIterator {
     private static SnakePanel panelInstance = null;
 
     private Socket clientSocket;
@@ -181,9 +183,15 @@ public class SnakePanel extends JPanel implements Runnable {
         });
 
         // Draw all players
-        for (Player player : this.gameData.getSnakes().values()) {
-            this.gameData.getAllDrawables().addDrawable(player.getSnake());
+        Iterator snake = gameData.createIterator();
+        while(snake.hasNext()){
+            Player data = (Player) snake.next();
+            this.gameData.getAllDrawables().addDrawable(data.getSnake());
         }
+
+//        for (Player player : this.gameData.getSnakes().values()) {
+//            this.gameData.getAllDrawables().addDrawable(player.getSnake());
+//        }
 
         // Draw all objects placed on the map
         this.gameData.getStaticTerrainEntities().forEach((type, entity) -> {
@@ -194,7 +202,12 @@ public class SnakePanel extends JPanel implements Runnable {
             this.gameData.getAllDrawables().addDrawable(entity);
         });
 
-        this.gameData.getAllDrawables().drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
+        Iterator drawables = gameData.getAllDrawables().createIterator();
+        while(drawables.hasNext()){
+            IDrawable drawable = (IDrawable) drawables.next();
+            drawable.drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
+        }
+//        this.gameData.getAllDrawables().drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
         this.gameData.getAllDrawables().removeDrawables();
     }
 
@@ -230,5 +243,10 @@ public class SnakePanel extends JPanel implements Runnable {
             try{Thread.sleep(100);} catch (Exception e){
             }
         }
+    }
+
+    @Override
+    public Iterator createIterator() {
+        return null;
     }
 }
