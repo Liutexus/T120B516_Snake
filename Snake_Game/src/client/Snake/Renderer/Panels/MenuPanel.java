@@ -1,9 +1,12 @@
 package client.Snake.Renderer.Panels;
 
 import client.Snake.Command.NetworkCommand;
+import client.Snake.Interface.IRenderState;
 import client.Snake.Renderer.Components.MenuButton;
-import client.Snake.Enumerator.ERendererState;
 import client.Snake.Interface.IMediator;
+import client.Snake.Renderer.RenderState.HostGameState;
+import client.Snake.Renderer.RenderState.InGameRenderState;
+import client.Snake.Renderer.RenderState.SettingsRenderState;
 import client.Snake.Renderer.SwingRender;
 
 import javax.swing.*;
@@ -58,15 +61,15 @@ public class MenuPanel extends JPanel implements Runnable, IMediator {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            changeRenderState(ERendererState.IN_GAME);
+            changeRenderState(new InGameRenderState());
         } else if (settingsButton.equals(sender)) { // Clicking 'Settings' button
-            changeRenderState(ERendererState.SETTINGS);
+            changeRenderState(new SettingsRenderState());
         } else if (hostGameButton.equals(sender)) { // Clicking 'Host Game' button
-            changeRenderState(ERendererState.HOST_GAME);
+            changeRenderState(new HostGameState());
         }
     }
 
-    private void changeRenderState(ERendererState state){
+    private void changeRenderState(IRenderState state){
         render.remove(this);
         this.invalidate();
         this.validate();

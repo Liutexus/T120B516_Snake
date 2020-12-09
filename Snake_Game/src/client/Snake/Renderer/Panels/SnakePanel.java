@@ -1,31 +1,33 @@
 package client.Snake.Renderer.Panels;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.*;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import client.Snake.Command.NetworkCommand;
+import client.Snake.Command.PlayerMoveCommand;
 import client.Snake.Command.TemplateCommand;
-import client.Snake.Network.GameData;
-import client.Snake.Renderer.Console.GameConsole;
-import client.Snake.Renderer.Drawables.Terrain;
-import client.Snake.Enumerator.ERendererState;
 import client.Snake.Interface.IDrawable;
 import client.Snake.Interface.IIterator;
 import client.Snake.Network.ClientListener;
 import client.Snake.Network.ClientUpdater;
-import client.Snake.Command.NetworkCommand;
+import client.Snake.Network.GameData;
+import client.Snake.Renderer.Console.GameConsole;
+import client.Snake.Renderer.Drawables.Terrain;
+import client.Snake.Renderer.RenderState.InGameRenderState;
 import client.Snake.Renderer.SwingRender;
 import server.Snake.Entity.Player;
-import client.Snake.Command.PlayerMoveCommand;
 import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.Utils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SnakePanel extends JPanel implements Runnable, IIterator {
     private static SnakePanel panelInstance = null;
@@ -219,7 +221,7 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
         executor.execute(updater);
         executor.execute(listener);
 
-        while(SwingRender.getInstance().getCurrentState() == ERendererState.IN_GAME){
+        while(SwingRender.getInstance().getCurrentState().getClass() == InGameRenderState.class){
             this.gameTime++;
             try{Thread.sleep(100);} catch (Exception ignored){
             }

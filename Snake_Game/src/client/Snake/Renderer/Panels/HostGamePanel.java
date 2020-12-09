@@ -1,8 +1,8 @@
 package client.Snake.Renderer.Panels;
 
-import client.Snake.Renderer.Components.MenuButton;
-import client.Snake.Enumerator.ERendererState;
 import client.Snake.Interface.IMediator;
+import client.Snake.Renderer.Components.MenuButton;
+import client.Snake.Renderer.RenderState.MenuRenderState;
 import client.Snake.Renderer.SwingRender;
 
 import javax.swing.*;
@@ -35,7 +35,7 @@ public class HostGamePanel extends JPanel implements Runnable, IMediator {
     @Override
     public void notify(Object sender) {
         if (this.backButton.equals(sender)) {
-            this.render.setCurrentState(ERendererState.MENU);
+            this.render.setCurrentState(new MenuRenderState());
             this.render.remove(this);
             this.invalidate();
             this.validate();

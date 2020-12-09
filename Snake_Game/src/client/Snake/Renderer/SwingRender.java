@@ -1,13 +1,15 @@
 package client.Snake.Renderer;
 
-import client.Snake.Enumerator.ERendererState;
+import client.Snake.Interface.IRenderState;
 import client.Snake.Renderer.Panels.HostGamePanel;
 import client.Snake.Renderer.Panels.MenuPanel;
 import client.Snake.Renderer.Panels.SettingsPanel;
 import client.Snake.Renderer.Panels.SnakePanel;
+import client.Snake.Renderer.RenderState.ClosedRenderState;
+import client.Snake.Renderer.RenderState.MenuRenderState;
 import server.Snake.Utility.Utils;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.net.Socket;
 
@@ -18,7 +20,7 @@ public class SwingRender extends JFrame implements Runnable {
 
     private Dimension prefScreenSize = new Dimension(1000, 1000);
 
-    private static ERendererState currentState = ERendererState.MENU;
+    private static IRenderState currentState;
     private SnakePanel gamePanel;
     private MenuPanel menuPanel;
     private SettingsPanel settingsPanel;
@@ -69,7 +71,7 @@ public class SwingRender extends JFrame implements Runnable {
         } catch (Exception e) {
             System.out.println("No server to connect to.");
         }
-
+        currentState = new MenuRenderState();
         // 'Join game view button' here
         initiateViews();
     }
@@ -80,11 +82,11 @@ public class SwingRender extends JFrame implements Runnable {
         return instance;
     }
 
-    public ERendererState getCurrentState(){
+    public IRenderState getCurrentState(){
         return currentState;
     }
 
-    public void setCurrentState(ERendererState state){
+    public void setCurrentState(IRenderState state){
         currentState = state;
     }
 
@@ -93,7 +95,7 @@ public class SwingRender extends JFrame implements Runnable {
     }
 
     public void close(){
-        this.setCurrentState(ERendererState.CLOSED);
+        this.setCurrentState(new ClosedRenderState());
         synchronized (this){
             this.notify();
         }
@@ -101,46 +103,10 @@ public class SwingRender extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        while(currentState != ERendererState.CLOSED) {
-            // Switch between views
-            switch(currentState) {
-                case TESTING:
-                case MENU:
-                    this.add(MenuPanel.getInstance());
-                    this.pack();
-                    this.setVisible(true);
-                    menuPanel.repaint();
-                    break;
-                case IN_GAME:
-                    gamePanel = SnakePanel.getInstance(clientSocket);
-                    gamePanel.setPreferredSize(prefScreenSize);
-                    this.add(gamePanel);
-                    gamePanel.requestFocus();
-                    this.validate();
-                    if(gamePanel.isDisplayable()) { // Is current panel is the game panel
-                        gamePanel.run();
-                    }
-                    break;
-                case SETTINGS:
-                    this.add(SettingsPanel.getInstance());
-                    this.pack();
-                    this.setVisible(true);
-                    settingsPanel.repaint();
-                    break;
-                case HOST_GAME:
-                    this.add(HostGamePanel.getInstance());
-                    this.pack();
-                    this.setVisible(true);
-                    hostGamePanel.repaint();
-                    break;
-                case POST_GAME:
-                    System.out.println("PostGame View Opened");
-                    break;
-                default:
-                    break;
-            }
+        while(currentState.getClass() != ClosedRenderState.class) {
+            currentState.run(this);
             synchronized (this){
-                try { this.wait(); } catch (Exception e) { }
+                try { this.wait(); } catch (Exception ignored) { }
             }
         }
     }
