@@ -1,6 +1,6 @@
 package client.Snake.Renderer.Components;
 
-import client.Snake.Renderer.Interface.IMediator;
+import client.Snake.Interface.IMediator;
 
 import javax.swing.*;
 import java.awt.*;

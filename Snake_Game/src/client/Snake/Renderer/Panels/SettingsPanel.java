@@ -1,8 +1,9 @@
-package client.Snake.Renderer;
+package client.Snake.Renderer.Panels;
 
+import client.Snake.Interface.IMediator;
 import client.Snake.Renderer.Components.MenuButton;
-import client.Snake.Renderer.Enumerator.ERendererState;
-import client.Snake.Renderer.Interface.IMediator;
+import client.Snake.Renderer.RenderState.MenuRenderState;
+import client.Snake.Renderer.SwingRender;
 
 import javax.swing.*;
 
@@ -34,7 +35,7 @@ public class SettingsPanel extends JPanel implements Runnable, IMediator {
     @Override
     public void notify(Object sender) {
         if (backButton.equals(sender)) {
-            render.setCurrentState(ERendererState.MENU);
+            render.setCurrentState(new MenuRenderState());
             render.remove(this);
             this.invalidate();
             this.validate();

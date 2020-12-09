@@ -9,6 +9,7 @@ import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EPacketHeader;
 import server.Snake.GameLogic;
 import server.Snake.Interface.IHandler;
+import server.Snake.Logic.IGameLogic;
 import server.Snake.MatchInstance;
 import server.Snake.Network.Packet.Packet;
 import server.Snake.Server;
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class Handler implements Runnable, IHandler {
     private Socket serverSocket;
     private MatchInstance match;
-    private GameLogic gameLogic;
+    private IGameLogic gameLogic;
     private HandlerBuilder builder;
     private OutputStream out;
     private InputStream in;
@@ -117,11 +118,11 @@ public class Handler implements Runnable, IHandler {
         return this.status;
     }
 
-    public void setGameLogic(GameLogic gameLogic) {
+    public void setGameLogic(IGameLogic gameLogic) {
         this.gameLogic = gameLogic;
     }
 
-    public GameLogic getGameLogic(){
+    public IGameLogic getGameLogic(){
         return this.gameLogic;
     }
 

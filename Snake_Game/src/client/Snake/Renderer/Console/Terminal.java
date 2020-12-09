@@ -1,6 +1,6 @@
 package client.Snake.Renderer.Console;
 
-import client.Snake.Renderer.Command.CustomPacketCommand;
+import client.Snake.Command.CustomPacketCommand;
 import client.Snake.Renderer.SwingRender;
 import server.Snake.Enumerator.EPacketHeader;
 

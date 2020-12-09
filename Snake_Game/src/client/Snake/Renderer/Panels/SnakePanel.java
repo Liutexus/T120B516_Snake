@@ -1,39 +1,33 @@
-package client.Snake.Renderer;
+package client.Snake.Renderer.Panels;
+
+import client.Snake.Command.NetworkCommand;
+import client.Snake.Command.PlayerMoveCommand;
+import client.Snake.Command.TemplateCommand;
+import client.Snake.Interface.IDrawable;
+import client.Snake.Interface.IIterator;
+import client.Snake.Network.ClientListener;
+import client.Snake.Network.ClientUpdater;
+import client.Snake.Network.GameData;
+import client.Snake.Renderer.Console.GameConsole;
+import client.Snake.Renderer.Drawables.Terrain;
+import client.Snake.Renderer.RenderState.InGameRenderState;
+import client.Snake.Renderer.SwingRender;
+import server.Snake.Entity.Player;
+import server.Snake.Utility.BitmapConverter;
+import server.Snake.Utility.Utils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import client.Snake.Renderer.Command.TemplateCommand;
-import client.Snake.Renderer.Console.GameConsole;
-import client.Snake.Renderer.Drawables.AllDrawables;
-import client.Snake.Renderer.Drawables.Terrain;
-import client.Snake.Renderer.Enumerator.ERendererState;
-import client.Snake.Renderer.Interface.IDrawable;
-import client.Snake.Renderer.Interface.IIterator;
-import client.Snake.Renderer.Network.ClientListener;
-import client.Snake.Renderer.Network.ClientUpdater;
-import server.Snake.Entity.AbstractMovingEntity;
-import server.Snake.Entity.AbstractStaticEntity;
-import client.Snake.Renderer.Command.NetworkCommand;
-import server.Snake.Entity.Entity;
-import server.Snake.Entity.Generic.GenericMovingEntity;
-import server.Snake.Entity.Generic.GenericStaticEntity;
-import server.Snake.Entity.Player;
-import client.Snake.Renderer.Command.PlayerMoveCommand;
-import server.Snake.GameLogic;
-import server.Snake.Network.Packet.Packet;
-import server.Snake.Utility.BitmapConverter;
-import server.Snake.Utility.MapToObjectVisitor;
-import server.Snake.Utility.Utils;
 
 public class SnakePanel extends JPanel implements Runnable, IIterator {
     private static SnakePanel panelInstance = null;
@@ -138,36 +132,20 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
     }
 
     private void keyResponse(KeyEvent key) {
-        switch (key.getKeyCode()){
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_W:
-                PlayerMoveCommand.moveUp(this.gameData.getId(), out);
-                break;
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_D:
-                PlayerMoveCommand.moveRight(this.gameData.getId(), out);
-                break;
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_S:
-                PlayerMoveCommand.moveDown(this.gameData.getId(), out);
-                break;
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_A:
-                PlayerMoveCommand.moveLeft(this.gameData.getId(), out);
-                break;
-            case KeyEvent.VK_SPACE:
-                PlayerMoveCommand.moveStop(this.gameData.getId(), out);
-                break;
-            case KeyEvent.VK_Z:
+        //                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
+        switch (key.getKeyCode()) {
+            case KeyEvent.VK_UP, KeyEvent.VK_W -> PlayerMoveCommand.moveUp(this.gameData.getId(), out);
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> PlayerMoveCommand.moveRight(this.gameData.getId(), out);
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> PlayerMoveCommand.moveDown(this.gameData.getId(), out);
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> PlayerMoveCommand.moveLeft(this.gameData.getId(), out);
+            case KeyEvent.VK_SPACE -> PlayerMoveCommand.moveStop(this.gameData.getId(), out);
+            case KeyEvent.VK_Z -> {
                 TemplateCommand u = new PlayerMoveCommand();
                 u.command(this.gameData.getId(), out);
-                break;
-            case 192: // To control console's visibility. Set key - " ` ";
-                GameConsole.toggleVisibility();
-                break;
-            default:
-                System.out.println("Not defined key press '" + key.getKeyChar() + "'");
-//                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
+            }
+// To control console's visibility. Set key - " ` ";
+            case 192 -> GameConsole.toggleVisibility();
+            default -> System.out.println("Not defined key press '" + key.getKeyChar() + "'");
         }
     }
 
@@ -192,7 +170,7 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
         });
 
         // Draw all players
-        Iterator snake = gameData.createIterator();
+        var snake = gameData.createIterator();
         while(snake.hasNext()){
             Player data = (Player) snake.next();
             this.gameData.getAllDrawables().addDrawable(data.getSnake());
@@ -203,15 +181,11 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
 //        }
 
         // Draw all objects placed on the map
-        this.gameData.getStaticTerrainEntities().forEach((type, entity) -> {
-            this.gameData.getAllDrawables().addDrawable(entity);
-        });
+        this.gameData.getStaticTerrainEntities().forEach((type, entity) -> this.gameData.getAllDrawables().addDrawable(entity));
 
-        this.gameData.getMovingTerrainEntities().forEach((type, entity) -> {
-            this.gameData.getAllDrawables().addDrawable(entity);
-        });
+        this.gameData.getMovingTerrainEntities().forEach((type, entity) -> this.gameData.getAllDrawables().addDrawable(entity));
 
-        Iterator drawables = gameData.getAllDrawables().createIterator();
+        var drawables = gameData.getAllDrawables().createIterator();
         while(drawables.hasNext()){
             IDrawable drawable = (IDrawable) drawables.next();
             drawable.drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
@@ -235,7 +209,7 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
             } catch (Exception e) {
                 System.out.println("Cannot establish connection to server.");
                 synchronized (this){
-                    try { this.wait(1000); } catch (Exception ex) { }
+                    try { this.wait(1000); } catch (Exception ignored) { }
                 }
 //                e.printStackTrace();
             }
@@ -247,9 +221,9 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
         executor.execute(updater);
         executor.execute(listener);
 
-        while(SwingRender.getInstance().getCurrentState() == ERendererState.IN_GAME){
+        while(SwingRender.getInstance().getCurrentState().getClass() == InGameRenderState.class){
             this.gameTime++;
-            try{Thread.sleep(100);} catch (Exception e){
+            try{Thread.sleep(100);} catch (Exception ignored){
             }
         }
     }

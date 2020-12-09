@@ -1,6 +1,6 @@
 package server.Snake.Entity;
 
-import client.Snake.Renderer.Interface.IDrawable;
+import client.Snake.Interface.IDrawable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Entity.Memento.Caretaker;
 import server.Snake.Entity.Memento.Memento;
@@ -9,7 +9,6 @@ import server.Snake.Interface.IEntity;
 import server.Snake.Interface.IVisitor;
 import server.Snake.Utility.Adapter;
 import server.Snake.Interface.IVisitable;
-import server.Snake.Utility.MapToObjectVisitor;
 
 import java.awt.*;
 import java.util.Map;

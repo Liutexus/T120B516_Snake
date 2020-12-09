@@ -8,7 +8,7 @@ import server.Snake.Entity.Entity;
 import server.Snake.Entity.Player;
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EMatchStatus;
-import server.Snake.GameLogic;
+import server.Snake.Logic.ConcreteGameLogic;
 import server.Snake.MatchInstance;
 import server.Snake.Server;
 import server.Snake.Utility.Utils;
@@ -79,7 +79,7 @@ class HandlerBuilderTest {
 
     @Test
     void setGameLogic() {
-        GameLogic testGameLogic = new GameLogic();
+        ConcreteGameLogic testGameLogic = new ConcreteGameLogic();
         this.testHandlerBuilder.setGameLogic(testGameLogic);
         assertEquals(testGameLogic, this.testHandlerBuilder.getProduct().getGameLogic());
     }

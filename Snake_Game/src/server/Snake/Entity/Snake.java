@@ -1,6 +1,6 @@
 package server.Snake.Entity;
 
-import client.Snake.Renderer.Interface.IDrawable;
+import client.Snake.Interface.IDrawable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import server.Snake.Entity.Effect.EffectHandler;
 import server.Snake.Entity.Memento.Caretaker;

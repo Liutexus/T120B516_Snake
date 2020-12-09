@@ -1,5 +1,6 @@
 package client.Snake.Renderer.Command;
 
+import client.Snake.Command.PlayerMoveCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.Snake.Utility.Utils;
@@ -60,7 +61,7 @@ class PlayerMoveCommandTest {
                 e.printStackTrace();
             }
         }
-        PlayerMoveCommand.moveUp("test", this.out);
+        client.Snake.Command.PlayerMoveCommand.moveUp("test", this.out);
 //        PlayerMoveCommand.undo("test", this.out);
     }
 
@@ -101,7 +102,7 @@ class PlayerMoveCommandTest {
                 e.printStackTrace();
             }
         }
-        PlayerMoveCommand.moveDown("test", this.out);
+        client.Snake.Command.PlayerMoveCommand.moveDown("test", this.out);
 //        PlayerMoveCommand.undo("test", this.out);
     }
 
@@ -142,7 +143,7 @@ class PlayerMoveCommandTest {
                 e.printStackTrace();
             }
         }
-        PlayerMoveCommand.moveRight("test", this.out);
+        client.Snake.Command.PlayerMoveCommand.moveRight("test", this.out);
 //        PlayerMoveCommand.undo("test", this.out);
     }
 
@@ -183,7 +184,7 @@ class PlayerMoveCommandTest {
                 e.printStackTrace();
             }
         }
-        PlayerMoveCommand.moveLeft("test", this.out);
+        client.Snake.Command.PlayerMoveCommand.moveLeft("test", this.out);
 //        PlayerMoveCommand.undo("test", this.out);
     }
 

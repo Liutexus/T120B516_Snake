@@ -10,6 +10,7 @@ import server.Snake.Entity.Entity;
 import server.Snake.Entity.Obstacle.Moving.Hawk;
 import server.Snake.Entity.Player;
 import server.Snake.Enumerator.EPacketHeader;
+import server.Snake.Logic.ConcreteGameLogic;
 import server.Snake.Network.Handler;
 import server.Snake.Utility.Utils;
 
@@ -113,7 +114,7 @@ class HandlerTest {
 
     @Test
     void setGameLogic() {
-        GameLogic testGameLogic = new GameLogic();
+        ConcreteGameLogic testGameLogic = new ConcreteGameLogic();
         testHandler.setGameLogic(testGameLogic);
         assertEquals(testGameLogic, testHandler.getGameLogic());
     }

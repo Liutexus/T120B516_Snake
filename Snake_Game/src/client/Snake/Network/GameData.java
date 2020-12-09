@@ -1,7 +1,7 @@
-package client.Snake.Renderer;
+package client.Snake.Network;
 
 import client.Snake.Renderer.Drawables.AllDrawables;
-import client.Snake.Renderer.Interface.IIterator;
+import client.Snake.Interface.IIterator;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.AbstractStaticEntity;
 import server.Snake.Entity.Player;

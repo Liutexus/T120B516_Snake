@@ -1,13 +1,13 @@
 package client.Snake.Renderer;
 
+import client.Snake.Renderer.RenderState.ClosedRenderState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import client.Snake.Renderer.Enumerator.ERendererState;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SwingRenderTest {
     private ExecutorService pool;
@@ -46,6 +46,6 @@ class SwingRenderTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(ERendererState.CLOSED, testRender.getCurrentState());
+        assertEquals(ClosedRenderState.class, testRender.getCurrentState().getClass());
     }
 }

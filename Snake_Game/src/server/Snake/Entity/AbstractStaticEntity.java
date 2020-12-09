@@ -1,6 +1,6 @@
 package server.Snake.Entity;
 
-import client.Snake.Renderer.SnakePanel;
+import client.Snake.Renderer.Panels.SnakePanel;
 import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntity;
 

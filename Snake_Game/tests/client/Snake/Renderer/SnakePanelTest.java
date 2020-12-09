@@ -1,12 +1,11 @@
 package client.Snake.Renderer;
 
+import client.Snake.Renderer.Panels.SnakePanel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import server.Snake.Entity.Snake;
 import server.Snake.Server;
 import server.Snake.Utility.Utils;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +34,7 @@ class SnakePanelTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        SnakePanel testSnakePanel = SnakePanel.getInstance(testSocket);
+        client.Snake.Renderer.Panels.SnakePanel testSnakePanel = SnakePanel.getInstance(testSocket);
 
         assertNotNull(testSnakePanel);
 
