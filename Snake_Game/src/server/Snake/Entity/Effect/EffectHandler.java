@@ -1,11 +1,8 @@
 package server.Snake.Entity.Effect;
 
-import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.Entity;
-import server.Snake.Entity.Player;
 import server.Snake.Entity.Snake;
 import server.Snake.Enumerator.EEffect;
-import server.Snake.GameLogic;
 
 import java.util.Map;
 

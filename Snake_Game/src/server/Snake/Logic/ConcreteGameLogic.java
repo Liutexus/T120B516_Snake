@@ -1,5 +1,5 @@
 // GameLogic.java is responsible of validating players' moves and determining game's state
-package server.Snake;
+package server.Snake.Logic;
 
 import server.Snake.Entity.*;
 import server.Snake.Entity.Collectible.CollectibleEntityFactory;
@@ -8,6 +8,7 @@ import server.Snake.Enumerator.EEffect;
 import server.Snake.Interface.IEntityFactory;
 import server.Snake.Entity.Obstacle.ObstacleEntityFactory;
 import server.Snake.Interface.IHandler;
+import server.Snake.MatchInstance;
 import server.Snake.Network.Handler;
 import server.Snake.Network.Packet.Packet;
 import server.Snake.Utility.Utils;
@@ -15,7 +16,7 @@ import server.Snake.Utility.Utils;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class GameLogic implements Runnable, IHandler {
+public class ConcreteGameLogic implements Runnable, IHandler, IGameLogic {
     private Map<Integer, Handler> handlers = new ConcurrentHashMap<>();
     private MatchInstance matchInstance;
     private Map<String, Player> players = new ConcurrentHashMap<>(); // All current players
@@ -33,9 +34,9 @@ public class GameLogic implements Runnable, IHandler {
 
     private IHandler nextHandler;
 
-    public GameLogic(){}
+    public ConcreteGameLogic(){}
 
-    public GameLogic(Map handlers, Map players, MatchInstance matchInstance, Map terrainEntities, int[][] terrain){
+    public ConcreteGameLogic(Map handlers, Map players, MatchInstance matchInstance, Map terrainEntities, int[][] terrain){
         this.handlers = handlers;
         this.players = players;
         this.matchInstance = matchInstance;

@@ -1,7 +1,8 @@
 package server.Snake.Entity.Builder;
 
 import server.Snake.Enumerator.EClientStatus;
-import server.Snake.GameLogic;
+import server.Snake.Logic.ConcreteGameLogic;
+import server.Snake.Logic.IGameLogic;
 import server.Snake.Network.Handler;
 import server.Snake.Interface.IHandlerBuilder;
 import server.Snake.Interface.IObserver;
@@ -41,7 +42,7 @@ public class HandlerBuilder implements IHandlerBuilder, IObserver {
     }
 
     @Override
-    public Handler setGameLogic(GameLogic gameLogic) {
+    public Handler setGameLogic(IGameLogic gameLogic) {
         this.handler.setGameLogic(gameLogic);
         return this.handler;
     }

@@ -9,6 +9,9 @@ import server.Snake.Interface.IHandler;
 import server.Snake.Interface.IObserver;
 import server.Snake.Interface.ISubject;
 import server.Snake.Enumerator.EPacketHeader;
+import server.Snake.Logic.ConcreteGameLogic;
+import server.Snake.Logic.IGameLogic;
+import server.Snake.Logic.ProxyGameLogic;
 import server.Snake.Network.Packet.Packet;
 import server.Snake.Utility.BitmapConverter;
 import server.Snake.Utility.Utils;
@@ -28,7 +31,7 @@ public class MatchInstance implements Runnable, ISubject, IHandler {
 
     private Map<Integer, HandlerBuilder> handlers = new ConcurrentHashMap<>(); // All opened socket's to clients
     private Map<Integer, Entity> terrainEntities = new ConcurrentHashMap<>(); // All collectibles on the map
-    private GameLogic gameLogic;
+    private IGameLogic gameLogic;
 
     private int[][] terrain;
     private int maxPlayerCount = Integer.parseInt(Utils.parseConfig("server", "maxPlayersPerMatch"));
@@ -120,7 +123,7 @@ public class MatchInstance implements Runnable, ISubject, IHandler {
     @Override
     public void run() {
         ExecutorService pool = Executors.newFixedThreadPool(concurrentThreads);
-        this.gameLogic = new GameLogic(this.handlers, this.players, this, this.terrainEntities, this.terrain);
+        this.gameLogic = new ProxyGameLogic(this.handlers, this.players, this, this.terrainEntities, this.terrain);
         pool.execute(gameLogic);
         while(true){
             if(currentPlayerCount != maxPlayerCount && this.status != EMatchStatus.ONGOING) {

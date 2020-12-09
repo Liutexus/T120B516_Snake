@@ -3,16 +3,15 @@ package server.Snake;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.Snake.Entity.Player;
+import server.Snake.Logic.ConcreteGameLogic;
 import server.Snake.Utility.Utils;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class GameLogicTest {
-    private GameLogic testGameLogic;
+class ConcreteGameLogicTest {
+    private ConcreteGameLogic testGameLogic;
 
     @BeforeEach
     void setUp() {
-        this.testGameLogic = new GameLogic();
+        this.testGameLogic = new ConcreteGameLogic();
 
         for(int i = 0; i < Integer.parseInt(Utils.parseConfig("server", "maxPlayersPerMatch")); i++)
             this.testGameLogic.addPlayer(new Player("test" + i));
