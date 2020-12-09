@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import client.Snake.Renderer.Enumerator.ERendererState;
+import client.Snake.Enumerator.ERendererState;
 
 import static org.junit.jupiter.api.Assertions.*;
 

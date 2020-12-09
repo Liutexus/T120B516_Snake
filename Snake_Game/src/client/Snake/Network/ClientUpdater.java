@@ -1,7 +1,6 @@
-package client.Snake.Renderer.Network;
+package client.Snake.Network;
 
-import client.Snake.Renderer.GameData;
-import client.Snake.Renderer.SnakePanel;
+import client.Snake.Renderer.Panels.SnakePanel;
 import server.Snake.Entity.AbstractMovingEntity;
 import server.Snake.Entity.Entity;
 import server.Snake.Entity.Generic.GenericMovingEntity;
@@ -14,8 +13,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ClientUpdater implements Runnable{
     private SnakePanel snakePanel = SnakePanel.getInstance();

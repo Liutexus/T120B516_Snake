@@ -1,9 +1,10 @@
-package client.Snake.Renderer;
+package client.Snake.Renderer.Panels;
 
-import client.Snake.Renderer.Command.NetworkCommand;
+import client.Snake.Command.NetworkCommand;
 import client.Snake.Renderer.Components.MenuButton;
-import client.Snake.Renderer.Enumerator.ERendererState;
-import client.Snake.Renderer.Interface.IMediator;
+import client.Snake.Enumerator.ERendererState;
+import client.Snake.Interface.IMediator;
+import client.Snake.Renderer.SwingRender;
 
 import javax.swing.*;
 import java.io.IOException;

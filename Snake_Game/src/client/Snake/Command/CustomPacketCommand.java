@@ -1,6 +1,6 @@
-package client.Snake.Renderer.Command;
+package client.Snake.Command;
 
-import client.Snake.Renderer.Interface.ICommand;
+import client.Snake.Interface.ICommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import server.Snake.Enumerator.EPacketHeader;

@@ -1,7 +1,7 @@
 package client.Snake.Renderer.Drawables;
 
-import client.Snake.Renderer.Interface.IDrawable;
-import client.Snake.Renderer.Interface.IIterator;
+import client.Snake.Interface.IDrawable;
+import client.Snake.Interface.IIterator;
 
 import java.awt.*;
 import java.util.ArrayList;

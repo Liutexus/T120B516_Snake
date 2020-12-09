@@ -1,24 +1,25 @@
-package client.Snake.Renderer;
+package client.Snake.Renderer.Panels;
 
 import client.Snake.Renderer.Components.MenuButton;
-import client.Snake.Renderer.Enumerator.ERendererState;
-import client.Snake.Renderer.Interface.IMediator;
+import client.Snake.Enumerator.ERendererState;
+import client.Snake.Interface.IMediator;
+import client.Snake.Renderer.SwingRender;
 
 import javax.swing.*;
 
-public class SettingsPanel extends JPanel implements Runnable, IMediator {
+public class HostGamePanel extends JPanel implements Runnable, IMediator {
     private static SwingRender render = null;
-    private static SettingsPanel panelInstance = null;
+    private static HostGamePanel panelInstance = null;
 
     private static MenuButton backButton;
 
-    private SettingsPanel() {
+    private HostGamePanel() {
         setUpControls();
     }
 
-    public static SettingsPanel getInstance() {
+    public static HostGamePanel getInstance() {
         if (panelInstance == null)
-            panelInstance = new SettingsPanel();
+            panelInstance = new HostGamePanel();
         return panelInstance;
     }
 
@@ -33,13 +34,13 @@ public class SettingsPanel extends JPanel implements Runnable, IMediator {
 
     @Override
     public void notify(Object sender) {
-        if (backButton.equals(sender)) {
-            render.setCurrentState(ERendererState.MENU);
-            render.remove(this);
+        if (this.backButton.equals(sender)) {
+            this.render.setCurrentState(ERendererState.MENU);
+            this.render.remove(this);
             this.invalidate();
             this.validate();
-            synchronized (render) {
-                render.notify();
+            synchronized (this.render) {
+                this.render.notify();
             }
         }
     }

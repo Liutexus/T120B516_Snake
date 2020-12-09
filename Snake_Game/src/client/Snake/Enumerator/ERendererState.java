@@ -1,4 +1,4 @@
-package client.Snake.Renderer.Enumerator;
+package client.Snake.Enumerator;
 
 public enum ERendererState {
     UNDETERMINED,

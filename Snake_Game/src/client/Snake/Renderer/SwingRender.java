@@ -1,6 +1,10 @@
 package client.Snake.Renderer;
 
-import client.Snake.Renderer.Enumerator.ERendererState;
+import client.Snake.Enumerator.ERendererState;
+import client.Snake.Renderer.Panels.HostGamePanel;
+import client.Snake.Renderer.Panels.MenuPanel;
+import client.Snake.Renderer.Panels.SettingsPanel;
+import client.Snake.Renderer.Panels.SnakePanel;
 import server.Snake.Utility.Utils;
 
 import javax.swing.JFrame;
@@ -15,8 +19,8 @@ public class SwingRender extends JFrame implements Runnable {
     private Dimension prefScreenSize = new Dimension(1000, 1000);
 
     private static ERendererState currentState = ERendererState.MENU;
-    private SnakePanel gamePanel;
-    private MenuPanel menuPanel;
+    private client.Snake.Renderer.Panels.SnakePanel gamePanel;
+    private client.Snake.Renderer.Panels.MenuPanel menuPanel;
     private SettingsPanel settingsPanel;
     private HostGamePanel hostGamePanel;
 
@@ -69,7 +73,7 @@ public class SwingRender extends JFrame implements Runnable {
             switch(currentState) {
                 case TESTING:
                 case MENU:
-                    this.add(MenuPanel.getInstance());
+                    this.add(client.Snake.Renderer.Panels.MenuPanel.getInstance());
                     this.pack();
                     this.setVisible(true);
                     menuPanel.repaint();

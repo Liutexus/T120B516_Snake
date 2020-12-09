@@ -1,6 +1,6 @@
 package client.Snake.Renderer.Drawables;
 
-import client.Snake.Renderer.Interface.IDrawable;
+import client.Snake.Interface.IDrawable;
 
 import java.awt.*;
 

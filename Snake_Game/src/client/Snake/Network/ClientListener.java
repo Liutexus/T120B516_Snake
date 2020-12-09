@@ -1,4 +1,4 @@
-package client.Snake.Renderer.Network;
+package client.Snake.Network;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

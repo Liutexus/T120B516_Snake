@@ -1,4 +1,4 @@
-package client.Snake.Renderer.Interface;
+package client.Snake.Interface;
 import java.util.Iterator;
 
 public interface IIterator {

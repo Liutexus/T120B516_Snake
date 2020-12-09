@@ -1,4 +1,4 @@
-package client.Snake.Renderer;
+package client.Snake.Renderer.Panels;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,31 +8,23 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.Snake.Renderer.Command.TemplateCommand;
+import client.Snake.Command.TemplateCommand;
+import client.Snake.Network.GameData;
 import client.Snake.Renderer.Console.GameConsole;
-import client.Snake.Renderer.Drawables.AllDrawables;
 import client.Snake.Renderer.Drawables.Terrain;
-import client.Snake.Renderer.Enumerator.ERendererState;
-import client.Snake.Renderer.Interface.IDrawable;
-import client.Snake.Renderer.Interface.IIterator;
-import client.Snake.Renderer.Network.ClientListener;
-import client.Snake.Renderer.Network.ClientUpdater;
-import server.Snake.Entity.AbstractMovingEntity;
-import server.Snake.Entity.AbstractStaticEntity;
-import client.Snake.Renderer.Command.NetworkCommand;
-import server.Snake.Entity.Entity;
-import server.Snake.Entity.Generic.GenericMovingEntity;
-import server.Snake.Entity.Generic.GenericStaticEntity;
+import client.Snake.Enumerator.ERendererState;
+import client.Snake.Interface.IDrawable;
+import client.Snake.Interface.IIterator;
+import client.Snake.Network.ClientListener;
+import client.Snake.Network.ClientUpdater;
+import client.Snake.Command.NetworkCommand;
+import client.Snake.Renderer.SwingRender;
 import server.Snake.Entity.Player;
-import client.Snake.Renderer.Command.PlayerMoveCommand;
-import server.Snake.GameLogic;
-import server.Snake.Network.Packet.Packet;
+import client.Snake.Command.PlayerMoveCommand;
 import server.Snake.Utility.BitmapConverter;
-import server.Snake.Utility.MapToObjectVisitor;
 import server.Snake.Utility.Utils;
 
 public class SnakePanel extends JPanel implements Runnable, IIterator {
