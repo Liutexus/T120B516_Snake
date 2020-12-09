@@ -168,7 +168,7 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
         });
 
         // Draw all players
-        Iterator snake = gameData.createIterator();
+        var snake = gameData.createIterator();
         while(snake.hasNext()){
             Player data = (Player) snake.next();
             this.gameData.getAllDrawables().addDrawable(data.getSnake());
@@ -183,7 +183,7 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
 
         this.gameData.getMovingTerrainEntities().forEach((type, entity) -> this.gameData.getAllDrawables().addDrawable(entity));
 
-        Iterator drawables = gameData.getAllDrawables().createIterator();
+        var drawables = gameData.getAllDrawables().createIterator();
         while(drawables.hasNext()){
             IDrawable drawable = (IDrawable) drawables.next();
             drawable.drawRect(g, windowWidth, windowHeight, cellWidth, cellHeight);
@@ -207,7 +207,7 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
             } catch (Exception e) {
                 System.out.println("Cannot establish connection to server.");
                 synchronized (this){
-                    try { this.wait(1000); } catch (Exception ex) { }
+                    try { this.wait(1000); } catch (Exception ignored) { }
                 }
 //                e.printStackTrace();
             }
@@ -221,7 +221,7 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
 
         while(SwingRender.getInstance().getCurrentState() == ERendererState.IN_GAME){
             this.gameTime++;
-            try{Thread.sleep(100);} catch (Exception e){
+            try{Thread.sleep(100);} catch (Exception ignored){
             }
         }
     }
