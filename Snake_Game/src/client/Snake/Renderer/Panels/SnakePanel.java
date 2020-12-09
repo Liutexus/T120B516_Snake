@@ -179,13 +179,9 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
 //        }
 
         // Draw all objects placed on the map
-        this.gameData.getStaticTerrainEntities().forEach((type, entity) -> {
-            this.gameData.getAllDrawables().addDrawable(entity);
-        });
+        this.gameData.getStaticTerrainEntities().forEach((type, entity) -> this.gameData.getAllDrawables().addDrawable(entity));
 
-        this.gameData.getMovingTerrainEntities().forEach((type, entity) -> {
-            this.gameData.getAllDrawables().addDrawable(entity);
-        });
+        this.gameData.getMovingTerrainEntities().forEach((type, entity) -> this.gameData.getAllDrawables().addDrawable(entity));
 
         Iterator drawables = gameData.getAllDrawables().createIterator();
         while(drawables.hasNext()){
