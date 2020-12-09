@@ -7,7 +7,6 @@ import server.Snake.Entity.Player;
 import server.Snake.Entity.Entity;
 import server.Snake.Enumerator.EClientStatus;
 import server.Snake.Enumerator.EPacketHeader;
-import server.Snake.GameLogic;
 import server.Snake.Interface.IHandler;
 import server.Snake.Logic.IGameLogic;
 import server.Snake.MatchInstance;
@@ -16,7 +15,6 @@ import server.Snake.Server;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,7 +35,7 @@ public class Handler implements Runnable, IHandler {
 
     private EClientStatus status;
 
-    private ExecutorService executor = Executors.newFixedThreadPool(2);;
+    private ExecutorService executor = Executors.newFixedThreadPool(2);
 
     private String clientId;
     private Player clientPlayer;

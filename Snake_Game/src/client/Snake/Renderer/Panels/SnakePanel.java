@@ -134,18 +134,35 @@ public class SnakePanel extends JPanel implements Runnable, IIterator {
     private void keyResponse(KeyEvent key) {
         //                throw new IllegalStateException("Unexpected value: " + key.getKeyCode());
         switch (key.getKeyCode()) {
-            case KeyEvent.VK_UP, KeyEvent.VK_W -> PlayerMoveCommand.moveUp(this.gameData.getId(), out);
-            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> PlayerMoveCommand.moveRight(this.gameData.getId(), out);
-            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> PlayerMoveCommand.moveDown(this.gameData.getId(), out);
-            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> PlayerMoveCommand.moveLeft(this.gameData.getId(), out);
-            case KeyEvent.VK_SPACE -> PlayerMoveCommand.moveStop(this.gameData.getId(), out);
-            case KeyEvent.VK_Z -> {
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
+                PlayerMoveCommand.moveUp(this.gameData.getId(), out);
+                break;
+            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_D:
+                PlayerMoveCommand.moveRight(this.gameData.getId(), out);
+                break;
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
+                PlayerMoveCommand.moveDown(this.gameData.getId(), out);
+                break;
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_A:
+                PlayerMoveCommand.moveLeft(this.gameData.getId(), out);
+                break;
+            case KeyEvent.VK_SPACE:
+                PlayerMoveCommand.moveStop(this.gameData.getId(), out);
+                break;
+            case KeyEvent.VK_Z:
                 TemplateCommand u = new PlayerMoveCommand();
                 u.command(this.gameData.getId(), out);
-            }
-// To control console's visibility. Set key - " ` ";
-            case 192 -> GameConsole.toggleVisibility();
-            default -> System.out.println("Not defined key press '" + key.getKeyChar() + "'");
+                break;
+            case 192: // To control console's visibility. Set key - " ` ";
+                GameConsole.toggleVisibility();
+                break;
+            default:
+                System.out.println("Not defined key press '" + key.getKeyChar() + "'");
+                break;
         }
     }
 

@@ -37,29 +37,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9b24d95-6789-41d6-a758-790acd0a0178" name="Default Changelist" comment="Dependencies are deleted and ignored, instead auto-downloaded via Maven">
-      <change afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Command/CustomPacketCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interface/IExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Effect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Multiply.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Plus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Position.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Score.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Tail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Velocity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/TerminalExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Tokens/ActorGroupExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Tokens/EActorToken.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Tokens/ECommandToken.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Tokens/Expression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Tokens/NullExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Console/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Console/Terminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Interpreter/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Network/ClientUpdater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Enumerator/EPacketHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Enumerator/EPacketHeader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/MatchInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Snake/Renderer/Panels/SnakePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Snake/Renderer/Panels/SnakePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Interpreter/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Interpreter/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Snake/Network/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Network/Handler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/Snake/Network/HandlerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Network/HandlerListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Snake/Utility/Utils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +85,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/libs/jackson-core-2.9.9.jar!/" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4948216" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -321,11 +303,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/server/Snake/Interpreter/Interpreter.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/server/Snake/Interpreter/Expressions/Commands/Position.java</url>
           <line>42</line>

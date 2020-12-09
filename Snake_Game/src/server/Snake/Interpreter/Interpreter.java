@@ -1,6 +1,7 @@
 package server.Snake.Interpreter;
 
 import server.Snake.Enumerator.EEffect;
+import server.Snake.Enumerator.EPacketHeader;
 import server.Snake.Interpreter.Expressions.Commands.*;
 import server.Snake.Interpreter.Expressions.TerminalExpression;
 import server.Snake.Interpreter.Expressions.Tokens.ActorGroupExpression;
@@ -17,7 +18,6 @@ public class Interpreter {
         TerminalExpression exp;
         try{
             if(tokens.length > 2){
-
                 ECommandToken command = ECommandToken.valueOf(tokens[0].toUpperCase());
                 ActorGroupExpression actorExp = new ActorGroupExpression(tokens[1]);
                 Expression parameter = new Expression(tokens[2]);
@@ -48,11 +48,15 @@ public class Interpreter {
                         exp.execute(handler);
                         break;
                     default:
-                        System.out.println("Command not implemented");
+                        handler.sendPacket(EPacketHeader.COMMAND, "Incorrect command.");
                 }
             }
+            else {
+                handler.sendPacket(EPacketHeader.COMMAND, "Incorrect command. Must consist of at least 3 keywords.");
+            }
         } catch (Exception e){
-            e.printStackTrace();
+            handler.sendPacket(EPacketHeader.COMMAND, "Command '" + tokens[0] + "' does not exist.");
+//            e.printStackTrace();
         }
     }
 }

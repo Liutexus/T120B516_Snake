@@ -47,7 +47,6 @@ public class HandlerListener implements Runnable, IHandler {
                 break;
             case COMMAND:
                 Interpreter.execute(packet.getBody(), handler);
-                handler.sendPacket(EPacketHeader.COMMAND, "sup, got the shit");
                 break;
             default:
                 this.handle(packet);
